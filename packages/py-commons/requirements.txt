@@ -3,3 +3,8 @@ pydantic-settings>=2.0.0
 httpx>=0.24.0
 python-jose[cryptography]>=3.3.0
 loguru>=0.7.0
+
+# Интеграция между сервисами
+aiohttp>=3.9.0
+aio-pika>=9.3.0
+redis[hiredis]>=5.0.0

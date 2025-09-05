@@ -1,0 +1,1 @@
+# Commons package for Scan Gateway service
