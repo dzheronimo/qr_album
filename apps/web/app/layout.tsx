@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { ThemeProvider } from 'next-themes';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { Providers } from './providers';
 import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 
@@ -71,21 +69,6 @@ export const metadata: Metadata = {
   },
 };
 
-// Create a client
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      retry: (failureCount, error: any) => {
-        if (error?.status === 401 || error?.status === 403) {
-          return false;
-        }
-        return failureCount < 3;
-      },
-    },
-  },
-});
-
 export default function RootLayout({
   children,
 }: {
@@ -94,18 +77,10 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning>
       <body className={inter.className}>
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-            <Toaster />
-            <ReactQueryDevtools initialIsOpen={false} />
-          </ThemeProvider>
-        </QueryClientProvider>
+        <Providers>
+          {children}
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );

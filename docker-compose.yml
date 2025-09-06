@@ -1,11 +1,11 @@
 version: '3.8'
 
 services:
-  # Frontend (Express fallback)
+  # Frontend (Next.js)
   web:
     build:
       context: ./apps/web
-      dockerfile: Dockerfile.express
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     environment:
