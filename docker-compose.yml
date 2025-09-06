@@ -72,7 +72,7 @@ services:
       - "8001:8000"
     environment:
       - ENVIRONMENT=production
-      - DATABASE_URL=postgresql://storyqr:storyqr@postgres:5432/storyqr_auth
+      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_auth
       - REDIS_URL=redis://redis:6379
       - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
       - JWT_SECRET=your-super-secret-jwt-key-change-in-production
@@ -94,7 +94,7 @@ services:
       - "8002:8000"
     environment:
       - ENVIRONMENT=production
-      - DATABASE_URL=postgresql://storyqr:storyqr@postgres:5432/storyqr_album
+      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_album
       - REDIS_URL=redis://redis:6379
       - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
       - JWT_SECRET=your-super-secret-jwt-key-change-in-production
@@ -114,7 +114,7 @@ services:
       - "8003:8000"
     environment:
       - ENVIRONMENT=production
-      - DATABASE_URL=postgresql://storyqr:storyqr@postgres:5432/storyqr_media
+      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_media
       - REDIS_URL=redis://redis:6379
       - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
       - MINIO_ENDPOINT=minio:9000
@@ -139,7 +139,7 @@ services:
       - "8005:8000"
     environment:
       - ENVIRONMENT=production
-      - DATABASE_URL=postgresql://storyqr:storyqr@postgres:5432/storyqr_qr
+      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_qr
       - REDIS_URL=redis://redis:6379
       - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
       - JWT_SECRET=your-super-secret-jwt-key-change-in-production
@@ -159,7 +159,7 @@ services:
       - "8006:8000"
     environment:
       - ENVIRONMENT=production
-      - DATABASE_URL=postgresql://storyqr:storyqr@postgres:5432/storyqr_user_profile
+      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_user_profile
       - REDIS_URL=redis://redis:6379
       - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
       - JWT_SECRET=your-super-secret-jwt-key-change-in-production
@@ -179,7 +179,7 @@ services:
       - "8007:8000"
     environment:
       - ENVIRONMENT=production
-      - DATABASE_URL=postgresql://storyqr:storyqr@postgres:5432/storyqr_analytics
+      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_analytics
       - REDIS_URL=redis://redis:6379
       - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
       - JWT_SECRET=your-super-secret-jwt-key-change-in-production
@@ -199,7 +199,7 @@ services:
       - "8008:8000"
     environment:
       - ENVIRONMENT=production
-      - DATABASE_URL=postgresql://storyqr:storyqr@postgres:5432/storyqr_billing
+      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_billing
       - REDIS_URL=redis://redis:6379
       - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
       - JWT_SECRET=your-super-secret-jwt-key-change-in-production
