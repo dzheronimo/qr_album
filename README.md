@@ -29,25 +29,25 @@
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   API Gateway   │    │   Auth Service  │    │  Album Service  │
-│   (Port 8000)   │◄──►│   (Port 8001)   │◄──►│   (Port 8002)   │
+│   (Port 8080)   │◄──►│   (Port 8001)   │◄──►│   (Port 8002)   │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
          │                       │                       │
          ▼                       ▼                       ▼
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │  Media Service  │    │   QR Service    │    │ Profile Service │
-│   (Port 8003)   │◄──►│   (Port 8004)   │◄──►│   (Port 8005)   │
+│   (Port 8003)   │◄──►│   (Port 8005)   │◄──►│   (Port 8006)   │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
          │                       │                       │
          ▼                       ▼                       ▼
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │Analytics Service│    │ Billing Service │    │Notification Svc │
-│   (Port 8006)   │◄──►│   (Port 8007)   │◄──►│   (Port 8008)   │
+│   (Port 8007)   │◄──►│   (Port 8008)   │◄──►│   (Port 8009)   │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
          │                       │                       │
          ▼                       ▼                       ▼
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │Moderation Service│   │  Print Service  │    │  Scan Gateway   │
-│   (Port 8009)   │◄──►│   (Port 8010)   │◄──►│   (Port 8011)   │
+│   (Port 8010)   │◄──►│   (Port 8011)   │◄──►│   (Port 8086)   │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
@@ -60,6 +60,58 @@
 - **Тестирование**: pytest, pytest-asyncio, pytest-cov
 - **Документация**: OpenAPI/Swagger, Sphinx
 - **Мониторинг**: Prometheus, Grafana (планируется)
+
+## 🏥 Health Standard
+
+Все микросервисы следуют единому стандарту health checks для обеспечения надежности и мониторинга:
+
+### 📋 Стандартные endpoints
+
+- **`GET /health`** - **Liveness probe**
+  - Проверяет, что сервис запущен и отвечает
+  - **Без авторизации**, всегда возвращает 200 при работе сервиса
+  - Используется Docker healthcheck и оркестраторами
+
+- **`GET /health/ready`** - **Readiness probe**
+  - Проверяет готовность сервиса принимать запросы
+  - Проверяет критические зависимости (БД, Redis, RabbitMQ, внешние API)
+  - Возвращает 503 при недоступных зависимостях
+  - Используется для определения готовности к трафику
+
+### 🔍 Проверки зависимостей
+
+Каждый сервис проверяет свои критические зависимости:
+
+| Сервис | Зависимости | Таймаут |
+|--------|-------------|---------|
+| **api-gateway** | Redis, RabbitMQ, backend сервисы | ≤1.5s |
+| **auth-svc** | PostgreSQL, Redis, RabbitMQ | ≤2s |
+| **album-svc** | PostgreSQL, Redis, RabbitMQ | ≤2s |
+| **media-svc** | PostgreSQL, MinIO, Redis | ≤2s |
+| **qr-svc** | PostgreSQL, Redis | ≤2s |
+| **notification-svc** | PostgreSQL, Redis, RabbitMQ, SMTP | ≤2s |
+| **moderation-svc** | PostgreSQL, Redis, AI API | ≤2s |
+| **print-svc** | PostgreSQL, Redis, PDF engine | ≤2s |
+| **scan-gateway** | Redis, qr-svc, analytics-svc | ≤1s |
+
+### 🧪 Smoke тесты
+
+Для проверки работоспособности всех сервисов:
+
+```bash
+# PowerShell (Windows)
+powershell -ExecutionPolicy Bypass -File scripts/smoke.ps1
+
+# Bash (Linux/macOS)
+bash scripts/smoke.sh
+```
+
+### 📊 Мониторинг
+
+- **Docker healthcheck**: Все контейнеры используют `/health` для проверки
+- **Kubernetes**: Liveness и readiness probes настроены
+- **Load balancer**: Readiness probe для определения готовности
+- **Alerting**: 503 на `/health/ready` → алерт в мониторинг
 
 ## 🚀 Быстрый старт
 
@@ -140,18 +192,18 @@ make test-fast
 ```
 qr_album/
 ├── apps/                          # Микросервисы
-│   ├── api-gateway/              # API Gateway (порт 8000)
+│   ├── api-gateway/              # API Gateway (порт 8080)
 │   ├── auth-svc/                 # Сервис аутентификации (порт 8001)
 │   ├── album-svc/                # Сервис альбомов (порт 8002)
 │   ├── media-svc/                # Сервис медиафайлов (порт 8003)
-│   ├── qr-svc/                   # Сервис QR кодов (порт 8004)
-│   ├── user-profile-svc/         # Сервис профилей (порт 8005)
-│   ├── analytics-svc/            # Сервис аналитики (порт 8006)
-│   ├── billing-svc/              # Сервис биллинга (порт 8007)
-│   ├── notification-svc/         # Сервис уведомлений (порт 8008)
-│   ├── moderation-svc/           # Сервис модерации (порт 8009)
-│   ├── print-svc/                # Сервис печати (порт 8010)
-│   └── scan-gateway/             # Gateway для сканирования (порт 8011)
+│   ├── qr-svc/                   # Сервис QR кодов (порт 8005)
+│   ├── user-profile-svc/         # Сервис профилей (порт 8006)
+│   ├── analytics-svc/            # Сервис аналитики (порт 8007)
+│   ├── billing-svc/              # Сервис биллинга (порт 8008)
+│   ├── notification-svc/         # Сервис уведомлений (порт 8009)
+│   ├── moderation-svc/           # Сервис модерации (порт 8010)
+│   ├── print-svc/                # Сервис печати (порт 8011)
+│   └── scan-gateway/             # Gateway для сканирования (порт 8086)
 ├── packages/                      # Общие пакеты
 │   └── py-commons/               # Общие утилиты и интеграции
 ├── tests/                         # Тесты
@@ -169,18 +221,18 @@ qr_album/
 
 После запуска сервисов документация API доступна по следующим адресам:
 
-- **API Gateway**: http://localhost:8000/docs
+- **API Gateway**: http://localhost:8080/docs
 - **Auth Service**: http://localhost:8001/docs
 - **Album Service**: http://localhost:8002/docs
 - **Media Service**: http://localhost:8003/docs
-- **QR Service**: http://localhost:8004/docs
-- **Profile Service**: http://localhost:8005/docs
-- **Analytics Service**: http://localhost:8006/docs
-- **Billing Service**: http://localhost:8007/docs
-- **Notification Service**: http://localhost:8008/docs
-- **Moderation Service**: http://localhost:8009/docs
-- **Print Service**: http://localhost:8010/docs
-- **Scan Gateway**: http://localhost:8011/docs
+- **QR Service**: http://localhost:8005/docs
+- **Profile Service**: http://localhost:8006/docs
+- **Analytics Service**: http://localhost:8007/docs
+- **Billing Service**: http://localhost:8008/docs
+- **Notification Service**: http://localhost:8009/docs
+- **Moderation Service**: http://localhost:8010/docs
+- **Print Service**: http://localhost:8011/docs
+- **Scan Gateway**: http://localhost:8086/docs
 
 ## 🛠️ Разработка
 

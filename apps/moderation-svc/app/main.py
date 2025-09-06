@@ -50,7 +50,7 @@ app.add_middleware(
 )
 
 # Подключение роутов
-app.include_router(health_router, prefix="/api/v1", tags=["health"])
+app.include_router(health_router, tags=["health"])  # Health без префикса
 app.include_router(moderation_router, prefix="/api/v1", tags=["moderation"])
 app.include_router(rules_router, prefix="/api/v1", tags=["rules"])
 app.include_router(logs_router, prefix="/api/v1", tags=["logs"])

@@ -41,4 +41,6 @@ app.add_middleware(AuthMiddleware)
 # Подключение маршрутов
 app.include_router(health.router, tags=["health"])
 app.include_router(auth.router, tags=["auth"])
+app.include_router(auth.router, prefix="/api/v1", tags=["api-auth"])
+app.include_router(auth.router, prefix="/admin-api/v1", tags=["admin-auth"])
 app.include_router(proxy.router, tags=["proxy"])

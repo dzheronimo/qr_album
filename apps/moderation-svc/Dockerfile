@@ -10,12 +10,16 @@ RUN groupadd -r appuser && useradd -r -g appuser appuser
 
 WORKDIR /app
 
+# Копируем и устанавливаем py-commons
+COPY packages/py-commons ./packages/py-commons
+RUN pip install --no-cache-dir -e ./packages/py-commons
+
 # Копируем и устанавливаем зависимости
-COPY requirements.txt .
+COPY apps/moderation-svc/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Копируем код приложения
-COPY app ./app
+COPY apps/moderation-svc/app ./app
 
 # Устанавливаем права на директорию
 RUN chown -R appuser:appuser /app

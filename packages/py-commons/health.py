@@ -347,3 +347,46 @@ async def check_http_service(service_url: str, name: str = "http_service") -> De
             response_time_ms=response_time,
             error=str(e)
         )
+
+
+async def check_smtp(host: str, port: int, name: str = "smtp") -> DependencyCheck:
+    """Проверяет подключение к SMTP серверу."""
+    import time
+    import socket
+    
+    start_time = time.time()
+    
+    try:
+        # Простая проверка TCP подключения
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(2.0)  # Таймаут 2 секунды
+        result = sock.connect_ex((host, port))
+        sock.close()
+        
+        response_time = (time.time() - start_time) * 1000
+        
+        if result == 0:
+            return DependencyCheck(
+                name=name,
+                status=HealthStatus.HEALTHY,
+                response_time_ms=response_time,
+                details={"host": host, "port": port}
+            )
+        else:
+            return DependencyCheck(
+                name=name,
+                status=HealthStatus.UNHEALTHY,
+                response_time_ms=response_time,
+                error=f"Connection failed to {host}:{port}"
+            )
+            
+    except Exception as e:
+        response_time = (time.time() - start_time) * 1000
+        logger.error(f"SMTP check failed: {e}")
+        
+        return DependencyCheck(
+            name=name,
+            status=HealthStatus.UNHEALTHY,
+            response_time_ms=response_time,
+            error=str(e)
+        )

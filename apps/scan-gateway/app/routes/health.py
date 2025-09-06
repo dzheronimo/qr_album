@@ -10,8 +10,8 @@ from pydantic import BaseModel
 
 # Импортируем общие health utilities
 import sys
-sys.path.append('/app/packages')
-from py_commons.health import create_health_router, check_database, check_redis, check_rabbitmq
+sys.path.append('/app/packages/py-commons')
+from health import create_health_router, check_redis, check_http_service
 
 router = APIRouter()
 
@@ -20,8 +20,19 @@ health_router = create_health_router("scan-gateway", "1.0.0")
 
 # Добавляем проверки зависимостей
 redis_url = os.getenv("REDIS_URL", "redis://redis:6379")
-if health_checker:
-    health_checker.add_dependency_check(lambda: check_redis(redis_url))
+
+# Получаем health_checker из глобального состояния
+from health import _health_checker
+if _health_checker:
+    _health_checker.add_dependency_check(lambda: check_redis(redis_url))
+    
+    # Добавляем проверку qr-svc (критичная зависимость)
+    qr_svc_url = os.getenv("QR_SVC_URL", "http://qr-svc:8000")
+    _health_checker.add_dependency_check(lambda: check_http_service(f"{qr_svc_url}/health", "qr-svc"))
+    
+    # Добавляем неблокирующую проверку analytics-svc
+    analytics_svc_url = os.getenv("ANALYTICS_SVC_URL", "http://analytics-svc:8000")
+    _health_checker.add_dependency_check(lambda: check_http_service(f"{analytics_svc_url}/health", "analytics-svc"))
 
 # Включаем health endpoints
 router.include_router(health_router)

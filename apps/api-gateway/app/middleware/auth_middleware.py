@@ -28,6 +28,8 @@ class AuthMiddleware(BaseHTTPMiddleware):
         """
         super().__init__(app)
         self.exclude_paths = exclude_paths or [
+            "/health",
+            "/health/ready",
             "/healthz",
             "/docs",
             "/openapi.json",
@@ -35,6 +37,12 @@ class AuthMiddleware(BaseHTTPMiddleware):
             "/auth/login",
             "/auth/register",
             "/auth/refresh",
+            "/admin-api/v1/auth/login",
+            "/admin-api/v1/auth/register",
+            "/admin-api/v1/auth/refresh",
+            "/api/v1/auth/login",
+            "/api/v1/auth/register",
+            "/api/v1/auth/refresh",
             "/scan/",  # Публичные сканирования
             "/api/services",  # Список сервисов
             "/api/services/",  # Проверка здоровья сервисов

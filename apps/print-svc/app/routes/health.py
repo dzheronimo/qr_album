@@ -10,8 +10,8 @@ from pydantic import BaseModel
 
 # Импортируем общие health utilities
 import sys
-sys.path.append('/app/packages')
-from py_commons.health import create_health_router, check_database, check_redis, check_rabbitmq
+sys.path.append('/app/packages/py-commons')
+from health import create_health_router, check_database, check_redis, check_rabbitmq
 
 router = APIRouter()
 
@@ -20,15 +20,15 @@ health_router = create_health_router("print-svc", "1.0.0")
 
 # Добавляем проверки зависимостей
 database_url = os.getenv("DATABASE_URL", "postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_print")
-health_checker = health_router.dependency_overrides.get("health_checker")
-if health_checker:
-    health_checker.add_dependency_check(lambda: check_database(database_url))
 redis_url = os.getenv("REDIS_URL", "redis://redis:6379")
-if health_checker:
-    health_checker.add_dependency_check(lambda: check_redis(redis_url))
 rabbitmq_url = os.getenv("RABBITMQ_URL", "amqp://guest:guest@rabbit:5672")
-if health_checker:
-    health_checker.add_dependency_check(lambda: check_rabbitmq(rabbitmq_url))
+
+# Получаем health_checker из глобального состояния
+from health import _health_checker
+if _health_checker:
+    _health_checker.add_dependency_check(lambda: check_database(database_url))
+    _health_checker.add_dependency_check(lambda: check_redis(redis_url))
+    _health_checker.add_dependency_check(lambda: check_rabbitmq(rabbitmq_url))
 
 # Включаем health endpoints
 router.include_router(health_router)
