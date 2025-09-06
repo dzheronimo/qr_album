@@ -26,6 +26,6 @@ jest.mock('next/image', () => ({
 }));
 
 // Mock environment variables
-process.env.NEXT_PUBLIC_API_BASE_URL = 'http://localhost:8000';
+process.env.NEXT_PUBLIC_API_BASE_URL = 'http://localhost:8080/api/v1';
 process.env.NEXT_PUBLIC_PUBLIC_BASE_URL = 'https://storyqr.ru';
 process.env.NEXT_PUBLIC_SHORT_BASE_URL = 'https://sqra.ru';
