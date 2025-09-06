@@ -253,34 +253,41 @@ class UsageService:
         
         current_usage = await self.get_current_usage(user_id)
         
+        # Безопасное получение текущих значений (защита от None)
+        current_albums_count = (current_usage.albums_count or 0) if current_usage else 0
+        current_pages_count = (current_usage.pages_count or 0) if current_usage else 0
+        current_media_count = (current_usage.media_files_count or 0) if current_usage else 0
+        current_qr_count = (current_usage.qr_codes_count or 0) if current_usage else 0
+        current_storage_mb = (current_usage.storage_used_mb or 0) if current_usage else 0
+        
         # Проверяем лимиты
         limits_exceeded = []
         
         if albums_count is not None and plan.max_albums is not None:
-            current_albums = (current_usage.albums_count if current_usage else 0) + albums_count
-            if current_albums > plan.max_albums:
-                limits_exceeded.append(f"Превышен лимит альбомов: {current_albums}/{plan.max_albums}")
+            total_albums = current_albums_count + albums_count
+            if total_albums > plan.max_albums:
+                limits_exceeded.append(f"Превышен лимит альбомов: {total_albums}/{plan.max_albums}")
         
         if pages_count is not None and plan.max_pages_per_album is not None:
-            current_pages = (current_usage.pages_count if current_usage else 0) + pages_count
-            if current_pages > plan.max_pages_per_album:
-                limits_exceeded.append(f"Превышен лимит страниц: {current_pages}/{plan.max_pages_per_album}")
+            total_pages = current_pages_count + pages_count
+            if total_pages > plan.max_pages_per_album:
+                limits_exceeded.append(f"Превышен лимит страниц: {total_pages}/{plan.max_pages_per_album}")
         
         if media_files_count is not None and plan.max_media_files is not None:
-            current_media = (current_usage.media_files_count if current_usage else 0) + media_files_count
-            if current_media > plan.max_media_files:
-                limits_exceeded.append(f"Превышен лимит медиафайлов: {current_media}/{plan.max_media_files}")
+            total_media = current_media_count + media_files_count
+            if total_media > plan.max_media_files:
+                limits_exceeded.append(f"Превышен лимит медиафайлов: {total_media}/{plan.max_media_files}")
         
         if qr_codes_count is not None and plan.max_qr_codes is not None:
-            current_qr = (current_usage.qr_codes_count if current_usage else 0) + qr_codes_count
-            if current_qr > plan.max_qr_codes:
-                limits_exceeded.append(f"Превышен лимит QR кодов: {current_qr}/{plan.max_qr_codes}")
+            total_qr = current_qr_count + qr_codes_count
+            if total_qr > plan.max_qr_codes:
+                limits_exceeded.append(f"Превышен лимит QR кодов: {total_qr}/{plan.max_qr_codes}")
         
         if storage_used_mb is not None and plan.max_storage_gb is not None:
-            current_storage = (current_usage.storage_used_mb if current_usage else 0) + storage_used_mb
+            total_storage = current_storage_mb + storage_used_mb
             max_storage_mb = plan.max_storage_gb * 1024
-            if current_storage > max_storage_mb:
-                limits_exceeded.append(f"Превышен лимит хранилища: {current_storage/1024:.2f}GB/{plan.max_storage_gb}GB")
+            if total_storage > max_storage_mb:
+                limits_exceeded.append(f"Превышен лимит хранилища: {total_storage/1024:.2f}GB/{plan.max_storage_gb}GB")
         
         return {
             "has_subscription": True,
