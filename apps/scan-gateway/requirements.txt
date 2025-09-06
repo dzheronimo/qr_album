@@ -6,3 +6,7 @@ httpx>=0.24.0
 loguru>=0.7.0
 redis>=5.0.0
 slowapi>=0.1.9
+setuptools>=78.1.1
+redis>=5.0.0
+aio-pika>=9.0.0
+tenacity>=8.0.0

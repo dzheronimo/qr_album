@@ -1,0 +1,250 @@
+name: Security Audit & Quality Checks
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  lint-secure:
+    name: Lint & Security Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install ruff mypy bandit pip-audit safety
+    
+    - name: Run ruff (code quality)
+      run: |
+        for service in apps/*/; do
+          if [ -d "$service" ]; then
+            echo "Checking $service with ruff..."
+            ruff check "$service" --output-format=json > "audit/reports/lint/ruff-$(basename $service).json" || true
+          fi
+        done
+    
+    - name: Run mypy (type checking)
+      run: |
+        for service in apps/*/; do
+          if [ -d "$service" ]; do
+            echo "Type checking $service with mypy..."
+            mypy "$service" --exclude ".*/app/__init__.py" --json-report "audit/reports/lint/mypy-$(basename $service).json" || true
+          fi
+        done
+    
+    - name: Run bandit (security)
+      run: |
+        for service in apps/*/; do
+          if [ -d "$service" ]; do
+            echo "Security scanning $service with bandit..."
+            bandit -r "$service" -f json -o "audit/reports/lint/bandit-$(basename $service).json" || true
+          fi
+        done
+    
+    - name: Run pip-audit (vulnerabilities)
+      run: |
+        for service in apps/*/; do
+          if [ -f "$service/requirements.txt" ]; do
+            echo "Auditing dependencies for $service..."
+            pip-audit --requirement "$service/requirements.txt" --format=json --output "audit/reports/lint/pip-audit-$(basename $service).json" || true
+          fi
+        done
+    
+    - name: Upload lint reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: lint-reports
+        path: audit/reports/lint/
+
+  docker-sec:
+    name: Docker Security
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: Install hadolint
+      run: |
+        wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
+        chmod +x /bin/hadolint
+    
+    - name: Install trivy
+      run: |
+        sudo apt-get update
+        sudo apt-get install wget apt-transport-https gnupg lsb-release
+        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+        echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+        sudo apt-get update
+        sudo apt-get install trivy
+    
+    - name: Run hadolint (Dockerfile linting)
+      run: |
+        mkdir -p audit/reports/docker
+        for dockerfile in apps/*/Dockerfile; do
+          if [ -f "$dockerfile" ]; do
+            service=$(basename $(dirname $dockerfile))
+            echo "Linting Dockerfile for $service..."
+            hadolint "$dockerfile" --format json > "audit/reports/docker/hadolint-$service.json" || true
+          fi
+        done
+    
+    - name: Build images for security scanning
+      run: |
+        for service in apps/*/; do
+          if [ -f "$service/Dockerfile" ]; do
+            service_name=$(basename $service)
+            echo "Building image for $service_name..."
+            docker build -t "qr-albums/$service_name:test" "$service"
+          fi
+        done
+    
+    - name: Run trivy (container security)
+      run: |
+        mkdir -p audit/reports/docker
+        for service in apps/*/; do
+          if [ -f "$service/Dockerfile" ]; do
+            service_name=$(basename $service)
+            echo "Scanning $service_name with trivy..."
+            trivy image --format json --output "audit/reports/docker/trivy-$service_name.json" "qr-albums/$service_name:test" || true
+          fi
+        done
+    
+    - name: Upload docker security reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: docker-security-reports
+        path: audit/reports/docker/
+
+  smoke-health:
+    name: Smoke Tests & Health Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Docker Compose
+      run: |
+        sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+    
+    - name: Start services
+      run: |
+        cp env.production .env
+        docker-compose up -d --build
+    
+    - name: Wait for services to be ready
+      run: |
+        sleep 60
+        docker-compose ps
+    
+    - name: Test health endpoints
+      run: |
+        # Test API Gateway
+        curl -f http://localhost:8080/health || exit 1
+        curl -f http://localhost:8080/health/ready || exit 1
+        
+        # Test Auth Service
+        curl -f http://localhost:8001/health || exit 1
+        curl -f http://localhost:8001/health/ready || exit 1
+        
+        # Test other services
+        for port in 8002 8003 8005 8006 8007 8008 8009 8010 8011; do
+          echo "Testing service on port $port..."
+          curl -f http://localhost:$port/health || exit 1
+        done
+        
+        # Test Scan Gateway
+        curl -f http://localhost:8086/health || exit 1
+    
+    - name: Cleanup
+      if: always()
+      run: |
+        docker-compose down -v
+
+  load-baseline:
+    name: Load Testing
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Docker Compose
+      run: |
+        sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+    
+    - name: Install oha (load testing tool)
+      run: |
+        wget https://github.com/hatoo/oha/releases/latest/download/oha-linux-amd64
+        chmod +x oha-linux-amd64
+        sudo mv oha-linux-amd64 /usr/local/bin/oha
+    
+    - name: Start services
+      run: |
+        cp env.production .env
+        docker-compose up -d --build
+    
+    - name: Wait for services to be ready
+      run: |
+        sleep 60
+        docker-compose ps
+    
+    - name: Run load tests
+      run: |
+        mkdir -p audit/reports/load
+        
+        # Test API Gateway
+        echo "Load testing API Gateway..."
+        oha -c 20 -n 100 http://localhost:8080/health --json > audit/reports/load/api-gateway-load.json
+        
+        # Test Scan Gateway
+        echo "Load testing Scan Gateway..."
+        oha -c 20 -n 100 http://localhost:8086/health --json > audit/reports/load/scan-gateway-load.json
+    
+    - name: Check performance thresholds
+      run: |
+        # Проверяем, что p95 < 500ms
+        python -c "
+        import json
+        import sys
+        
+        with open('audit/reports/load/api-gateway-load.json') as f:
+            data = json.load(f)
+            p95 = data['latency']['p95']
+            if p95 > 500:
+                print(f'API Gateway p95 too high: {p95}ms')
+                sys.exit(1)
+            print(f'API Gateway p95: {p95}ms - OK')
+        
+        with open('audit/reports/load/scan-gateway-load.json') as f:
+            data = json.load(f)
+            p95 = data['latency']['p95']
+            if p95 > 500:
+                print(f'Scan Gateway p95 too high: {p95}ms')
+                sys.exit(1)
+            print(f'Scan Gateway p95: {p95}ms - OK')
+        "
+    
+    - name: Upload load test reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: load-test-reports
+        path: audit/reports/load/
+    
+    - name: Cleanup
+      if: always()
+      run: |
+        docker-compose down -v

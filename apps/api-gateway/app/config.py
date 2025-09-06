@@ -24,8 +24,21 @@ class Settings(CommonSettings):
     print_service_url: str = "http://print-svc:8000"
     
     # Настройки CORS
-    cors_origins: list = ["*"]  # В продакшене указать конкретные домены
+    admin_origins: str = "http://localhost:3001,https://admin.yourdomain.com"
+    web_origins: str = "http://localhost:3000,https://yourdomain.com"
+    cors_origins: list = []  # Будет заполнено из переменных окружения
     cors_allow_credentials: bool = True
+    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Парсим CORS origins из переменных окружения
+        admin_origins = self.admin_origins.split(',') if self.admin_origins else []
+        web_origins = self.web_origins.split(',') if self.web_origins else []
+        self.cors_origins = admin_origins + web_origins
+        
+        # Если origins не заданы, используем безопасные по умолчанию
+        if not self.cors_origins:
+            self.cors_origins = ["http://localhost:3000", "http://localhost:3001"]
     
     # Настройки rate limiting
     rate_limit_requests_per_minute: int = 60

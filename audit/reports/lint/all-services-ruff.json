@@ -1,0 +1,4349 @@
+﻿[
+  {
+    "cell": null,
+    "code": "F811",
+    "end_location": {
+      "column": 21,
+      "row": 180
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\album-svc\\app\\commons\\settings.py",
+    "fix": null,
+    "location": {
+      "column": 9,
+      "row": 180
+    },
+    "message": "Redefinition of unused `database_url` from line 160",
+    "noqa_row": 180,
+    "url": "https://docs.astral.sh/ruff/rules/redefined-while-unused"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 52,
+      "row": 11
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\album-svc\\app\\services\\album_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import select, update, delete",
+          "end_location": {
+            "column": 52,
+            "row": 11
+          },
+          "location": {
+            "column": 1,
+            "row": 11
+          }
+        }
+      ],
+      "message": "Remove unused import: `sqlalchemy.func`"
+    },
+    "location": {
+      "column": 48,
+      "row": 11
+    },
+    "message": "`sqlalchemy.func` imported but unused",
+    "noqa_row": 11,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 70,
+      "row": 84
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\album-svc\\app\\services\\album_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "Album.is_public",
+          "end_location": {
+            "column": 70,
+            "row": 84
+          },
+          "location": {
+            "column": 47,
+            "row": 84
+          }
+        }
+      ],
+      "message": "Replace with `Album.is_public`"
+    },
+    "location": {
+      "column": 47,
+      "row": 84
+    },
+    "message": "Avoid equality comparisons to `True`; use `Album.is_public:` for truth checks",
+    "noqa_row": 84,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 43,
+      "row": 136
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\album-svc\\app\\services\\album_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "Album.is_public",
+          "end_location": {
+            "column": 43,
+            "row": 136
+          },
+          "location": {
+            "column": 20,
+            "row": 136
+          }
+        }
+      ],
+      "message": "Replace with `Album.is_public`"
+    },
+    "location": {
+      "column": 20,
+      "row": 136
+    },
+    "message": "Avoid equality comparisons to `True`; use `Album.is_public:` for truth checks",
+    "noqa_row": 136,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 70,
+      "row": 98
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\album-svc\\app\\services\\page_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "Album.is_public",
+          "end_location": {
+            "column": 70,
+            "row": 98
+          },
+          "location": {
+            "column": 47,
+            "row": 98
+          }
+        }
+      ],
+      "message": "Replace with `Album.is_public`"
+    },
+    "location": {
+      "column": 47,
+      "row": 98
+    },
+    "message": "Avoid equality comparisons to `True`; use `Album.is_public:` for truth checks",
+    "noqa_row": 98,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 70,
+      "row": 126
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\album-svc\\app\\services\\page_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "Album.is_public",
+          "end_location": {
+            "column": 70,
+            "row": 126
+          },
+          "location": {
+            "column": 47,
+            "row": 126
+          }
+        }
+      ],
+      "message": "Replace with `Album.is_public`"
+    },
+    "location": {
+      "column": 47,
+      "row": 126
+    },
+    "message": "Avoid equality comparisons to `True`; use `Album.is_public:` for truth checks",
+    "noqa_row": 126,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "F811",
+    "end_location": {
+      "column": 21,
+      "row": 180
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\commons\\settings.py",
+    "fix": null,
+    "location": {
+      "column": 9,
+      "row": 180
+    },
+    "message": "Redefinition of unused `database_url` from line 160",
+    "noqa_row": 180,
+    "url": "https://docs.astral.sh/ruff/rules/redefined-while-unused"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 34,
+      "row": 5
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\routes\\analytics.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from typing import Optional, Dict, Any",
+          "end_location": {
+            "column": 45,
+            "row": 5
+          },
+          "location": {
+            "column": 1,
+            "row": 5
+          }
+        }
+      ],
+      "message": "Remove unused import: `typing.List`"
+    },
+    "location": {
+      "column": 30,
+      "row": 5
+    },
+    "message": "`typing.List` imported but unused",
+    "noqa_row": 5,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 41,
+      "row": 6
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\routes\\analytics.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from datetime import datetime",
+          "end_location": {
+            "column": 41,
+            "row": 6
+          },
+          "location": {
+            "column": 1,
+            "row": 6
+          }
+        }
+      ],
+      "message": "Remove unused import: `datetime.timedelta`"
+    },
+    "location": {
+      "column": 32,
+      "row": 6
+    },
+    "message": "`datetime.timedelta` imported but unused",
+    "noqa_row": 6,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 52,
+      "row": 14
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\routes\\analytics.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 15
+          },
+          "location": {
+            "column": 1,
+            "row": 14
+          }
+        }
+      ],
+      "message": "Remove unused import: `app.services.stats_service.StatsService`"
+    },
+    "location": {
+      "column": 40,
+      "row": 14
+    },
+    "message": "`app.services.stats_service.StatsService` imported but unused",
+    "noqa_row": 14,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 38,
+      "row": 9
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\routes\\stats.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from pydantic import BaseModel",
+          "end_location": {
+            "column": 38,
+            "row": 9
+          },
+          "location": {
+            "column": 1,
+            "row": 9
+          }
+        }
+      ],
+      "message": "Remove unused import: `pydantic.Field`"
+    },
+    "location": {
+      "column": 33,
+      "row": 9
+    },
+    "message": "`pydantic.Field` imported but unused",
+    "noqa_row": 9,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 41,
+      "row": 8
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\services\\analytics_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from datetime import datetime",
+          "end_location": {
+            "column": 41,
+            "row": 8
+          },
+          "location": {
+            "column": 1,
+            "row": 8
+          }
+        }
+      ],
+      "message": "Remove unused import: `datetime.timedelta`"
+    },
+    "location": {
+      "column": 32,
+      "row": 8
+    },
+    "message": "`datetime.timedelta` imported but unused",
+    "noqa_row": 8,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 36,
+      "row": 11
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\services\\analytics_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import select, and_",
+          "end_location": {
+            "column": 47,
+            "row": 11
+          },
+          "location": {
+            "column": 1,
+            "row": 11
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 32,
+      "row": 11
+    },
+    "message": "`sqlalchemy.func` imported but unused",
+    "noqa_row": 11,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 47,
+      "row": 11
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\services\\analytics_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import select, and_",
+          "end_location": {
+            "column": 47,
+            "row": 11
+          },
+          "location": {
+            "column": 1,
+            "row": 11
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 44,
+      "row": 11
+    },
+    "message": "`sqlalchemy.or_` imported but unused",
+    "noqa_row": 11,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 42,
+      "row": 12
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\services\\analytics_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 13
+          },
+          "location": {
+            "column": 1,
+            "row": 12
+          }
+        }
+      ],
+      "message": "Remove unused import: `sqlalchemy.exc.IntegrityError`"
+    },
+    "location": {
+      "column": 28,
+      "row": 12
+    },
+    "message": "`sqlalchemy.exc.IntegrityError` imported but unused",
+    "noqa_row": 12,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 41,
+      "row": 8
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\services\\stats_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from datetime import datetime",
+          "end_location": {
+            "column": 41,
+            "row": 8
+          },
+          "location": {
+            "column": 1,
+            "row": 8
+          }
+        }
+      ],
+      "message": "Remove unused import: `datetime.timedelta`"
+    },
+    "location": {
+      "column": 32,
+      "row": 8
+    },
+    "message": "`datetime.timedelta` imported but unused",
+    "noqa_row": 8,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 36,
+      "row": 9
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\services\\stats_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 10
+          },
+          "location": {
+            "column": 1,
+            "row": 9
+          }
+        }
+      ],
+      "message": "Remove unused import: `collections.defaultdict`"
+    },
+    "location": {
+      "column": 25,
+      "row": 9
+    },
+    "message": "`collections.defaultdict` imported but unused",
+    "noqa_row": 9,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 47,
+      "row": 12
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\services\\stats_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import select, func, and_, desc",
+          "end_location": {
+            "column": 58,
+            "row": 12
+          },
+          "location": {
+            "column": 1,
+            "row": 12
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 44,
+      "row": 12
+    },
+    "message": "`sqlalchemy.or_` imported but unused",
+    "noqa_row": 12,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 58,
+      "row": 12
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\services\\stats_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import select, func, and_, desc",
+          "end_location": {
+            "column": 58,
+            "row": 12
+          },
+          "location": {
+            "column": 1,
+            "row": 12
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 55,
+      "row": 12
+    },
+    "message": "`sqlalchemy.asc` imported but unused",
+    "noqa_row": 12,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 40,
+      "row": 13
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\services\\stats_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 14
+          },
+          "location": {
+            "column": 1,
+            "row": 13
+          }
+        }
+      ],
+      "message": "Remove unused import: `sqlalchemy.orm.selectinload`"
+    },
+    "location": {
+      "column": 28,
+      "row": 13
+    },
+    "message": "`sqlalchemy.orm.selectinload` imported but unused",
+    "noqa_row": 13,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 89,
+      "row": 15
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\services\\stats_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from app.models.analytics import ScanEvent, UserActivity, PageView, AlbumView",
+          "end_location": {
+            "column": 101,
+            "row": 15
+          },
+          "location": {
+            "column": 1,
+            "row": 15
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 80,
+      "row": 15
+    },
+    "message": "`app.models.analytics.EventType` imported but unused",
+    "noqa_row": 15,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 101,
+      "row": 15
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\analytics-svc\\app\\services\\stats_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from app.models.analytics import ScanEvent, UserActivity, PageView, AlbumView",
+          "end_location": {
+            "column": 101,
+            "row": 15
+          },
+          "location": {
+            "column": 1,
+            "row": 15
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 91,
+      "row": 15
+    },
+    "message": "`app.models.analytics.DeviceType` imported but unused",
+    "noqa_row": 15,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F811",
+    "end_location": {
+      "column": 21,
+      "row": 180
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\api-gateway\\app\\commons\\settings.py",
+    "fix": null,
+    "location": {
+      "column": 9,
+      "row": 180
+    },
+    "message": "Redefinition of unused `database_url` from line 160",
+    "noqa_row": 180,
+    "url": "https://docs.astral.sh/ruff/rules/redefined-while-unused"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 76,
+      "row": 8
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\api-gateway\\app\\main.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 9
+          },
+          "location": {
+            "column": 1,
+            "row": 8
+          }
+        }
+      ],
+      "message": "Remove unused import: `fastapi.middleware.cors.CORSMiddleware`"
+    },
+    "location": {
+      "column": 55,
+      "row": 8
+    },
+    "message": "`fastapi.middleware.cors.CORSMiddleware` imported but unused",
+    "noqa_row": 8,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 43,
+      "row": 9
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\api-gateway\\app\\middleware\\auth_middleware.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from fastapi import Request, status",
+          "end_location": {
+            "column": 51,
+            "row": 9
+          },
+          "location": {
+            "column": 1,
+            "row": 9
+          }
+        }
+      ],
+      "message": "Remove unused import: `fastapi.HTTPException`"
+    },
+    "location": {
+      "column": 30,
+      "row": 9
+    },
+    "message": "`fastapi.HTTPException` imported but unused",
+    "noqa_row": 9,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 76,
+      "row": 9
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\api-gateway\\app\\middleware\\cors_middleware.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 10
+          },
+          "location": {
+            "column": 1,
+            "row": 9
+          }
+        }
+      ],
+      "message": "Remove unused import: `fastapi.middleware.cors.CORSMiddleware`"
+    },
+    "location": {
+      "column": 55,
+      "row": 9
+    },
+    "message": "`fastapi.middleware.cors.CORSMiddleware` imported but unused",
+    "noqa_row": 9,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "E722",
+    "end_location": {
+      "column": 27,
+      "row": 286
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\api-gateway\\app\\middleware\\logging_middleware.py",
+    "fix": null,
+    "location": {
+      "column": 21,
+      "row": 286
+    },
+    "message": "Do not use bare `except`",
+    "noqa_row": 286,
+    "url": "https://docs.astral.sh/ruff/rules/bare-except"
+  },
+  {
+    "cell": null,
+    "code": "E722",
+    "end_location": {
+      "column": 19,
+      "row": 289
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\api-gateway\\app\\middleware\\logging_middleware.py",
+    "fix": null,
+    "location": {
+      "column": 13,
+      "row": 289
+    },
+    "message": "Do not use bare `except`",
+    "noqa_row": 289,
+    "url": "https://docs.astral.sh/ruff/rules/bare-except"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 34,
+      "row": 8
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\api-gateway\\app\\middleware\\rate_limit_middleware.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from typing import Dict",
+          "end_location": {
+            "column": 34,
+            "row": 8
+          },
+          "location": {
+            "column": 1,
+            "row": 8
+          }
+        }
+      ],
+      "message": "Remove unused import: `typing.Optional`"
+    },
+    "location": {
+      "column": 26,
+      "row": 8
+    },
+    "message": "`typing.Optional` imported but unused",
+    "noqa_row": 8,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 43,
+      "row": 9
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\api-gateway\\app\\middleware\\rate_limit_middleware.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from fastapi import Request, status",
+          "end_location": {
+            "column": 51,
+            "row": 9
+          },
+          "location": {
+            "column": 1,
+            "row": 9
+          }
+        }
+      ],
+      "message": "Remove unused import: `fastapi.HTTPException`"
+    },
+    "location": {
+      "column": 30,
+      "row": 9
+    },
+    "message": "`fastapi.HTTPException` imported but unused",
+    "noqa_row": 9,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 24,
+      "row": 6
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\api-gateway\\app\\routes\\auth.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from typing import Optional",
+          "end_location": {
+            "column": 39,
+            "row": 6
+          },
+          "location": {
+            "column": 1,
+            "row": 6
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 20,
+      "row": 6
+    },
+    "message": "`typing.Dict` imported but unused",
+    "noqa_row": 6,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 29,
+      "row": 6
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\api-gateway\\app\\routes\\auth.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from typing import Optional",
+          "end_location": {
+            "column": 39,
+            "row": 6
+          },
+          "location": {
+            "column": 1,
+            "row": 6
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 26,
+      "row": 6
+    },
+    "message": "`typing.Any` imported but unused",
+    "noqa_row": 6,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 71,
+      "row": 7
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\api-gateway\\app\\routes\\auth.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from fastapi import APIRouter, Request, HTTPException, status",
+          "end_location": {
+            "column": 71,
+            "row": 7
+          },
+          "location": {
+            "column": 1,
+            "row": 7
+          }
+        }
+      ],
+      "message": "Remove unused import: `fastapi.Depends`"
+    },
+    "location": {
+      "column": 64,
+      "row": 7
+    },
+    "message": "`fastapi.Depends` imported but unused",
+    "noqa_row": 7,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 48,
+      "row": 8
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\api-gateway\\app\\routes\\auth.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 9
+          },
+          "location": {
+            "column": 1,
+            "row": 8
+          }
+        }
+      ],
+      "message": "Remove unused import: `fastapi.responses.StreamingResponse`"
+    },
+    "location": {
+      "column": 31,
+      "row": 8
+    },
+    "message": "`fastapi.responses.StreamingResponse` imported but unused",
+    "noqa_row": 8,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 71,
+      "row": 7
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\api-gateway\\app\\routes\\proxy.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from fastapi import APIRouter, Request, HTTPException, status",
+          "end_location": {
+            "column": 71,
+            "row": 7
+          },
+          "location": {
+            "column": 1,
+            "row": 7
+          }
+        }
+      ],
+      "message": "Remove unused import: `fastapi.Depends`"
+    },
+    "location": {
+      "column": 64,
+      "row": 7
+    },
+    "message": "`fastapi.Depends` imported but unused",
+    "noqa_row": 7,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F811",
+    "end_location": {
+      "column": 21,
+      "row": 180
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\auth-svc\\app\\commons\\settings.py",
+    "fix": null,
+    "location": {
+      "column": 9,
+      "row": 180
+    },
+    "message": "Redefinition of unused `database_url` from line 160",
+    "noqa_row": 180,
+    "url": "https://docs.astral.sh/ruff/rules/redefined-while-unused"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 29,
+      "row": 8
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\auth-svc\\app\\integration\\event_handlers.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from typing import Dict",
+          "end_location": {
+            "column": 29,
+            "row": 8
+          },
+          "location": {
+            "column": 1,
+            "row": 8
+          }
+        }
+      ],
+      "message": "Remove unused import: `typing.Any`"
+    },
+    "location": {
+      "column": 26,
+      "row": 8
+    },
+    "message": "`typing.Any` imported but unused",
+    "noqa_row": 8,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 55,
+      "row": 10
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\auth-svc\\app\\models\\user.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import String, Boolean, DateTime",
+          "end_location": {
+            "column": 55,
+            "row": 10
+          },
+          "location": {
+            "column": 1,
+            "row": 10
+          }
+        }
+      ],
+      "message": "Remove unused import: `sqlalchemy.Text`"
+    },
+    "location": {
+      "column": 51,
+      "row": 10
+    },
+    "message": "`sqlalchemy.Text` imported but unused",
+    "noqa_row": 10,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F841",
+    "end_location": {
+      "column": 12,
+      "row": 176
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\auth-svc\\app\\routes\\auth.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 15,
+            "row": 176
+          },
+          "location": {
+            "column": 5,
+            "row": 176
+          }
+        }
+      ],
+      "message": "Remove assignment to unused variable `success`"
+    },
+    "location": {
+      "column": 5,
+      "row": 176
+    },
+    "message": "Local variable `success` is assigned to but never used",
+    "noqa_row": 176,
+    "url": "https://docs.astral.sh/ruff/rules/unused-variable"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 30,
+      "row": 8
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\auth-svc\\app\\services\\auth_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 9
+          },
+          "location": {
+            "column": 1,
+            "row": 8
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 22,
+      "row": 8
+    },
+    "message": "`datetime.datetime` imported but unused",
+    "noqa_row": 8,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 41,
+      "row": 8
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\auth-svc\\app\\services\\auth_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 9
+          },
+          "location": {
+            "column": 1,
+            "row": 8
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 32,
+      "row": 8
+    },
+    "message": "`datetime.timedelta` imported but unused",
+    "noqa_row": 8,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 33,
+      "row": 12
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\auth-svc\\app\\services\\auth_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 13
+          },
+          "location": {
+            "column": 1,
+            "row": 12
+          }
+        }
+      ],
+      "message": "Remove unused import: `app.models.user.User`"
+    },
+    "location": {
+      "column": 29,
+      "row": 12
+    },
+    "message": "`app.models.user.User` imported but unused",
+    "noqa_row": 12,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 34,
+      "row": 7
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\auth-svc\\app\\services\\user_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from typing import Optional",
+          "end_location": {
+            "column": 34,
+            "row": 7
+          },
+          "location": {
+            "column": 1,
+            "row": 7
+          }
+        }
+      ],
+      "message": "Remove unused import: `typing.List`"
+    },
+    "location": {
+      "column": 30,
+      "row": 7
+    },
+    "message": "`typing.List` imported but unused",
+    "noqa_row": 7,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 46,
+      "row": 11
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\auth-svc\\app\\services\\user_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import select, update",
+          "end_location": {
+            "column": 46,
+            "row": 11
+          },
+          "location": {
+            "column": 1,
+            "row": 11
+          }
+        }
+      ],
+      "message": "Remove unused import: `sqlalchemy.delete`"
+    },
+    "location": {
+      "column": 40,
+      "row": 11
+    },
+    "message": "`sqlalchemy.delete` imported but unused",
+    "noqa_row": 11,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F811",
+    "end_location": {
+      "column": 21,
+      "row": 180
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\commons\\settings.py",
+    "fix": null,
+    "location": {
+      "column": 9,
+      "row": 180
+    },
+    "message": "Redefinition of unused `database_url` from line 160",
+    "noqa_row": 180,
+    "url": "https://docs.astral.sh/ruff/rules/redefined-while-unused"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 30,
+      "row": 6
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\routes\\subscriptions.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 7
+          },
+          "location": {
+            "column": 1,
+            "row": 6
+          }
+        }
+      ],
+      "message": "Remove unused import: `datetime.datetime`"
+    },
+    "location": {
+      "column": 22,
+      "row": 6
+    },
+    "message": "`datetime.datetime` imported but unused",
+    "noqa_row": 6,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 58,
+      "row": 12
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\services\\plan_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import select, update, delete, and_",
+          "end_location": {
+            "column": 58,
+            "row": 12
+          },
+          "location": {
+            "column": 1,
+            "row": 12
+          }
+        }
+      ],
+      "message": "Remove unused import: `sqlalchemy.func`"
+    },
+    "location": {
+      "column": 54,
+      "row": 12
+    },
+    "message": "`sqlalchemy.func` imported but unused",
+    "noqa_row": 12,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 53,
+      "row": 148
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\services\\plan_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "Plan.is_active",
+          "end_location": {
+            "column": 53,
+            "row": 148
+          },
+          "location": {
+            "column": 31,
+            "row": 148
+          }
+        }
+      ],
+      "message": "Replace with `Plan.is_active`"
+    },
+    "location": {
+      "column": 31,
+      "row": 148
+    },
+    "message": "Avoid equality comparisons to `True`; use `Plan.is_active:` for truth checks",
+    "noqa_row": 148,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 47,
+      "row": 169
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\services\\plan_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "Plan.is_active",
+          "end_location": {
+            "column": 47,
+            "row": 169
+          },
+          "location": {
+            "column": 25,
+            "row": 169
+          }
+        }
+      ],
+      "message": "Replace with `Plan.is_active`"
+    },
+    "location": {
+      "column": 25,
+      "row": 169
+    },
+    "message": "Avoid equality comparisons to `True`; use `Plan.is_active:` for truth checks",
+    "noqa_row": 169,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 72,
+      "row": 169
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\services\\plan_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "Plan.is_popular",
+          "end_location": {
+            "column": 72,
+            "row": 169
+          },
+          "location": {
+            "column": 49,
+            "row": 169
+          }
+        }
+      ],
+      "message": "Replace with `Plan.is_popular`"
+    },
+    "location": {
+      "column": 49,
+      "row": 169
+    },
+    "message": "Avoid equality comparisons to `True`; use `Plan.is_popular:` for truth checks",
+    "noqa_row": 169,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "F811",
+    "end_location": {
+      "column": 36,
+      "row": 339
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\services\\plan_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 340
+          },
+          "location": {
+            "column": 1,
+            "row": 339
+          }
+        }
+      ],
+      "message": "Remove definition: `func`"
+    },
+    "location": {
+      "column": 32,
+      "row": 339
+    },
+    "message": "Redefinition of unused `func` from line 12",
+    "noqa_row": 339,
+    "url": "https://docs.astral.sh/ruff/rules/redefined-while-unused"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 42,
+      "row": 351
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\services\\plan_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "Plan.is_active",
+          "end_location": {
+            "column": 42,
+            "row": 351
+          },
+          "location": {
+            "column": 20,
+            "row": 351
+          }
+        }
+      ],
+      "message": "Replace with `Plan.is_active`"
+    },
+    "location": {
+      "column": 20,
+      "row": 351
+    },
+    "message": "Avoid equality comparisons to `True`; use `Plan.is_active:` for truth checks",
+    "noqa_row": 351,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 47,
+      "row": 358
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\services\\plan_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "Plan.is_active",
+          "end_location": {
+            "column": 47,
+            "row": 358
+          },
+          "location": {
+            "column": 25,
+            "row": 358
+          }
+        }
+      ],
+      "message": "Replace with `Plan.is_active`"
+    },
+    "location": {
+      "column": 25,
+      "row": 358
+    },
+    "message": "Avoid equality comparisons to `True`; use `Plan.is_active:` for truth checks",
+    "noqa_row": 358,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 72,
+      "row": 358
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\services\\plan_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "Plan.is_popular",
+          "end_location": {
+            "column": 72,
+            "row": 358
+          },
+          "location": {
+            "column": 49,
+            "row": 358
+          }
+        }
+      ],
+      "message": "Replace with `Plan.is_popular`"
+    },
+    "location": {
+      "column": 49,
+      "row": 358
+    },
+    "message": "Avoid equality comparisons to `True`; use `Plan.is_popular:` for truth checks",
+    "noqa_row": 358,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 42,
+      "row": 368
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\services\\plan_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "Plan.is_active",
+          "end_location": {
+            "column": 42,
+            "row": 368
+          },
+          "location": {
+            "column": 20,
+            "row": 368
+          }
+        }
+      ],
+      "message": "Replace with `Plan.is_active`"
+    },
+    "location": {
+      "column": 20,
+      "row": 368
+    },
+    "message": "Avoid equality comparisons to `True`; use `Plan.is_active:` for truth checks",
+    "noqa_row": 368,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 28,
+      "row": 9
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\services\\subscription_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 10
+          },
+          "location": {
+            "column": 1,
+            "row": 9
+          }
+        }
+      ],
+      "message": "Remove unused import: `decimal.Decimal`"
+    },
+    "location": {
+      "column": 21,
+      "row": 9
+    },
+    "message": "`decimal.Decimal` imported but unused",
+    "noqa_row": 9,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 46,
+      "row": 12
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\services\\subscription_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import select, update, and_, or_, func",
+          "end_location": {
+            "column": 63,
+            "row": 12
+          },
+          "location": {
+            "column": 1,
+            "row": 12
+          }
+        }
+      ],
+      "message": "Remove unused import: `sqlalchemy.delete`"
+    },
+    "location": {
+      "column": 40,
+      "row": 12
+    },
+    "message": "`sqlalchemy.delete` imported but unused",
+    "noqa_row": 12,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 40,
+      "row": 13
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\services\\subscription_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 14
+          },
+          "location": {
+            "column": 1,
+            "row": 13
+          }
+        }
+      ],
+      "message": "Remove unused import: `sqlalchemy.orm.selectinload`"
+    },
+    "location": {
+      "column": 28,
+      "row": 13
+    },
+    "message": "`sqlalchemy.orm.selectinload` imported but unused",
+    "noqa_row": 13,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 80,
+      "row": 16
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\services\\subscription_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from app.models.billing import Subscription, Plan, SubscriptionStatus",
+          "end_location": {
+            "column": 80,
+            "row": 16
+          },
+          "location": {
+            "column": 1,
+            "row": 16
+          }
+        }
+      ],
+      "message": "Remove unused import: `app.models.billing.PlanType`"
+    },
+    "location": {
+      "column": 72,
+      "row": 16
+    },
+    "message": "`app.models.billing.PlanType` imported but unused",
+    "noqa_row": 16,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 55,
+      "row": 11
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\services\\usage_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import select, update, and_, or_",
+          "end_location": {
+            "column": 55,
+            "row": 11
+          },
+          "location": {
+            "column": 1,
+            "row": 11
+          }
+        }
+      ],
+      "message": "Remove unused import: `sqlalchemy.func`"
+    },
+    "location": {
+      "column": 51,
+      "row": 11
+    },
+    "message": "`sqlalchemy.func` imported but unused",
+    "noqa_row": 11,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 40,
+      "row": 12
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\billing-svc\\app\\services\\usage_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 13
+          },
+          "location": {
+            "column": 1,
+            "row": 12
+          }
+        }
+      ],
+      "message": "Remove unused import: `sqlalchemy.orm.selectinload`"
+    },
+    "location": {
+      "column": 28,
+      "row": 12
+    },
+    "message": "`sqlalchemy.orm.selectinload` imported but unused",
+    "noqa_row": 12,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F811",
+    "end_location": {
+      "column": 21,
+      "row": 180
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\media-svc\\app\\commons\\settings.py",
+    "fix": null,
+    "location": {
+      "column": 9,
+      "row": 180
+    },
+    "message": "Redefinition of unused `database_url` from line 160",
+    "noqa_row": 180,
+    "url": "https://docs.astral.sh/ruff/rules/redefined-while-unused"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 39,
+      "row": 11
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\media-svc\\app\\models\\media_file.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import String, DateTime, Text, Integer, Enum as SQLEnum, Float",
+          "end_location": {
+            "column": 100,
+            "row": 11
+          },
+          "location": {
+            "column": 1,
+            "row": 11
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 32,
+      "row": 11
+    },
+    "message": "`sqlalchemy.Boolean` imported but unused",
+    "noqa_row": 11,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 76,
+      "row": 11
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\media-svc\\app\\models\\media_file.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import String, DateTime, Text, Integer, Enum as SQLEnum, Float",
+          "end_location": {
+            "column": 100,
+            "row": 11
+          },
+          "location": {
+            "column": 1,
+            "row": 11
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 66,
+      "row": 11
+    },
+    "message": "`sqlalchemy.ForeignKey` imported but unused",
+    "noqa_row": 11,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 41,
+      "row": 8
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\media-svc\\app\\routes\\media.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from datetime import datetime",
+          "end_location": {
+            "column": 41,
+            "row": 8
+          },
+          "location": {
+            "column": 1,
+            "row": 8
+          }
+        }
+      ],
+      "message": "Remove unused import: `datetime.timedelta`"
+    },
+    "location": {
+      "column": 32,
+      "row": 8
+    },
+    "message": "`datetime.timedelta` imported but unused",
+    "noqa_row": 8,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 45,
+      "row": 1
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\media-svc\\app\\routes\\upload.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from fastapi import APIRouter",
+          "end_location": {
+            "column": 45,
+            "row": 1
+          },
+          "location": {
+            "column": 1,
+            "row": 1
+          }
+        }
+      ],
+      "message": "Remove unused import: `fastapi.HTTPException`"
+    },
+    "location": {
+      "column": 32,
+      "row": 1
+    },
+    "message": "`fastapi.HTTPException` imported but unused",
+    "noqa_row": 1,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "E401",
+    "end_location": {
+      "column": 23,
+      "row": 3
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\media-svc\\app\\routes\\upload.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "import boto3\nimport os\nimport uuid",
+          "end_location": {
+            "column": 23,
+            "row": 3
+          },
+          "location": {
+            "column": 1,
+            "row": 3
+          }
+        }
+      ],
+      "message": "Split imports"
+    },
+    "location": {
+      "column": 1,
+      "row": 3
+    },
+    "message": "Multiple imports on one line",
+    "noqa_row": 3,
+    "url": "https://docs.astral.sh/ruff/rules/multiple-imports-on-one-line"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 17,
+      "row": 7
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\media-svc\\app\\services\\media_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 8
+          },
+          "location": {
+            "column": 1,
+            "row": 7
+          }
+        }
+      ],
+      "message": "Remove unused import: `mimetypes`"
+    },
+    "location": {
+      "column": 8,
+      "row": 7
+    },
+    "message": "`mimetypes` imported but unused",
+    "noqa_row": 7,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 10,
+      "row": 8
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\media-svc\\app\\services\\media_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 9
+          },
+          "location": {
+            "column": 1,
+            "row": 8
+          }
+        }
+      ],
+      "message": "Remove unused import: `os`"
+    },
+    "location": {
+      "column": 8,
+      "row": 8
+    },
+    "message": "`os` imported but unused",
+    "noqa_row": 8,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F811",
+    "end_location": {
+      "column": 21,
+      "row": 180
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\commons\\settings.py",
+    "fix": null,
+    "location": {
+      "column": 9,
+      "row": 180
+    },
+    "message": "Redefinition of unused `database_url` from line 160",
+    "noqa_row": 180,
+    "url": "https://docs.astral.sh/ruff/rules/redefined-while-unused"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 10,
+      "row": 7
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\config.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 8
+          },
+          "location": {
+            "column": 1,
+            "row": 7
+          }
+        }
+      ],
+      "message": "Remove unused import: `os`"
+    },
+    "location": {
+      "column": 8,
+      "row": 7
+    },
+    "message": "`os` imported but unused",
+    "noqa_row": 7,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 29,
+      "row": 5
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\routes\\ai.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from typing import Dict, List",
+          "end_location": {
+            "column": 35,
+            "row": 5
+          },
+          "location": {
+            "column": 1,
+            "row": 5
+          }
+        }
+      ],
+      "message": "Remove unused import: `typing.Any`"
+    },
+    "location": {
+      "column": 26,
+      "row": 5
+    },
+    "message": "`typing.Any` imported but unused",
+    "noqa_row": 5,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 38,
+      "row": 9
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\routes\\logs.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from pydantic import BaseModel",
+          "end_location": {
+            "column": 38,
+            "row": 9
+          },
+          "location": {
+            "column": 1,
+            "row": 9
+          }
+        }
+      ],
+      "message": "Remove unused import: `pydantic.Field`"
+    },
+    "location": {
+      "column": 33,
+      "row": 9
+    },
+    "message": "`pydantic.Field` imported but unused",
+    "noqa_row": 9,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 30,
+      "row": 6
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\routes\\moderation.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 7
+          },
+          "location": {
+            "column": 1,
+            "row": 6
+          }
+        }
+      ],
+      "message": "Remove unused import: `datetime.datetime`"
+    },
+    "location": {
+      "column": 22,
+      "row": 6
+    },
+    "message": "`datetime.datetime` imported but unused",
+    "noqa_row": 6,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 45,
+      "row": 9
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\services\\ai_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from typing import Optional, Dict, Any",
+          "end_location": {
+            "column": 45,
+            "row": 9
+          },
+          "location": {
+            "column": 1,
+            "row": 9
+          }
+        }
+      ],
+      "message": "Remove unused import: `typing.List`"
+    },
+    "location": {
+      "column": 41,
+      "row": 9
+    },
+    "message": "`typing.List` imported but unused",
+    "noqa_row": 9,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 30,
+      "row": 10
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\services\\ai_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 11
+          },
+          "location": {
+            "column": 1,
+            "row": 10
+          }
+        }
+      ],
+      "message": "Remove unused import: `datetime.datetime`"
+    },
+    "location": {
+      "column": 22,
+      "row": 10
+    },
+    "message": "`datetime.datetime` imported but unused",
+    "noqa_row": 10,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 21,
+      "row": 17
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\services\\ai_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from app.models.moderation import (\r\n    ModerationRequest, ModerationResult, ContentType, \r\n    SeverityLevel\r\n)",
+          "end_location": {
+            "column": 2,
+            "row": 18
+          },
+          "location": {
+            "column": 1,
+            "row": 15
+          }
+        }
+      ],
+      "message": "Remove unused import: `app.models.moderation.ModerationStatus`"
+    },
+    "location": {
+      "column": 5,
+      "row": 17
+    },
+    "message": "`app.models.moderation.ModerationStatus` imported but unused",
+    "noqa_row": 17,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 67,
+      "row": 14
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\services\\log_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from app.models.moderation import ModerationLog",
+          "end_location": {
+            "column": 67,
+            "row": 14
+          },
+          "location": {
+            "column": 1,
+            "row": 14
+          }
+        }
+      ],
+      "message": "Remove unused import: `app.models.moderation.ModerationRequest`"
+    },
+    "location": {
+      "column": 50,
+      "row": 14
+    },
+    "message": "`app.models.moderation.ModerationRequest` imported but unused",
+    "noqa_row": 14,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F821",
+    "end_location": {
+      "column": 54,
+      "row": 217
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\services\\log_service.py",
+    "fix": null,
+    "location": {
+      "column": 48,
+      "row": 217
+    },
+    "message": "Undefined name `String`",
+    "noqa_row": 217,
+    "url": "https://docs.astral.sh/ruff/rules/undefined-name"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 44,
+      "row": 11
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\services\\moderation_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import select, update, func",
+          "end_location": {
+            "column": 55,
+            "row": 11
+          },
+          "location": {
+            "column": 1,
+            "row": 11
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 40,
+      "row": 11
+    },
+    "message": "`sqlalchemy.and_` imported but unused",
+    "noqa_row": 11,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 49,
+      "row": 11
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\services\\moderation_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import select, update, func",
+          "end_location": {
+            "column": 55,
+            "row": 11
+          },
+          "location": {
+            "column": 1,
+            "row": 11
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 46,
+      "row": 11
+    },
+    "message": "`sqlalchemy.or_` imported but unused",
+    "noqa_row": 11,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 56,
+      "row": 15
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\services\\moderation_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from app.models.moderation import (\r\n    ModerationRequest, ModerationResult, ContentType, ModerationStatus, ModerationType, SeverityLevel\r\n)",
+          "end_location": {
+            "column": 2,
+            "row": 17
+          },
+          "location": {
+            "column": 1,
+            "row": 14
+          }
+        }
+      ],
+      "message": "Remove unused import: `app.models.moderation.ModerationRule`"
+    },
+    "location": {
+      "column": 42,
+      "row": 15
+    },
+    "message": "`app.models.moderation.ModerationRule` imported but unused",
+    "noqa_row": 15,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 78,
+      "row": 123
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\services\\rule_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "ModerationRule.is_active",
+          "end_location": {
+            "column": 78,
+            "row": 123
+          },
+          "location": {
+            "column": 46,
+            "row": 123
+          }
+        }
+      ],
+      "message": "Replace with `ModerationRule.is_active`"
+    },
+    "location": {
+      "column": 46,
+      "row": 123
+    },
+    "message": "Avoid equality comparisons to `True`; use `ModerationRule.is_active:` for truth checks",
+    "noqa_row": 123,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 52,
+      "row": 473
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\services\\rule_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "ModerationRule.is_active",
+          "end_location": {
+            "column": 52,
+            "row": 473
+          },
+          "location": {
+            "column": 20,
+            "row": 473
+          }
+        }
+      ],
+      "message": "Replace with `ModerationRule.is_active`"
+    },
+    "location": {
+      "column": 20,
+      "row": 473
+    },
+    "message": "Avoid equality comparisons to `True`; use `ModerationRule.is_active:` for truth checks",
+    "noqa_row": 473,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 52,
+      "row": 483
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\services\\rule_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "ModerationRule.is_active",
+          "end_location": {
+            "column": 52,
+            "row": 483
+          },
+          "location": {
+            "column": 20,
+            "row": 483
+          }
+        }
+      ],
+      "message": "Replace with `ModerationRule.is_active`"
+    },
+    "location": {
+      "column": 20,
+      "row": 483
+    },
+    "message": "Avoid equality comparisons to `True`; use `ModerationRule.is_active:` for truth checks",
+    "noqa_row": 483,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 52,
+      "row": 494
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\moderation-svc\\app\\services\\rule_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "ModerationRule.is_active",
+          "end_location": {
+            "column": 52,
+            "row": 494
+          },
+          "location": {
+            "column": 20,
+            "row": 494
+          }
+        }
+      ],
+      "message": "Replace with `ModerationRule.is_active`"
+    },
+    "location": {
+      "column": 20,
+      "row": 494
+    },
+    "message": "Avoid equality comparisons to `True`; use `ModerationRule.is_active:` for truth checks",
+    "noqa_row": 494,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E402",
+    "end_location": {
+      "column": 41,
+      "row": 25
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\alembic\\env.py",
+    "fix": null,
+    "location": {
+      "column": 1,
+      "row": 25
+    },
+    "message": "Module level import not at top of file",
+    "noqa_row": 25,
+    "url": "https://docs.astral.sh/ruff/rules/module-import-not-at-top-of-file"
+  },
+  {
+    "cell": null,
+    "code": "F811",
+    "end_location": {
+      "column": 21,
+      "row": 180
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\app\\commons\\settings.py",
+    "fix": null,
+    "location": {
+      "column": 9,
+      "row": 180
+    },
+    "message": "Redefinition of unused `database_url` from line 160",
+    "noqa_row": 180,
+    "url": "https://docs.astral.sh/ruff/rules/redefined-while-unused"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 10,
+      "row": 7
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\app\\config.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 8
+          },
+          "location": {
+            "column": 1,
+            "row": 7
+          }
+        }
+      ],
+      "message": "Remove unused import: `os`"
+    },
+    "location": {
+      "column": 8,
+      "row": 7
+    },
+    "message": "`os` imported but unused",
+    "noqa_row": 7,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "E401",
+    "end_location": {
+      "column": 19,
+      "row": 3
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\app\\routes\\notify.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "import smtplib\nimport os",
+          "end_location": {
+            "column": 19,
+            "row": 3
+          },
+          "location": {
+            "column": 1,
+            "row": 3
+          }
+        }
+      ],
+      "message": "Split imports"
+    },
+    "location": {
+      "column": 1,
+      "row": 3
+    },
+    "message": "Multiple imports on one line",
+    "noqa_row": 3,
+    "url": "https://docs.astral.sh/ruff/rules/multiple-imports-on-one-line"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 41,
+      "row": 8
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\app\\services\\notification_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from datetime import datetime",
+          "end_location": {
+            "column": 41,
+            "row": 8
+          },
+          "location": {
+            "column": 1,
+            "row": 8
+          }
+        }
+      ],
+      "message": "Remove unused import: `datetime.timedelta`"
+    },
+    "location": {
+      "column": 32,
+      "row": 8
+    },
+    "message": "`datetime.timedelta` imported but unused",
+    "noqa_row": 8,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 61,
+      "row": 108
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\app\\services\\queue_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "not NotificationQueue.is_processing",
+          "end_location": {
+            "column": 61,
+            "row": 108
+          },
+          "location": {
+            "column": 21,
+            "row": 108
+          }
+        }
+      ],
+      "message": "Replace with `not NotificationQueue.is_processing`"
+    },
+    "location": {
+      "column": 21,
+      "row": 108
+    },
+    "message": "Avoid equality comparisons to `False`; use `not NotificationQueue.is_processing:` for false checks",
+    "noqa_row": 108,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 65,
+      "row": 259
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\app\\services\\queue_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "not NotificationQueue.is_processing",
+          "end_location": {
+            "column": 65,
+            "row": 259
+          },
+          "location": {
+            "column": 25,
+            "row": 259
+          }
+        }
+      ],
+      "message": "Replace with `not NotificationQueue.is_processing`"
+    },
+    "location": {
+      "column": 25,
+      "row": 259
+    },
+    "message": "Avoid equality comparisons to `False`; use `not NotificationQueue.is_processing:` for false checks",
+    "noqa_row": 259,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 59,
+      "row": 304
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\app\\services\\queue_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "NotificationQueue.is_processing",
+          "end_location": {
+            "column": 59,
+            "row": 304
+          },
+          "location": {
+            "column": 20,
+            "row": 304
+          }
+        }
+      ],
+      "message": "Replace with `NotificationQueue.is_processing`"
+    },
+    "location": {
+      "column": 20,
+      "row": 304
+    },
+    "message": "Avoid equality comparisons to `True`; use `NotificationQueue.is_processing:` for truth checks",
+    "noqa_row": 304,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 61,
+      "row": 314
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\app\\services\\queue_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "not NotificationQueue.is_processing",
+          "end_location": {
+            "column": 61,
+            "row": 314
+          },
+          "location": {
+            "column": 21,
+            "row": 314
+          }
+        }
+      ],
+      "message": "Replace with `not NotificationQueue.is_processing`"
+    },
+    "location": {
+      "column": 21,
+      "row": 314
+    },
+    "message": "Avoid equality comparisons to `False`; use `not NotificationQueue.is_processing:` for false checks",
+    "noqa_row": 314,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 62,
+      "row": 311
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\app\\services\\settings_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "NotificationSettings.email_enabled",
+          "end_location": {
+            "column": 62,
+            "row": 311
+          },
+          "location": {
+            "column": 20,
+            "row": 311
+          }
+        }
+      ],
+      "message": "Replace with `NotificationSettings.email_enabled`"
+    },
+    "location": {
+      "column": 20,
+      "row": 311
+    },
+    "message": "Avoid equality comparisons to `True`; use `NotificationSettings.email_enabled:` for truth checks",
+    "noqa_row": 311,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 61,
+      "row": 317
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\app\\services\\settings_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "NotificationSettings.push_enabled",
+          "end_location": {
+            "column": 61,
+            "row": 317
+          },
+          "location": {
+            "column": 20,
+            "row": 317
+          }
+        }
+      ],
+      "message": "Replace with `NotificationSettings.push_enabled`"
+    },
+    "location": {
+      "column": 20,
+      "row": 317
+    },
+    "message": "Avoid equality comparisons to `True`; use `NotificationSettings.push_enabled:` for truth checks",
+    "noqa_row": 317,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 60,
+      "row": 323
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\app\\services\\settings_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "NotificationSettings.sms_enabled",
+          "end_location": {
+            "column": 60,
+            "row": 323
+          },
+          "location": {
+            "column": 20,
+            "row": 323
+          }
+        }
+      ],
+      "message": "Replace with `NotificationSettings.sms_enabled`"
+    },
+    "location": {
+      "column": 20,
+      "row": 323
+    },
+    "message": "Avoid equality comparisons to `True`; use `NotificationSettings.sms_enabled:` for truth checks",
+    "noqa_row": 323,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 65,
+      "row": 330
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\app\\services\\settings_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "NotificationSettings.marketing_emails",
+          "end_location": {
+            "column": 65,
+            "row": 330
+          },
+          "location": {
+            "column": 20,
+            "row": 330
+          }
+        }
+      ],
+      "message": "Replace with `NotificationSettings.marketing_emails`"
+    },
+    "location": {
+      "column": 20,
+      "row": 330
+    },
+    "message": "Avoid equality comparisons to `True`; use `NotificationSettings.marketing_emails:` for truth checks",
+    "noqa_row": 330,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 69,
+      "row": 131
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\app\\services\\template_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "NotificationTemplate.is_active",
+          "end_location": {
+            "column": 69,
+            "row": 131
+          },
+          "location": {
+            "column": 31,
+            "row": 131
+          }
+        }
+      ],
+      "message": "Replace with `NotificationTemplate.is_active`"
+    },
+    "location": {
+      "column": 31,
+      "row": 131
+    },
+    "message": "Avoid equality comparisons to `True`; use `NotificationTemplate.is_active:` for truth checks",
+    "noqa_row": 131,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 58,
+      "row": 300
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\app\\services\\template_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "NotificationTemplate.is_active",
+          "end_location": {
+            "column": 58,
+            "row": 300
+          },
+          "location": {
+            "column": 20,
+            "row": 300
+          }
+        }
+      ],
+      "message": "Replace with `NotificationTemplate.is_active`"
+    },
+    "location": {
+      "column": 20,
+      "row": 300
+    },
+    "message": "Avoid equality comparisons to `True`; use `NotificationTemplate.is_active:` for truth checks",
+    "noqa_row": 300,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 58,
+      "row": 310
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\notification-svc\\app\\services\\template_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "NotificationTemplate.is_active",
+          "end_location": {
+            "column": 58,
+            "row": 310
+          },
+          "location": {
+            "column": 20,
+            "row": 310
+          }
+        }
+      ],
+      "message": "Replace with `NotificationTemplate.is_active`"
+    },
+    "location": {
+      "column": 20,
+      "row": 310
+    },
+    "message": "Avoid equality comparisons to `True`; use `NotificationTemplate.is_active:` for truth checks",
+    "noqa_row": 310,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "F811",
+    "end_location": {
+      "column": 21,
+      "row": 180
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\commons\\settings.py",
+    "fix": null,
+    "location": {
+      "column": 9,
+      "row": 180
+    },
+    "message": "Redefinition of unused `database_url` from line 160",
+    "noqa_row": 180,
+    "url": "https://docs.astral.sh/ruff/rules/redefined-while-unused"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 10,
+      "row": 7
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\config.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 8
+          },
+          "location": {
+            "column": 1,
+            "row": 7
+          }
+        }
+      ],
+      "message": "Remove unused import: `os`"
+    },
+    "location": {
+      "column": 8,
+      "row": 7
+    },
+    "message": "`os` imported but unused",
+    "noqa_row": 7,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 45,
+      "row": 5
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\routes\\queue.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from typing import Optional, List, Dict",
+          "end_location": {
+            "column": 45,
+            "row": 5
+          },
+          "location": {
+            "column": 1,
+            "row": 5
+          }
+        }
+      ],
+      "message": "Remove unused import: `typing.Any`"
+    },
+    "location": {
+      "column": 42,
+      "row": 5
+    },
+    "message": "`typing.Any` imported but unused",
+    "noqa_row": 5,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 72,
+      "row": 171
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\layout_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "PrintLayout.is_active",
+          "end_location": {
+            "column": 72,
+            "row": 171
+          },
+          "location": {
+            "column": 43,
+            "row": 171
+          }
+        }
+      ],
+      "message": "Replace with `PrintLayout.is_active`"
+    },
+    "location": {
+      "column": 43,
+      "row": 171
+    },
+    "message": "Avoid equality comparisons to `True`; use `PrintLayout.is_active:` for truth checks",
+    "noqa_row": 171,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 49,
+      "row": 370
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\layout_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "PrintLayout.is_active",
+          "end_location": {
+            "column": 49,
+            "row": 370
+          },
+          "location": {
+            "column": 20,
+            "row": 370
+          }
+        }
+      ],
+      "message": "Replace with `PrintLayout.is_active`"
+    },
+    "location": {
+      "column": 20,
+      "row": 370
+    },
+    "message": "Avoid equality comparisons to `True`; use `PrintLayout.is_active:` for truth checks",
+    "noqa_row": 370,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 49,
+      "row": 380
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\layout_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "PrintLayout.is_active",
+          "end_location": {
+            "column": 49,
+            "row": 380
+          },
+          "location": {
+            "column": 20,
+            "row": 380
+          }
+        }
+      ],
+      "message": "Replace with `PrintLayout.is_active`"
+    },
+    "location": {
+      "column": 20,
+      "row": 380
+    },
+    "message": "Avoid equality comparisons to `True`; use `PrintLayout.is_active:` for truth checks",
+    "noqa_row": 380,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 44,
+      "row": 11
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\print_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import select, update, func",
+          "end_location": {
+            "column": 55,
+            "row": 11
+          },
+          "location": {
+            "column": 1,
+            "row": 11
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 40,
+      "row": 11
+    },
+    "message": "`sqlalchemy.and_` imported but unused",
+    "noqa_row": 11,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 49,
+      "row": 11
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\print_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import select, update, func",
+          "end_location": {
+            "column": 55,
+            "row": 11
+          },
+          "location": {
+            "column": 1,
+            "row": 11
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 46,
+      "row": 11
+    },
+    "message": "`sqlalchemy.or_` imported but unused",
+    "noqa_row": 11,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 53,
+      "row": 15
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\print_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from app.models.print_models import (\r\n    PrintJob, PrintTemplate, PrintLayout, PrintHistory,\r\n    PrintJobStatus, PrintJobType, PrintFormat\r\n)",
+          "end_location": {
+            "column": 2,
+            "row": 17
+          },
+          "location": {
+            "column": 1,
+            "row": 14
+          }
+        }
+      ],
+      "message": "Remove unused import: `app.models.print_models.PrintQueue`"
+    },
+    "location": {
+      "column": 43,
+      "row": 15
+    },
+    "message": "`app.models.print_models.PrintQueue` imported but unused",
+    "noqa_row": 15,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 54,
+      "row": 82
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\queue_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "not PrintQueue.is_processing",
+          "end_location": {
+            "column": 54,
+            "row": 82
+          },
+          "location": {
+            "column": 21,
+            "row": 82
+          }
+        }
+      ],
+      "message": "Replace with `not PrintQueue.is_processing`"
+    },
+    "location": {
+      "column": 21,
+      "row": 82
+    },
+    "message": "Avoid equality comparisons to `False`; use `not PrintQueue.is_processing:` for false checks",
+    "noqa_row": 82,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 52,
+      "row": 191
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\queue_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "PrintQueue.is_processing",
+          "end_location": {
+            "column": 52,
+            "row": 191
+          },
+          "location": {
+            "column": 20,
+            "row": 191
+          }
+        }
+      ],
+      "message": "Replace with `PrintQueue.is_processing`"
+    },
+    "location": {
+      "column": 20,
+      "row": 191
+    },
+    "message": "Avoid equality comparisons to `True`; use `PrintQueue.is_processing:` for truth checks",
+    "noqa_row": 191,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 53,
+      "row": 201
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\queue_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "not PrintQueue.is_processing",
+          "end_location": {
+            "column": 53,
+            "row": 201
+          },
+          "location": {
+            "column": 20,
+            "row": 201
+          }
+        }
+      ],
+      "message": "Replace with `not PrintQueue.is_processing`"
+    },
+    "location": {
+      "column": 20,
+      "row": 201
+    },
+    "message": "Avoid equality comparisons to `False`; use `not PrintQueue.is_processing:` for false checks",
+    "noqa_row": 201,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 54,
+      "row": 274
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\queue_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "not PrintQueue.is_processing",
+          "end_location": {
+            "column": 54,
+            "row": 274
+          },
+          "location": {
+            "column": 21,
+            "row": 274
+          }
+        }
+      ],
+      "message": "Replace with `not PrintQueue.is_processing`"
+    },
+    "location": {
+      "column": 21,
+      "row": 274
+    },
+    "message": "Avoid equality comparisons to `False`; use `not PrintQueue.is_processing:` for false checks",
+    "noqa_row": 274,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 52,
+      "row": 387
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\queue_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "PrintQueue.is_processing",
+          "end_location": {
+            "column": 52,
+            "row": 387
+          },
+          "location": {
+            "column": 20,
+            "row": 387
+          }
+        }
+      ],
+      "message": "Replace with `PrintQueue.is_processing`"
+    },
+    "location": {
+      "column": 20,
+      "row": 387
+    },
+    "message": "Avoid equality comparisons to `True`; use `PrintQueue.is_processing:` for truth checks",
+    "noqa_row": 387,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 53,
+      "row": 397
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\queue_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "not PrintQueue.is_processing",
+          "end_location": {
+            "column": 53,
+            "row": 397
+          },
+          "location": {
+            "column": 20,
+            "row": 397
+          }
+        }
+      ],
+      "message": "Replace with `not PrintQueue.is_processing`"
+    },
+    "location": {
+      "column": 20,
+      "row": 397
+    },
+    "message": "Avoid equality comparisons to `False`; use `not PrintQueue.is_processing:` for false checks",
+    "noqa_row": 397,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 53,
+      "row": 414
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\queue_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "not PrintQueue.is_processing",
+          "end_location": {
+            "column": 53,
+            "row": 414
+          },
+          "location": {
+            "column": 20,
+            "row": 414
+          }
+        }
+      ],
+      "message": "Replace with `not PrintQueue.is_processing`"
+    },
+    "location": {
+      "column": 20,
+      "row": 414
+    },
+    "message": "Avoid equality comparisons to `False`; use `not PrintQueue.is_processing:` for false checks",
+    "noqa_row": 414,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 76,
+      "row": 178
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\template_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "PrintTemplate.is_active",
+          "end_location": {
+            "column": 76,
+            "row": 178
+          },
+          "location": {
+            "column": 45,
+            "row": 178
+          }
+        }
+      ],
+      "message": "Replace with `PrintTemplate.is_active`"
+    },
+    "location": {
+      "column": 45,
+      "row": 178
+    },
+    "message": "Avoid equality comparisons to `True`; use `PrintTemplate.is_active:` for truth checks",
+    "noqa_row": 178,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 51,
+      "row": 378
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\template_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "PrintTemplate.is_active",
+          "end_location": {
+            "column": 51,
+            "row": 378
+          },
+          "location": {
+            "column": 20,
+            "row": 378
+          }
+        }
+      ],
+      "message": "Replace with `PrintTemplate.is_active`"
+    },
+    "location": {
+      "column": 20,
+      "row": 378
+    },
+    "message": "Avoid equality comparisons to `True`; use `PrintTemplate.is_active:` for truth checks",
+    "noqa_row": 378,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 51,
+      "row": 388
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\template_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "PrintTemplate.is_active",
+          "end_location": {
+            "column": 51,
+            "row": 388
+          },
+          "location": {
+            "column": 20,
+            "row": 388
+          }
+        }
+      ],
+      "message": "Replace with `PrintTemplate.is_active`"
+    },
+    "location": {
+      "column": 20,
+      "row": 388
+    },
+    "message": "Avoid equality comparisons to `True`; use `PrintTemplate.is_active:` for truth checks",
+    "noqa_row": 388,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 51,
+      "row": 399
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\template_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "PrintTemplate.is_active",
+          "end_location": {
+            "column": 51,
+            "row": 399
+          },
+          "location": {
+            "column": 20,
+            "row": 399
+          }
+        }
+      ],
+      "message": "Replace with `PrintTemplate.is_active`"
+    },
+    "location": {
+      "column": 20,
+      "row": 399
+    },
+    "message": "Avoid equality comparisons to `True`; use `PrintTemplate.is_active:` for truth checks",
+    "noqa_row": 399,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 10,
+      "row": 7
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\weasyprint_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 8
+          },
+          "location": {
+            "column": 1,
+            "row": 7
+          }
+        }
+      ],
+      "message": "Remove unused import: `os`"
+    },
+    "location": {
+      "column": 8,
+      "row": 7
+    },
+    "message": "`os` imported but unused",
+    "noqa_row": 7,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 16,
+      "row": 9
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\weasyprint_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 10
+          },
+          "location": {
+            "column": 1,
+            "row": 9
+          }
+        }
+      ],
+      "message": "Remove unused import: `tempfile`"
+    },
+    "location": {
+      "column": 8,
+      "row": 9
+    },
+    "message": "`tempfile` imported but unused",
+    "noqa_row": 9,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 61,
+      "row": 16
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\print-svc\\app\\services\\weasyprint_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from app.models.print_models import PrintJob, PrintFormat",
+          "end_location": {
+            "column": 74,
+            "row": 16
+          },
+          "location": {
+            "column": 1,
+            "row": 16
+          }
+        }
+      ],
+      "message": "Remove unused import: `app.models.print_models.PrintJobStatus`"
+    },
+    "location": {
+      "column": 47,
+      "row": 16
+    },
+    "message": "`app.models.print_models.PrintJobStatus` imported but unused",
+    "noqa_row": 16,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 48,
+      "row": 2
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\qr-svc\\app\\models.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import String, Boolean",
+          "end_location": {
+            "column": 48,
+            "row": 2
+          },
+          "location": {
+            "column": 1,
+            "row": 2
+          }
+        }
+      ],
+      "message": "Remove unused import: `sqlalchemy.Integer`"
+    },
+    "location": {
+      "column": 41,
+      "row": 2
+    },
+    "message": "`sqlalchemy.Integer` imported but unused",
+    "noqa_row": 2,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 30,
+      "row": 5
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\qr-svc\\app\\models\\qr_code.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 6
+          },
+          "location": {
+            "column": 1,
+            "row": 5
+          }
+        }
+      ],
+      "message": "Remove unused import: `datetime.datetime`"
+    },
+    "location": {
+      "column": 22,
+      "row": 5
+    },
+    "message": "`datetime.datetime` imported but unused",
+    "noqa_row": 5,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 28,
+      "row": 7
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\qr-svc\\app\\models\\qr_code.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 8
+          },
+          "location": {
+            "column": 1,
+            "row": 7
+          }
+        }
+      ],
+      "message": "Remove unused import: `typing.Optional`"
+    },
+    "location": {
+      "column": 20,
+      "row": 7
+    },
+    "message": "`typing.Optional` imported but unused",
+    "noqa_row": 7,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 72,
+      "row": 9
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\qr-svc\\app\\models\\qr_code.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, JSON",
+          "end_location": {
+            "column": 90,
+            "row": 9
+          },
+          "location": {
+            "column": 1,
+            "row": 9
+          }
+        }
+      ],
+      "message": "Remove unused import: `sqlalchemy.Boolean`"
+    },
+    "location": {
+      "column": 65,
+      "row": 9
+    },
+    "message": "`sqlalchemy.Boolean` imported but unused",
+    "noqa_row": 9,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 23,
+      "row": 7
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\qr-svc\\app\\services\\qr_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 8
+          },
+          "location": {
+            "column": 1,
+            "row": 7
+          }
+        }
+      ],
+      "message": "Remove unused import: `io.BytesIO`"
+    },
+    "location": {
+      "column": 16,
+      "row": 7
+    },
+    "message": "`io.BytesIO` imported but unused",
+    "noqa_row": 7,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 40,
+      "row": 13
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\qr-svc\\app\\services\\qr_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 14
+          },
+          "location": {
+            "column": 1,
+            "row": 13
+          }
+        }
+      ],
+      "message": "Remove unused import: `sqlalchemy.orm.selectinload`"
+    },
+    "location": {
+      "column": 28,
+      "row": 13
+    },
+    "message": "`sqlalchemy.orm.selectinload` imported but unused",
+    "noqa_row": 13,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F811",
+    "end_location": {
+      "column": 21,
+      "row": 180
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\scan-gateway\\app\\commons\\settings.py",
+    "fix": null,
+    "location": {
+      "column": 9,
+      "row": 180
+    },
+    "message": "Redefinition of unused `database_url` from line 160",
+    "noqa_row": 180,
+    "url": "https://docs.astral.sh/ruff/rules/redefined-while-unused"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 54,
+      "row": 8
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\scan-gateway\\app\\routes\\redirect.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from fastapi import APIRouter, Request",
+          "end_location": {
+            "column": 54,
+            "row": 8
+          },
+          "location": {
+            "column": 1,
+            "row": 8
+          }
+        }
+      ],
+      "message": "Remove unused import: `fastapi.HTTPException`"
+    },
+    "location": {
+      "column": 41,
+      "row": 8
+    },
+    "message": "`fastapi.HTTPException` imported but unused",
+    "noqa_row": 8,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 45,
+      "row": 1
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\scan-gateway\\app\\routes\\resolve.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from fastapi import APIRouter",
+          "end_location": {
+            "column": 55,
+            "row": 1
+          },
+          "location": {
+            "column": 1,
+            "row": 1
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 32,
+      "row": 1
+    },
+    "message": "`fastapi.HTTPException` imported but unused",
+    "noqa_row": 1,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 55,
+      "row": 1
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\scan-gateway\\app\\routes\\resolve.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from fastapi import APIRouter",
+          "end_location": {
+            "column": 55,
+            "row": 1
+          },
+          "location": {
+            "column": 1,
+            "row": 1
+          }
+        }
+      ],
+      "message": "Remove unused import"
+    },
+    "location": {
+      "column": 47,
+      "row": 1
+    },
+    "message": "`fastapi.Response` imported but unused",
+    "noqa_row": 1,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F811",
+    "end_location": {
+      "column": 21,
+      "row": 180
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\user-profile-svc\\app\\commons\\settings.py",
+    "fix": null,
+    "location": {
+      "column": 9,
+      "row": 180
+    },
+    "message": "Redefinition of unused `database_url` from line 160",
+    "noqa_row": 180,
+    "url": "https://docs.astral.sh/ruff/rules/redefined-while-unused"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 48,
+      "row": 13
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\user-profile-svc\\app\\routes\\profiles.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 14
+          },
+          "location": {
+            "column": 1,
+            "row": 13
+          }
+        }
+      ],
+      "message": "Remove unused import: `app.models.user_profile.UserProfile`"
+    },
+    "location": {
+      "column": 37,
+      "row": 13
+    },
+    "message": "`app.models.user_profile.UserProfile` imported but unused",
+    "noqa_row": 13,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "F401",
+    "end_location": {
+      "column": 52,
+      "row": 11
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\user-profile-svc\\app\\services\\profile_service.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from sqlalchemy import select, update, delete",
+          "end_location": {
+            "column": 52,
+            "row": 11
+          },
+          "location": {
+            "column": 1,
+            "row": 11
+          }
+        }
+      ],
+      "message": "Remove unused import: `sqlalchemy.func`"
+    },
+    "location": {
+      "column": 48,
+      "row": 11
+    },
+    "message": "`sqlalchemy.func` imported but unused",
+    "noqa_row": 11,
+    "url": "https://docs.astral.sh/ruff/rules/unused-import"
+  },
+  {
+    "cell": null,
+    "code": "E712",
+    "end_location": {
+      "column": 72,
+      "row": 156
+    },
+    "filename": "C:\\Dev\\qr_album\\apps\\user-profile-svc\\app\\services\\profile_service.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "UserProfile.is_public",
+          "end_location": {
+            "column": 72,
+            "row": 156
+          },
+          "location": {
+            "column": 43,
+            "row": 156
+          }
+        }
+      ],
+      "message": "Replace with `UserProfile.is_public`"
+    },
+    "location": {
+      "column": 43,
+      "row": 156
+    },
+    "message": "Avoid equality comparisons to `True`; use `UserProfile.is_public:` for truth checks",
+    "noqa_row": 156,
+    "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+  }
+]
