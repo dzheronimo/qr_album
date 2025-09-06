@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { QrCode, AlertCircle, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { ToastAction } from '@/components/ui/toast';
 import { apiClient, endpoints } from '@/lib/api';
 import { mapToUiError, shouldShowToast, shouldShowInlineAlert, logError } from '@/lib/errors';
 import { ConnectionStatusBanner } from '@/components/net/OfflineBanner';
@@ -91,10 +92,11 @@ export default function ResetPasswordPage() {
           title: uiError.title,
           description: uiError.message,
           variant: 'destructive',
-          action: uiError.actions?.[0] ? {
-            altText: uiError.actions[0].label,
-            onClick: uiError.actions[0].onClick,
-          } : undefined,
+          action: uiError.actions?.[0] ? (
+            <ToastAction onClick={uiError.actions[0].onClick}>
+              {uiError.actions[0].label}
+            </ToastAction>
+          ) : undefined,
         });
       }
     } finally {
