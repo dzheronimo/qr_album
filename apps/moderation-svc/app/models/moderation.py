@@ -223,7 +223,7 @@ class ModerationRule(Base):
     auto_action: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     
     # Дополнительные данные
-    metadata: Mapped[Optional[Dict[str, Any]]] = mapped_column(JSON, nullable=True)
+    extra_metadata: Mapped[Optional[Dict[str, Any]]] = mapped_column(JSON, nullable=True)
     
     # Временные метки
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
@@ -246,7 +246,7 @@ class ModerationRule(Base):
             "threshold": self.threshold,
             "action": self.action,
             "auto_action": self.auto_action,
-            "metadata": self.metadata,
+            "extra_metadata": self.extra_metadata,
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
         }
@@ -395,7 +395,7 @@ class ContentFlag(Base):
     resolution_notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     
     # Дополнительные данные
-    metadata: Mapped[Optional[Dict[str, Any]]] = mapped_column(JSON, nullable=True)
+    extra_metadata: Mapped[Optional[Dict[str, Any]]] = mapped_column(JSON, nullable=True)
     
     # Временные метки
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
@@ -420,7 +420,7 @@ class ContentFlag(Base):
             "resolved_by": self.resolved_by,
             "resolved_at": self.resolved_at.isoformat() if self.resolved_at else None,
             "resolution_notes": self.resolution_notes,
-            "metadata": self.metadata,
+            "extra_metadata": self.extra_metadata,
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
         }

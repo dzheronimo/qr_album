@@ -16,6 +16,8 @@ import { apiClient, endpoints } from '@/lib/api';
 import { CreatePageRequest } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 
+export const dynamic = 'force-dynamic';
+
 const createPageSchema = z.object({
   title: z.string().min(1, 'Название обязательно').max(100, 'Название слишком длинное'),
   description: z.string().max(500, 'Описание слишком длинное').optional(),
@@ -75,7 +77,7 @@ export default function NewPagePage() {
         title: 'Страница создана',
         description: 'Страница была успешно создана.',
       });
-      router.push(`/dashboard/albums/${albumId}/pages/${page.id}`);
+      router.push(`/dashboard/albums/${albumId}/pages/${(page as any).id}`);
     },
     onError: (error: any) => {
       toast({

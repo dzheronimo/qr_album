@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -15,6 +16,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient, endpoints } from '@/lib/api';
 import { CreateAlbumRequest } from '@/types';
 import { useToast } from '@/hooks/use-toast';
+
+export const dynamic = 'force-dynamic';
 
 const createAlbumSchema = z.object({
   title: z.string().min(1, 'Название обязательно').max(100, 'Название слишком длинное'),
@@ -57,7 +60,7 @@ export default function NewAlbumPage() {
         title: 'Альбом создан',
         description: 'Альбом был успешно создан.',
       });
-      router.push(`/dashboard/albums/${album.id}`);
+      router.push(`/dashboard/albums/${(album as any).id}`);
     },
     onError: (error: any) => {
       toast({

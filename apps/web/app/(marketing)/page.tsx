@@ -7,7 +7,7 @@ import {
   QrCode, 
   Camera, 
   Share2, 
-  BarChart3, 
+  BarChart3,
   Smartphone, 
   Users, 
   Zap,
@@ -15,6 +15,8 @@ import {
   ArrowRight,
   Star
 } from 'lucide-react';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'StoryQR - Создавайте интерактивные альбомы с QR-кодами',

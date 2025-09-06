@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,8 +19,11 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
+
 import { apiClient, endpoints } from '@/lib/api';
 import { AnalyticsOverview, Album } from '@/types';
+
+export const dynamic = 'force-dynamic';
 
 export default function DashboardPage() {
   const [upgradePrompt, setUpgradePrompt] = useState(false);

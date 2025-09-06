@@ -155,15 +155,22 @@ class DatabaseSettings(CommonSettings):
     
     # Database name - должно быть переопределено в каждом сервисе
     db_name: str = Field(..., description="Имя базы данных для сервиса")
+    
+    # DATABASE_URL from environment (takes precedence over individual fields)
+    database_url: str = Field(default="", alias="DATABASE_URL", description="Полный URL для подключения к базе данных")
 
-    @property
-    def database_url(self) -> str:
+    def get_database_url(self) -> str:
         """
-        Формирует URL для подключения к базе данных.
+        Получает URL для подключения к базе данных.
+        
+        Если задан DATABASE_URL, использует его, иначе формирует из отдельных полей.
         
         Returns:
             URL для подключения к PostgreSQL
         """
+        if self.database_url:
+            return self.database_url
+        
         return (
             f"postgresql+asyncpg://{self.postgres_user}:{self.postgres_password}"
             f"@{self.postgres_host}:{self.postgres_port}/{self.db_name}"

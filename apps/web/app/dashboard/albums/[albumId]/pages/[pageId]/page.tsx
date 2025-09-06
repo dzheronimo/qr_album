@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,10 +27,13 @@ import {
   Share2
 } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { apiClient, endpoints } from '@/lib/api';
 import { Page, Media, QRCode } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 import { formatBytes, getFileType } from '@/lib/utils';
+
+export const dynamic = 'force-dynamic';
 
 const updatePageSchema = z.object({
   title: z.string().min(1, 'Название обязательно').max(100, 'Название слишком длинное'),
@@ -96,12 +99,13 @@ export default function PageEditPage() {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm<UpdatePageForm>({
     resolver: zodResolver(updatePageSchema),
   });
 
   // Update form when page data loads
-  React.useEffect(() => {
+  useEffect(() => {
     if (page) {
       reset({
         title: page.title,

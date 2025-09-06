@@ -1,99 +1,67 @@
+'use client';
+
+import { useState } from 'react';
+
+export const dynamic = 'force-dynamic';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, X, Zap, Crown } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Тарифы',
-  description: 'Выберите подходящий тариф для создания интерактивных альбомов с QR-кодами.',
-};
-
-const plans = [
-  {
-    name: 'Бесплатно',
-    description: 'Идеально для начала работы',
-    price: 0,
-    period: '',
-    icon: Zap,
-    popular: false,
-    features: [
-      { name: 'Неограниченные альбомы', included: true },
-      { name: 'До 50 страниц в альбоме', included: true },
-      { name: 'До 100 медиа файлов', included: true },
-      { name: '5 ГБ хранилища', included: true },
-      { name: 'Базовая аналитика', included: true },
-      { name: 'QR-коды в PNG/SVG', included: true },
-      { name: 'Печать наклеек', included: true },
-      { name: 'Кастомные QR-коды', included: false },
-      { name: 'Расширенная аналитика', included: false },
-      { name: 'API доступ', included: false },
-      { name: 'Приоритетная поддержка', included: false },
-    ],
-    cta: 'Начать бесплатно',
-    href: '/auth/register',
-  },
-  {
-    name: 'Pro',
-    description: 'Для профессионалов и бизнеса',
-    price: 990,
-    period: '/мес',
-    icon: Crown,
-    popular: true,
-    features: [
-      { name: 'Неограниченные альбомы', included: true },
-      { name: 'Неограниченные страницы', included: true },
-      { name: 'Неограниченные медиа файлы', included: true },
-      { name: '100 ГБ хранилища', included: true },
-      { name: 'Расширенная аналитика', included: true },
-      { name: 'QR-коды в PNG/SVG', included: true },
-      { name: 'Печать наклеек', included: true },
-      { name: 'Кастомные QR-коды', included: true },
-      { name: 'API доступ', included: true },
-      { name: 'Приоритетная поддержка', included: true },
-      { name: 'Экспорт данных', included: true },
-    ],
-    cta: 'Выбрать Pro',
-    href: '/auth/register?plan=pro',
-  },
-];
-
-const faqs = [
-  {
-    question: 'Могу ли я изменить тариф в любое время?',
-    answer: 'Да, вы можете изменить тариф в любое время. При переходе на более высокий тариф изменения вступают в силу немедленно, при понижении - в конце текущего периода.',
-  },
-  {
-    question: 'Что происходит с моими данными при отмене подписки?',
-    answer: 'Ваши данные остаются доступными в течение 30 дней после отмены. После этого они будут удалены, если вы не возобновите подписку.',
-  },
-  {
-    question: 'Есть ли ограничения на размер файлов?',
-    answer: 'Максимальный размер одного файла - 100 МБ для изображений и 500 МБ для видео. Эти ограничения действуют для всех тарифов.',
-  },
-  {
-    question: 'Поддерживается ли API?',
-    answer: 'API доступен только для тарифа Pro. Он позволяет интегрировать StoryQR с вашими приложениями и автоматизировать создание альбомов.',
-  },
-  {
-    question: 'Можно ли использовать StoryQR для коммерческих целей?',
-    answer: 'Да, вы можете использовать StoryQR для любых целей, включая коммерческие. Мы рекомендуем тариф Pro для бизнес-использования.',
-  },
-  {
-    question: 'Как работает печать наклеек?',
-    answer: 'Вы можете создать PDF с QR-кодами для печати на наклейках. Поддерживаются различные размеры: 35мм и 50мм с настройкой сетки.',
-  },
-];
+import { PricingTable } from '@/components/pricing/PricingTable';
+import { CompareTable } from '@/components/pricing/CompareTable';
+import { TrialCta } from '@/components/trial/TrialCta';
+import { TrialStartModal } from '@/components/trial/TrialStartModal';
+import { CheckoutDrawer } from '@/components/checkout/CheckoutDrawer';
+import { QrCode, Users, Camera, Share2, BarChart3, Smartphone, Zap, ChevronDown, ChevronUp } from 'lucide-react';
+import { FAQ_DATA } from '@/lib/constants';
+import { BillingPlan } from '@/types';
+import { getCurrencyPreference, Currency } from '@/lib/currency';
 
 export default function PricingPage() {
+  const [isTrialModalOpen, setIsTrialModalOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<BillingPlan | null>(null);
+  const [currency, setCurrency] = useState<Currency>(getCurrencyPreference());
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+
+  const handleStartTrial = () => {
+    setIsTrialModalOpen(true);
+  };
+
+  const handleTrialSuccess = (trialData: any) => {
+    // Редирект на dashboard или показать успех
+    console.log('Trial started:', trialData);
+  };
+
+  const handlePlanSelect = (planId: string) => {
+    // Здесь нужно получить данные плана по ID
+    // Для простоты используем первый план
+    const plan: BillingPlan = {
+      id: planId,
+      name: 'Lite',
+      description: '3 месяца загрузок / 1 год хранения',
+      price_rub: 1990,
+      price_eur: 24,
+      upload_months: 3,
+      storage_years: 1,
+      features: ['Безлимит гостей и загрузок', 'ZIP-скачивание', 'Пароль/PIN', 'Ко-организаторы', 'Лайв-слайдшоу', 'Многоязычие']
+    };
+    setSelectedPlan(plan);
+    setIsCheckoutOpen(true);
+  };
+
+  const toggleFaq = (index: number) => {
+    setExpandedFaq(expandedFaq === index ? null : index);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
       {/* Header */}
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
-            <div className="h-8 w-8 rounded bg-primary" />
+            <QrCode className="h-8 w-8 text-primary" />
             <span className="text-xl font-bold">StoryQR</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-6">
@@ -116,91 +84,93 @@ export default function PricingPage() {
       {/* Hero Section */}
       <section className="py-20">
         <div className="container">
-          <div className="mx-auto max-w-3xl text-center">
+          <div className="mx-auto max-w-4xl text-center">
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl mb-6">
-              Простые и прозрачные тарифы
+              Соберите все фото и видео гостей одним QR
             </h1>
             <p className="text-lg text-muted-foreground mb-8">
-              Начните бесплатно, переходите на Pro когда будете готовы к расширенным возможностям.
+              Без приложений. Разовая оплата за событие
             </p>
+            
+            {/* Буллеты */}
+            <div className="flex flex-wrap justify-center gap-6 mb-8">
+              <div className="flex items-center gap-2">
+                <Users className="h-5 w-5 text-primary" />
+                <span className="text-sm">Безлим гости и загрузки</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Camera className="h-5 w-5 text-primary" />
+                <span className="text-sm">Аудио-гостевая</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Share2 className="h-5 w-5 text-primary" />
+                <span className="text-sm">Живое слайдшоу</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <QrCode className="h-5 w-5 text-primary" />
+                <span className="text-sm">Красивые QR-карточки</span>
+              </div>
+            </div>
+
+            {/* CTA кнопка */}
+            <Button size="lg" onClick={handleStartTrial}>
+              Начать бесплатно на 7 дней
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Pricing Cards */}
+      {/* Trial CTA */}
+      <section className="py-12">
+        <div className="container">
+          <div className="max-w-md mx-auto">
+            <TrialCta onStartTrial={handleStartTrial} />
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Table */}
       <section className="py-20">
         <div className="container">
-          <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
-            {plans.map((plan) => (
-              <Card key={plan.name} className={`relative ${plan.popular ? 'border-primary shadow-lg' : ''}`}>
-                {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <Badge className="bg-primary text-primary-foreground">
-                      Популярный
-                    </Badge>
-                  </div>
-                )}
-                <CardHeader className="text-center">
-                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                    <plan.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                  <CardDescription className="text-base">
-                    {plan.description}
-                  </CardDescription>
-                  <div className="mt-4">
-                    <span className="text-4xl font-bold">
-                      ₽{plan.price}
-                    </span>
-                    <span className="text-muted-foreground">{plan.period}</span>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <ul className="space-y-3">
-                    {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-center">
-                        {feature.included ? (
-                          <CheckCircle className="mr-3 h-5 w-5 text-green-500 flex-shrink-0" />
-                        ) : (
-                          <X className="mr-3 h-5 w-5 text-muted-foreground flex-shrink-0" />
-                        )}
-                        <span className={`text-sm ${!feature.included ? 'text-muted-foreground' : ''}`}>
-                          {feature.name}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Link href={plan.href} className="block">
-                    <Button 
-                      className="w-full" 
-                      variant={plan.popular ? 'default' : 'outline'}
-                    >
-                      {plan.cta}
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <PricingTable onPlanSelect={handlePlanSelect} />
+        </div>
+      </section>
+
+      {/* Comparison Table */}
+      <section className="py-20 bg-muted/30">
+        <div className="container">
+          <CompareTable />
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20">
         <div className="container">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-3xl font-bold text-center mb-12">
               Часто задаваемые вопросы
             </h2>
-            <div className="space-y-8">
-              {faqs.map((faq, index) => (
+            <div className="space-y-4">
+              {FAQ_DATA.map((faq, index) => (
                 <Card key={index}>
-                  <CardHeader>
-                    <CardTitle className="text-lg">{faq.question}</CardTitle>
+                  <CardHeader 
+                    className="cursor-pointer"
+                    onClick={() => toggleFaq(index)}
+                  >
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-lg">{faq.question}</CardTitle>
+                      {expandedFaq === index ? (
+                        <ChevronUp className="h-5 w-5 text-muted-foreground" />
+                      ) : (
+                        <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                      )}
+                    </div>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{faq.answer}</p>
-                  </CardContent>
+                  {expandedFaq === index && (
+                    <CardContent>
+                      <p className="text-muted-foreground">{faq.answer}</p>
+                    </CardContent>
+                  )}
                 </Card>
               ))}
             </div>
@@ -209,7 +179,7 @@ export default function PricingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20">
+      <section className="py-20 bg-primary/5">
         <div className="container">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
@@ -219,11 +189,9 @@ export default function PricingPage() {
               Создайте свой первый интерактивный альбом уже сегодня.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <Link href="/auth/register">
-                <Button size="lg">
-                  Начать бесплатно
-                </Button>
-              </Link>
+              <Button size="lg" onClick={handleStartTrial}>
+                Начать бесплатно
+              </Button>
               <Link href="/help">
                 <Button variant="outline" size="lg">
                   Задать вопрос
@@ -240,7 +208,7 @@ export default function PricingPage() {
           <div className="grid gap-8 md:grid-cols-4">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <div className="h-6 w-6 rounded bg-primary" />
+                <QrCode className="h-6 w-6 text-primary" />
                 <span className="font-bold">StoryQR</span>
               </div>
               <p className="text-sm text-muted-foreground">
@@ -276,6 +244,20 @@ export default function PricingPage() {
           </div>
         </div>
       </footer>
+
+      {/* Modals */}
+      <TrialStartModal
+        isOpen={isTrialModalOpen}
+        onClose={() => setIsTrialModalOpen(false)}
+        onSuccess={handleTrialSuccess}
+      />
+
+      <CheckoutDrawer
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+        plan={selectedPlan}
+        currency={currency}
+      />
     </div>
   );
 }

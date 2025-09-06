@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AdminLayout } from '@/components/layout/AdminLayout';
 import { adminApi } from '@/lib/adminApi';
-import { formatDate, formatFileSize } from '@/lib/utils';
+import { formatDate, formatBytes } from '@/lib/utils';
 import { Check, X, Trash2, Eye, RefreshCw } from 'lucide-react';
 
 export default function MediaModerationPage() {
@@ -85,7 +87,7 @@ export default function MediaModerationPage() {
       case 'new':
         return <Badge variant="warning">Новое</Badge>;
       case 'approved':
-        return <Badge variant="success">Одобрено</Badge>;
+        return <Badge variant="default">Одобрено</Badge>;
       case 'rejected':
         return <Badge variant="secondary">Отклонено</Badge>;
       default:
@@ -209,7 +211,7 @@ export default function MediaModerationPage() {
                           </span>
                         </TableCell>
                         <TableCell>
-                          {formatFileSize(media.size)}
+                          {formatBytes(media.size)}
                         </TableCell>
                         <TableCell>
                           {formatDate(media.createdAt)}
@@ -229,7 +231,7 @@ export default function MediaModerationPage() {
                             </Button>
                             <Button 
                               size="sm" 
-                              variant="success"
+                              variant="default"
                               onClick={() => handleApprove(media.id)}
                               disabled={approveMutation.isPending}
                             >

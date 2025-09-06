@@ -7,26 +7,22 @@
 import os
 from typing import List
 
-from pydantic import BaseSettings
+from pydantic import Field
+from app.commons.settings import DatabaseSettings
 
 
-class Settings(BaseSettings):
+class Settings(DatabaseSettings):
     """Настройки приложения."""
     
     # Основные настройки
     app_name: str = "Print Service"
     debug: bool = False
     
-    # Настройки базы данных
-    database_url: str = "postgresql+asyncpg://postgres:password@localhost:5432/print_db"
+    # Database name for this service
+    db_name: str = Field(default="storyqr_print", description="Имя базы данных для Print сервиса")
     
     # Настройки CORS
     allowed_origins: List[str] = ["*"]
-    
-    # Настройки JWT (для будущей интеграции)
-    secret_key: str = "your-secret-key-here"
-    algorithm: str = "HS256"
-    access_token_expire_minutes: int = 30
     
     # Настройки WeasyPrint
     weasyprint_enabled: bool = True
@@ -55,8 +51,7 @@ class Settings(BaseSettings):
     # Настройки макетов
     max_layouts_per_type: int = 50
     layout_validation_enabled: bool = True
-    
-    class Config:
-        """Конфигурация Pydantic."""
-        env_file = ".env"
-        case_sensitive = False
+
+
+# Создаем экземпляр настроек
+settings = Settings()

@@ -1,167 +1,116 @@
-# Makefile для проекта QR-Albums
+# StoryQR Docker Management
 
-.PHONY: help install test test-unit test-integration test-e2e test-coverage clean lint format
+.PHONY: help build up down logs clean restart status
 
-# Цвета для вывода
-RED=\033[0;31m
-GREEN=\033[0;32m
-YELLOW=\033[1;33m
-BLUE=\033[0;34m
-NC=\033[0m # No Color
-
-help: ## Показать справку
-	@echo "$(BLUE)QR-Albums Project$(NC)"
-	@echo "$(BLUE)===============$(NC)"
+# Default target
+help:
+	@echo "StoryQR Docker Management Commands:"
 	@echo ""
-	@echo "$(GREEN)Доступные команды:$(NC)"
-	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  $(YELLOW)%-20s$(NC) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@echo "  make build     - Build all Docker images"
+	@echo "  make up        - Start all services"
+	@echo "  make down      - Stop all services"
+	@echo "  make restart   - Restart all services"
+	@echo "  make logs      - Show logs for all services"
+	@echo "  make status    - Show status of all services"
+	@echo "  make clean     - Remove all containers and volumes"
+	@echo ""
+	@echo "Frontend specific:"
+	@echo "  make web-build - Build only frontend"
+	@echo "  make web-logs  - Show frontend logs"
+	@echo ""
+	@echo "Backend specific:"
+	@echo "  make backend-build - Build only backend services"
+	@echo "  make backend-logs  - Show backend logs"
+	@echo ""
 
-install: ## Установить зависимости
-	@echo "$(BLUE)Установка зависимостей...$(NC)"
-	pip install -r requirements.txt
-	pip install -r tests/requirements.txt
-	@echo "$(GREEN)Зависимости установлены!$(NC)"
+# Build all services
+build:
+	@echo "Building all Docker images..."
+	docker-compose build
 
-install-dev: ## Установить зависимости для разработки
-	@echo "$(BLUE)Установка зависимостей для разработки...$(NC)"
-	pip install -r requirements.txt
-	pip install -r tests/requirements.txt
-	pip install -r requirements-dev.txt
-	@echo "$(GREEN)Зависимости для разработки установлены!$(NC)"
+# Build only frontend
+web-build:
+	@echo "Building frontend..."
+	docker-compose build web
 
-test: ## Запустить все тесты
-	@echo "$(BLUE)Запуск всех тестов...$(NC)"
-	pytest tests/ -v
-	@echo "$(GREEN)Все тесты завершены!$(NC)"
+# Build only backend services
+backend-build:
+	@echo "Building backend services..."
+	docker-compose build api-gateway auth-svc album-svc media-svc qr-svc user-profile-svc analytics-svc billing-svc notification-svc moderation-svc print-svc scan-gateway
 
-test-unit: ## Запустить только unit тесты
-	@echo "$(BLUE)Запуск unit тестов...$(NC)"
-	pytest tests/unit/ -v -m "unit"
-	@echo "$(GREEN)Unit тесты завершены!$(NC)"
+# Start all services
+up:
+	@echo "Starting all services..."
+	docker-compose up -d
 
-test-integration: ## Запустить только integration тесты
-	@echo "$(BLUE)Запуск integration тестов...$(NC)"
-	pytest tests/integration/ -v -m "integration"
-	@echo "$(GREEN)Integration тесты завершены!$(NC)"
+# Stop all services
+down:
+	@echo "Stopping all services..."
+	docker-compose down
 
-test-e2e: ## Запустить только E2E тесты
-	@echo "$(BLUE)Запуск E2E тестов...$(NC)"
-	pytest tests/e2e/ -v -m "e2e"
-	@echo "$(GREEN)E2E тесты завершены!$(NC)"
+# Restart all services
+restart: down up
 
-test-fast: ## Запустить быстрые тесты (без slow)
-	@echo "$(BLUE)Запуск быстрых тестов...$(NC)"
-	pytest tests/ -v -m "not slow"
-	@echo "$(GREEN)Быстрые тесты завершены!$(NC)"
+# Show logs for all services
+logs:
+	docker-compose logs -f
 
-test-coverage: ## Запустить тесты с покрытием кода
-	@echo "$(BLUE)Запуск тестов с покрытием кода...$(NC)"
-	pytest tests/ --cov=apps --cov=packages --cov-report=html --cov-report=term-missing
-	@echo "$(GREEN)Тесты с покрытием завершены! Отчет в htmlcov/index.html$(NC)"
+# Show frontend logs
+web-logs:
+	docker-compose logs -f web
 
-test-parallel: ## Запустить тесты параллельно
-	@echo "$(BLUE)Запуск тестов параллельно...$(NC)"
-	pytest tests/ -n auto
-	@echo "$(GREEN)Параллельные тесты завершены!$(NC)"
+# Show backend logs
+backend-logs:
+	docker-compose logs -f api-gateway auth-svc album-svc media-svc qr-svc user-profile-svc analytics-svc billing-svc notification-svc moderation-svc print-svc scan-gateway
 
-test-auth: ## Запустить тесты аутентификации
-	@echo "$(BLUE)Запуск тестов аутентификации...$(NC)"
-	pytest tests/ -v -m "auth"
-	@echo "$(GREEN)Тесты аутентификации завершены!$(NC)"
+# Show status of all services
+status:
+	@echo "Service Status:"
+	@docker-compose ps
 
-test-album: ## Запустить тесты альбомов
-	@echo "$(BLUE)Запуск тестов альбомов...$(NC)"
-	pytest tests/ -v -m "album"
-	@echo "$(GREEN)Тесты альбомов завершены!$(NC)"
+# Clean up everything
+clean:
+	@echo "Cleaning up containers and volumes..."
+	docker-compose down -v --remove-orphans
+	docker system prune -f
 
-test-media: ## Запустить тесты медиафайлов
-	@echo "$(BLUE)Запуск тестов медиафайлов...$(NC)"
-	pytest tests/ -v -m "media"
-	@echo "$(GREEN)Тесты медиафайлов завершены!$(NC)"
+# Development commands
+dev:
+	@echo "Starting development environment..."
+	docker-compose -f docker-compose.dev.yml up -d
 
-test-qr: ## Запустить тесты QR кодов
-	@echo "$(BLUE)Запуск тестов QR кодов...$(NC)"
-	pytest tests/ -v -m "qr"
-	@echo "$(GREEN)Тесты QR кодов завершены!$(NC)"
+dev-down:
+	@echo "Stopping development environment..."
+	docker-compose -f docker-compose.dev.yml down
 
-test-billing: ## Запустить тесты биллинга
-	@echo "$(BLUE)Запуск тестов биллинга...$(NC)"
-	pytest tests/ -v -m "billing"
-	@echo "$(GREEN)Тесты биллинга завершены!$(NC)"
+# Production commands
+prod:
+	@echo "Starting production environment..."
+	docker-compose up -d
 
-test-notification: ## Запустить тесты уведомлений
-	@echo "$(BLUE)Запуск тестов уведомлений...$(NC)"
-	pytest tests/ -v -m "notification"
-	@echo "$(GREEN)Тесты уведомлений завершены!$(NC)"
+prod-down:
+	@echo "Stopping production environment..."
+	docker-compose down
 
-test-moderation: ## Запустить тесты модерации
-	@echo "$(BLUE)Запуск тестов модерации...$(NC)"
-	pytest tests/ -v -m "moderation"
-	@echo "$(GREEN)Тесты модерации завершены!$(NC)"
+# Database commands
+db-migrate:
+	@echo "Running database migrations..."
+	docker-compose exec api-gateway python -m alembic upgrade head
 
-test-print: ## Запустить тесты печати
-	@echo "$(BLUE)Запуск тестов печати...$(NC)"
-	pytest tests/ -v -m "print"
-	@echo "$(GREEN)Тесты печати завершены!$(NC)"
+db-reset:
+	@echo "Resetting database..."
+	docker-compose down -v
+	docker-compose up -d postgres
+	sleep 10
+	docker-compose up -d
 
-lint: ## Запустить линтеры
-	@echo "$(BLUE)Запуск линтеров...$(NC)"
-	flake8 apps/ packages/ tests/
-	black --check apps/ packages/ tests/
-	isort --check-only apps/ packages/ tests/
-	@echo "$(GREEN)Линтеры завершены!$(NC)"
-
-format: ## Форматировать код
-	@echo "$(BLUE)Форматирование кода...$(NC)"
-	black apps/ packages/ tests/
-	isort apps/ packages/ tests/
-	@echo "$(GREEN)Код отформатирован!$(NC)"
-
-clean: ## Очистить временные файлы
-	@echo "$(BLUE)Очистка временных файлов...$(NC)"
-	find . -type f -name "*.pyc" -delete
-	find . -type d -name "__pycache__" -delete
-	find . -type d -name "*.egg-info" -exec rm -rf {} +
-	rm -rf build/
-	rm -rf dist/
-	rm -rf htmlcov/
-	rm -rf .coverage
-	rm -rf .pytest_cache/
-	rm -rf .mypy_cache/
-	@echo "$(GREEN)Очистка завершена!$(NC)"
-
-setup-db: ## Настроить тестовые базы данных
-	@echo "$(BLUE)Настройка тестовых баз данных...$(NC)"
-	# Создание тестовых баз данных
-	# Здесь можно добавить команды для создания тестовых БД
-	@echo "$(GREEN)Тестовые базы данных настроены!$(NC)"
-
-docker-test: ## Запустить тесты в Docker
-	@echo "$(BLUE)Запуск тестов в Docker...$(NC)"
-	docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit
-	@echo "$(GREEN)Тесты в Docker завершены!$(NC)"
-
-ci: ## Запустить CI pipeline
-	@echo "$(BLUE)Запуск CI pipeline...$(NC)"
-	make lint
-	make test-coverage
-	@echo "$(GREEN)CI pipeline завершен!$(NC)"
-
-# Команды для разработки
-dev-setup: install-dev setup-db ## Настроить среду разработки
-	@echo "$(GREEN)Среда разработки настроена!$(NC)"
-
-dev-test: test-fast ## Быстрые тесты для разработки
-	@echo "$(GREEN)Быстрые тесты для разработки завершены!$(NC)"
-
-# Команды для продакшена
-prod-test: test ## Тесты для продакшена
-	@echo "$(GREEN)Тесты для продакшена завершены!$(NC)"
-
-# Статистика
-stats: ## Показать статистику проекта
-	@echo "$(BLUE)Статистика проекта:$(NC)"
-	@echo "Файлы Python: $$(find . -name '*.py' | wc -l)"
-	@echo "Строки кода: $$(find . -name '*.py' -exec wc -l {} + | tail -1 | awk '{print $$1}')"
-	@echo "Тесты: $$(find tests/ -name 'test_*.py' | wc -l)"
-	@echo "Строки тестов: $$(find tests/ -name 'test_*.py' -exec wc -l {} + | tail -1 | awk '{print $$1}')"
+# Health check
+health:
+	@echo "Checking service health..."
+	@echo "Frontend: http://localhost:3000"
+	@echo "API Gateway: http://localhost:8080"
+	@echo "Database: localhost:5432"
+	@echo "Redis: localhost:6379"
+	@echo "RabbitMQ: http://localhost:15672"
+	@echo "MinIO: http://localhost:9001"
+	@echo "MailHog: http://localhost:8025"

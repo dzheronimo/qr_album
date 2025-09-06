@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -80,7 +82,7 @@ export default function OrdersPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'paid':
-        return <Badge variant="success">Оплачен</Badge>;
+        return <Badge variant="default">Оплачен</Badge>;
       case 'pending':
         return <Badge variant="warning">Ожидает</Badge>;
       case 'failed':
@@ -278,7 +280,7 @@ export default function OrdersPage() {
                             {order.status === 'pending' && (
                               <Button 
                                 size="sm" 
-                                variant="success"
+                                variant="default"
                                 onClick={() => handleMarkPaid(order.id)}
                                 disabled={markPaidMutation.isPending}
                               >

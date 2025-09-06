@@ -2,7 +2,7 @@
 Роуты для работы с AI модерацией.
 """
 
-from typing import Dict, Any
+from typing import Dict, Any, List
 
 from fastapi import APIRouter, HTTPException, Depends, status
 from pydantic import BaseModel

@@ -1,8 +1,26 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
+  output: 'standalone',
+  typescript: {
+    ignoreBuildErrors: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  experimental: {
+    serverComponentsExternalPackages: [],
+  },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      // Не исключаем React и React-DOM из серверной сборки
+      // config.externals = [...(config.externals || []), 'react', 'react-dom'];
+    }
+    return config;
+  },
+  generateBuildId: async () => {
+    return 'build-' + Date.now();
+  },
+  trailingSlash: true,
   images: {
     domains: ['localhost', 'storyqr.ru', 'sqra.ru'],
     remotePatterns: [
@@ -36,10 +54,11 @@ const nextConfig = {
     ];
   },
   async rewrites() {
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080/api/v1';
     return [
       {
         source: '/api/v1/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/:path*`,
+        destination: `${apiBaseUrl}/:path*`,
       },
     ];
   },

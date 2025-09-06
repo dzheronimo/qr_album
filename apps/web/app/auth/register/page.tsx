@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -13,6 +14,8 @@ import { QrCode, Eye, EyeOff, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { apiClient, endpoints } from '@/lib/api';
 import { authManager } from '@/lib/auth';
+
+export const dynamic = 'force-dynamic';
 
 const registerSchema = z.object({
   email: z.string().email('Введите корректный email'),
@@ -56,7 +59,7 @@ export default function RegisterPage() {
       });
 
       if (response.success) {
-        const { access_token, refresh_token, user } = response.data;
+        const { access_token, refresh_token, user } = response.data as any;
         
         // Store tokens and user data
         authManager.login(

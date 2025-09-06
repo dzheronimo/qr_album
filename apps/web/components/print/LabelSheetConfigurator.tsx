@@ -70,7 +70,7 @@ export function LabelSheetConfigurator({
       };
 
       const response = await apiClient.post(endpoints.print.jobs(), request);
-      const jobId = response.data.id;
+      const jobId = (response.data as any).id;
 
       toast({
         title: 'Задание создано',

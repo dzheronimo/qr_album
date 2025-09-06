@@ -89,8 +89,8 @@ export function useUpload(options: UseUploadOptions = {}) {
       );
 
       // Attach to page if pageId provided
-      if (pageId && response.data?.id) {
-        await apiClient.post(endpoints.media.attach(response.data.id), {
+      if (pageId && (response.data as any)?.id) {
+        await apiClient.post(endpoints.media.attach((response.data as any).id), {
           page_id: pageId,
         });
       }

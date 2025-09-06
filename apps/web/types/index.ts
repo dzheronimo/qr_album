@@ -223,42 +223,77 @@ export interface BillingPlan {
   id: string;
   name: string;
   description: string;
-  price: number;
-  currency: 'RUB' | 'USD' | 'EUR';
-  interval: 'month' | 'year';
+  price_rub: number;
+  price_eur: number;
+  upload_months: number;
+  storage_years: number;
   features: string[];
-  limits: {
-    albums: number;
-    pages_per_album: number;
-    media_uploads: number;
-    storage_gb: number;
-    qr_codes: number;
-  };
-  is_popular: boolean;
-  is_current: boolean;
+  is_popular?: boolean;
+  is_current?: boolean;
 }
 
 export interface BillingLimits {
-  albums: {
-    used: number;
-    limit: number;
+  uploads_left: number;
+  storage_until: string;
+  tier: string;
+  trial: {
+    active: boolean;
+    days_left: number;
+    uploads_left: number;
   };
-  pages_per_album: {
-    used: number;
-    limit: number;
-  };
-  media_uploads: {
-    used: number;
-    limit: number;
-  };
-  storage_gb: {
-    used: number;
-    limit: number;
-  };
-  qr_codes: {
-    used: number;
-    limit: number;
-  };
+}
+
+// Trial types
+export interface TrialStatus {
+  active: boolean;
+  ends_at: string;
+  uploads_left: number;
+}
+
+export interface TrialStartResponse {
+  active: boolean;
+  ends_at: string;
+  uploads_left: number;
+}
+
+// Order types
+export interface CreateOrderRequest {
+  plan_id: string;
+  addons?: Array<{
+    sku: string;
+    qty: number;
+  }>;
+}
+
+export interface CreateOrderResponse {
+  id: string;
+  payment_url: string;
+}
+
+export interface OrderStatus {
+  status: 'pending' | 'paid' | 'failed';
+}
+
+// Print SKU types
+export interface PrintSku {
+  sku: string;
+  name: string;
+  price_rub: number;
+  price_eur: number;
+  kind: 'cards' | 'signs';
+  description?: string;
+}
+
+// API Error types
+export class ApiError extends Error {
+  constructor(
+    message: string,
+    public status: number,
+    public code?: string
+  ) {
+    super(message);
+    this.name = 'ApiError';
+  }
 }
 
 // Notification types

@@ -14,6 +14,8 @@ import { useToast } from '@/hooks/use-toast';
 import { apiClient, endpoints } from '@/lib/api';
 import { authManager } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 const loginSchema = z.object({
   email: z.string().email('Введите корректный email'),
   password: z.string().min(6, 'Пароль должен содержать минимум 6 символов'),
@@ -43,7 +45,7 @@ export default function LoginPage() {
       });
 
       if (response.success) {
-        const { access_token, refresh_token, user } = response.data;
+        const { access_token, refresh_token, user } = response.data as any;
         
         // Store tokens and user data
         authManager.login(

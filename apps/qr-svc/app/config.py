@@ -33,3 +33,10 @@ class Settings(DatabaseSettings):
         default=5,
         description="Минимальная длина slug"
     )
+
+
+# Создаем экземпляр настроек
+settings = Settings()
+
+# Экспортируем DATABASE_URL для использования в db.py
+DATABASE_URL = settings.get_database_url()

@@ -19,10 +19,13 @@ import {
   FolderOpen
 } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { apiClient, endpoints } from '@/lib/api';
 import { Album } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 import { formatDate } from '@/lib/utils';
+
+export const dynamic = 'force-dynamic';
 
 export default function AlbumsPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -73,8 +76,8 @@ export default function AlbumsPage() {
     }
   };
 
-  const albums = albumsData?.data || [];
-  const totalPages = albumsData?.total_pages || 1;
+  const albums = (albumsData as any)?.data || [];
+  const totalPages = (albumsData as any)?.total_pages || 1;
 
   return (
     <div className="space-y-6">
@@ -133,7 +136,7 @@ export default function AlbumsPage() {
               </div>
             </div>
             <div className="text-sm text-muted-foreground">
-              {albumsData?.total || 0} альбомов
+              {(albumsData as any)?.total || 0} альбомов
             </div>
           </div>
         </CardContent>

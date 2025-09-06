@@ -1,0 +1,24 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install express
+RUN npm init -y && npm install express
+
+# Copy simple server
+COPY simple-server.js ./
+
+# Create public directory
+RUN mkdir -p public
+
+# Expose port
+EXPOSE 3000
+
+# Set environment
+ENV NODE_ENV=production
+ENV PORT=3000
+
+# Run the server
+CMD ["node", "simple-server.js"]
+
+

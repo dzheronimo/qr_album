@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -37,7 +39,7 @@ export default function EventsPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'active':
-        return <Badge variant="success">Активно</Badge>;
+        return <Badge variant="default">Активно</Badge>;
       case 'trial':
         return <Badge variant="warning">Триал</Badge>;
       case 'expired':

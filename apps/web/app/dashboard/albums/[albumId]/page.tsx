@@ -24,10 +24,13 @@ import {
   Music
 } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { apiClient, endpoints } from '@/lib/api';
 import { Album, Page } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 import { formatDate, formatRelativeTime } from '@/lib/utils';
+
+export const dynamic = 'force-dynamic';
 
 export default function AlbumDetailPage() {
   const params = useParams();

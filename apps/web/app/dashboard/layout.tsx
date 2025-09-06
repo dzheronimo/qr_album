@@ -17,7 +17,10 @@ import {
   X
 } from 'lucide-react';
 import { authManager } from '@/lib/auth';
+
 import { User as UserType } from '@/types';
+
+export const dynamic = 'force-dynamic';
 
 export default function DashboardLayout({
   children,

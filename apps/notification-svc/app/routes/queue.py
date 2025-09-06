@@ -2,7 +2,7 @@
 Роуты для работы с очередью уведомлений.
 """
 
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 from fastapi import APIRouter, HTTPException, Depends, status, Query
 from pydantic import BaseModel, Field

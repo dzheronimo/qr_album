@@ -19,10 +19,13 @@ import {
   QrCode
 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
+
 import { apiClient, endpoints } from '@/lib/api';
 import { PublicPageData } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 import { formatBytes, getFileType } from '@/lib/utils';
+
+export const dynamic = 'force-dynamic';
 
 export default function PublicPageView() {
   const params = useParams();
@@ -78,9 +81,9 @@ export default function PublicPageView() {
         { skipAuth: true }
       );
       
-      if (response.data.valid) {
+      if ((response.data as any).valid) {
         setIsAuthenticated(true);
-        setAccessToken(response.data.access_token);
+        setAccessToken((response.data as any).access_token);
         toast({
           title: 'Доступ разрешен',
           description: 'PIN-код верный. Контент загружается.',

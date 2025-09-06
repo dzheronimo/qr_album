@@ -14,7 +14,7 @@ settings = Settings()
 
 # Создание асинхронного движка базы данных
 engine = create_async_engine(
-    settings.database_url,
+    settings.get_database_url(),
     echo=False,  # Установить True для отладки SQL запросов
     poolclass=NullPool,  # Отключаем пул соединений для разработки
     future=True

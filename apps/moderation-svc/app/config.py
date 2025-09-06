@@ -7,26 +7,22 @@
 import os
 from typing import List
 
-from pydantic import BaseSettings
+from pydantic import Field
+from app.commons.settings import DatabaseSettings
 
 
-class Settings(BaseSettings):
+class Settings(DatabaseSettings):
     """Настройки приложения."""
     
     # Основные настройки
     app_name: str = "Moderation Service"
     debug: bool = False
     
-    # Настройки базы данных
-    database_url: str = "postgresql+asyncpg://postgres:password@localhost:5432/moderation_db"
+    # Database name for this service
+    db_name: str = Field(default="storyqr_moderation", description="Имя базы данных для Moderation сервиса")
     
     # Настройки CORS
     allowed_origins: List[str] = ["*"]
-    
-    # Настройки JWT (для будущей интеграции)
-    secret_key: str = "your-secret-key-here"
-    algorithm: str = "HS256"
-    access_token_expire_minutes: int = 30
     
     # Настройки AI модерации
     ai_enabled: bool = True
@@ -54,8 +50,7 @@ class Settings(BaseSettings):
     # Настройки правил
     max_rules_per_content_type: int = 100
     rule_evaluation_timeout: int = 5  # секунды
-    
-    class Config:
-        """Конфигурация Pydantic."""
-        env_file = ".env"
-        case_sensitive = False
+
+
+# Создаем экземпляр настроек
+settings = Settings()
