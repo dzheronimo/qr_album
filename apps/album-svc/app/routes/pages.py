@@ -12,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_db
 from app.services.page_service import PageService
 from app.models.album import PageStatus
+from app.dependencies import get_current_user_id
 
 router = APIRouter()
 
@@ -59,7 +60,7 @@ class PageResponse(BaseModel):
 async def create_page(
     album_id: int,
     request: CreatePageRequest,
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -105,7 +106,7 @@ async def create_page(
 @router.get("/albums/{album_id}/pages", response_model=List[PageResponse])
 async def get_album_pages(
     album_id: int,
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     status: Optional[PageStatus] = Query(None, description="Фильтр по статусу"),
     db: AsyncSession = Depends(get_db)
 ):
@@ -135,7 +136,7 @@ async def get_album_pages(
 @router.get("/pages/{page_id}", response_model=PageResponse)
 async def get_page(
     page_id: int,
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -168,7 +169,7 @@ async def get_page(
 async def update_page(
     page_id: int,
     request: UpdatePageRequest,
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -212,7 +213,7 @@ async def update_page(
 @router.post("/pages/{page_id}/publish")
 async def publish_page(
     page_id: int,
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -244,7 +245,7 @@ async def publish_page(
 @router.post("/pages/{page_id}/archive")
 async def archive_page(
     page_id: int,
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -276,7 +277,7 @@ async def archive_page(
 @router.delete("/pages/{page_id}")
 async def delete_page(
     page_id: int,
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -309,7 +310,7 @@ async def delete_page(
 async def reorder_pages(
     album_id: int,
     request: ReorderPagesRequest,
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
     """
