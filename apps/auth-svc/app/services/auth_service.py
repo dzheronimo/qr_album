@@ -214,3 +214,43 @@ class AuthService:
             bool: True если изменение успешно, False иначе
         """
         return await self.user_service.change_password(user_id, old_password, new_password)
+    
+    async def verify_token(self, token: str) -> Optional[Dict[str, Any]]:
+        """
+        Проверяет JWT токен и возвращает информацию о пользователе.
+        
+        Args:
+            token: JWT токен
+            
+        Returns:
+            Optional[Dict[str, Any]]: Информация о пользователе или None
+        """
+        try:
+            from app.commons.security import decode_token
+            
+            # Декодируем токен
+            payload = decode_token(token, settings.jwt_secret, settings.jwt_algorithm)
+            if not payload:
+                return None
+            
+            # Получаем user_id из payload
+            user_id = payload.get("sub")
+            if not user_id:
+                return None
+            
+            # Получаем информацию о пользователе
+            user = await self.user_service.get_user_by_id(int(user_id))
+            if not user:
+                return None
+            
+            return {
+                "user_id": user.id,
+                "email": user.email,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "is_active": user.is_active,
+                "is_verified": user.is_verified,
+            }
+            
+        except Exception:
+            return None
