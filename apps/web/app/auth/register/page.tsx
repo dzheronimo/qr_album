@@ -76,32 +76,22 @@ export default function RegisterPage() {
     clearErrors();
 
     try {
-      const { confirmPassword, ...registerData } = data;
+      // Бэкенд принимает: email, password, first_name, last_name
+      // username не поддерживается на сервере — не отправляем его
+      const { confirmPassword, username, email, password, firstName, lastName } = data;
+      const registerData = {
+        email,
+        password,
+        first_name: firstName || undefined,
+        last_name: lastName || undefined,
+      } as const;
       
-      const response = await apiClient.post(endpoints.auth.register(), registerData, {
-        skipAuth: true,
-      });
+      const response = await apiClient.post(endpoints.auth.register(), registerData, { skipAuth: true });
 
-      if (response.success) {
-        const { access_token, refresh_token, user } = response.data as any;
-        
-        // Store tokens and user data
-        authManager.login(
-          { access_token, refresh_token, token_type: 'bearer', expires_in: 3600 },
-          user
-        );
-
-        toast({
-          title: 'Добро пожаловать в StoryQR!',
-          description: 'Ваш аккаунт успешно создан.',
-        });
-
-        // Redirect to dashboard or plan selection
-        if (plan === 'pro') {
-          router.push('/dashboard?upgrade=pro');
-        } else {
-          router.push('/dashboard');
-        }
+      if (response?.success) {
+        toast({ title: 'Аккаунт создан', description: 'Войдите, используя свой email и пароль.' });
+        router.push('/auth/login');
+        return;
       }
     } catch (error: any) {
       // Логируем ошибку для разработчиков
@@ -124,7 +114,7 @@ export default function RegisterPage() {
           description: uiError.message,
           variant: 'destructive',
           action: uiError.actions?.[0] ? (
-            <ToastAction onClick={uiError.actions[0].onClick}>
+            <ToastAction altText={uiError.actions[0].label} onClick={uiError.actions[0].onClick}>
               {uiError.actions[0].label}
             </ToastAction>
           ) : undefined,

@@ -297,22 +297,22 @@ test.describe('Login Error Handling', () => {
   test('login-form-validation.spec: валидация полей в реальном времени', async ({ page }) => {
     // Проверяем валидацию email
     await page.fill('input[name="email"]', 'invalid-email');
-    await page.blur('input[name="email"]');
+    await page.locator('input[name="email"]').blur();
     await expect(page.locator('text=Введите корректный email')).toBeVisible();
 
     // Исправляем email
     await page.fill('input[name="email"]', 'valid@email.com');
-    await page.blur('input[name="email"]');
+    await page.locator('input[name="email"]').blur();
     await expect(page.locator('text=Введите корректный email')).not.toBeVisible();
 
     // Проверяем валидацию пароля
     await page.fill('input[name="password"]', '123');
-    await page.blur('input[name="password"]');
+    await page.locator('input[name="password"]').blur();
     await expect(page.locator('text=Пароль должен содержать минимум 6 символов')).toBeVisible();
 
     // Исправляем пароль
     await page.fill('input[name="password"]', 'password123');
-    await page.blur('input[name="password"]');
+    await page.locator('input[name="password"]').blur();
     await expect(page.locator('text=Пароль должен содержать минимум 6 символов')).not.toBeVisible();
   });
 });

@@ -56,9 +56,12 @@ export function PricingTable({ onPlanSelect, className }: PricingTableProps) {
   const plans = plansData?.plans || DEFAULT_PLANS;
   const usingFallback = !plansData || error;
 
-  if (usingFallback && !isFallback) {
-    setIsFallback(true);
-  }
+  // Избегаем setState во время рендера: переносим в эффект
+  useEffect(() => {
+    if (usingFallback && !isFallback) {
+      setIsFallback(true);
+    }
+  }, [usingFallback, isFallback]);
 
   return (
     <div className={className}>

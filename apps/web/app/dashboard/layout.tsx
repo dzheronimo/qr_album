@@ -33,14 +33,27 @@ export default function DashboardLayout({
   const router = useRouter();
 
   useEffect(() => {
-    const authState = authManager.getAuthState();
-    setUser(authState.user);
-    setIsAuthenticated(authState.isAuthenticated);
+    // Add a small delay to ensure cookies are properly set after login
+    const checkAuth = () => {
+      const authState = authManager.getAuthState();
+      setUser(authState.user);
+      setIsAuthenticated(authState.isAuthenticated);
 
-    if (!authState.isAuthenticated) {
-      router.push('/auth/login');
-      return;
-    }
+      if (!authState.isAuthenticated) {
+        // Only redirect if we're sure the user is not authenticated
+        // Add a small delay to avoid race conditions
+        setTimeout(() => {
+          const finalAuthState = authManager.getAuthState();
+          if (!finalAuthState.isAuthenticated) {
+            router.push('/auth/login');
+          }
+        }, 100);
+        return;
+      }
+    };
+
+    // Check auth immediately
+    checkAuth();
 
     // Subscribe to auth changes
     const unsubscribe = authManager.subscribe(() => {

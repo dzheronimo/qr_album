@@ -1,242 +1,114 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { QrCode, Play, ArrowRight, CheckCircle, Smartphone, Camera, Share2 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Демо StoryQR | Попробуйте бесплатно',
-  description: 'Попробуйте StoryQR в действии. Создайте тестовый альбом и посмотрите, как работают QR-коды.',
-  robots: 'noindex,follow', // Не индексировать демо-страницу
+  title: 'Демо | StoryQR',
+  description: 'Интерактивная демонстрация возможностей StoryQR',
 };
-
-const demoSteps = [
-  {
-    step: 1,
-    title: 'Создайте альбом',
-    description: 'Добавьте название и описание для вашего альбома воспоминаний',
-    icon: Camera,
-  },
-  {
-    step: 2,
-    title: 'Добавьте контент',
-    description: 'Загрузите фото и видео, создайте страницы с историями',
-    icon: Smartphone,
-  },
-  {
-    step: 3,
-    title: 'Получите QR-код',
-    description: 'Сгенерируйте QR-код и поделитесь им с друзьями',
-    icon: Share2,
-  },
-];
-
-const demoFeatures = [
-  'Создание неограниченных альбомов',
-  'Загрузка фото и видео',
-  'Генерация QR-кодов',
-  'Защита PIN-кодом',
-  'Аналитика просмотров',
-  'Печать наклеек',
-];
 
 export default function DemoPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
-      {/* Header */}
-      <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="inline-flex items-center space-x-2">
-              <QrCode className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold">StoryQR</span>
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Link href="/auth/login">
-                <Button variant="ghost">Войти</Button>
-              </Link>
-              <Link href="/auth/register">
-                <Button>Создать аккаунт</Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 py-12">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-8">
-            <Play className="h-10 w-10 text-primary" />
-          </div>
-          <h1 className="text-5xl font-bold mb-6">Попробуйте StoryQR</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Создайте тестовый альбом и посмотрите, как легко превратить ваши воспоминания в интерактивные QR-коды
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Демонстрация StoryQR
+          </h1>
+          <p className="text-xl text-gray-600">
+            Посмотрите, как работает создание QR-альбомов
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" asChild>
-              <Link href="/auth/register?demo=true">
-                Начать демо
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <Link href="/help">Узнать больше</Link>
-            </Button>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Demo Card 1 */}
+          <div className="bg-white shadow rounded-lg p-6">
+            <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+              <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              Создание альбома
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Создайте альбом с QR-кодами для быстрого доступа к контенту
+            </p>
+            <div className="bg-gray-100 rounded p-4 text-sm text-gray-700">
+              <p>1. Нажмите "Создать альбом"</p>
+              <p>2. Заполните название и описание</p>
+              <p>3. Добавьте страницы с медиафайлами</p>
+            </div>
+          </div>
+
+          {/* Demo Card 2 */}
+          <div className="bg-white shadow rounded-lg p-6">
+            <div className="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              QR-коды
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Генерируйте QR-коды для мгновенного доступа к вашим страницам
+            </p>
+            <div className="bg-gray-100 rounded p-4 text-sm text-gray-700">
+              <p>1. Загрузите медиафайлы</p>
+              <p>2. Создайте QR-код</p>
+              <p>3. Скачайте и распечатайте</p>
+            </div>
+          </div>
+
+          {/* Demo Card 3 */}
+          <div className="bg-white shadow rounded-lg p-6">
+            <div className="w-16 h-16 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+              <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              Поделиться
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Делитесь QR-кодами с друзьями и коллегами
+            </p>
+            <div className="bg-gray-100 rounded p-4 text-sm text-gray-700">
+              <p>1. Скачайте QR-код</p>
+              <p>2. Распечатайте или отправьте</p>
+              <p>3. Получатели сканируют и получают доступ</p>
+            </div>
+          </div>
+
+          {/* Demo Card 4 */}
+          <div className="bg-white shadow rounded-lg p-6">
+            <div className="w-16 h-16 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+              <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              Аналитика
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Отслеживайте статистику просмотров ваших QR-кодов
+            </p>
+            <div className="bg-gray-100 rounded p-4 text-sm text-gray-700">
+              <p>1. Просматривайте статистику</p>
+              <p>2. Анализируйте популярность</p>
+              <p>3. Экспортируйте данные</p>
+            </div>
           </div>
         </div>
 
-        {/* Demo Steps */}
-        <div className="max-w-4xl mx-auto mb-16">
-          <h2 className="text-3xl font-bold text-center mb-12">Как это работает</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {demoSteps.map((step, index) => (
-              <Card key={index} className="relative">
-                <CardHeader className="text-center">
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-full mb-4 mx-auto">
-                    <step.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">
-                    {step.step}
-                  </div>
-                  <CardTitle className="text-xl">{step.title}</CardTitle>
-                  <CardDescription className="text-base">{step.description}</CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Demo Features */}
-        <div className="max-w-4xl mx-auto mb-16">
-          <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-2xl">Что вы сможете попробовать</CardTitle>
-              <CardDescription>
-                Полный доступ ко всем функциям платформы
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-2 gap-4">
-                {demoFeatures.map((feature, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
-                    <span>{feature}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Demo CTA */}
-        <div className="max-w-2xl mx-auto text-center">
-          <Card className="bg-primary/5 border-primary/20">
-            <CardHeader>
-              <CardTitle className="text-2xl">Готовы начать?</CardTitle>
-              <CardDescription className="text-base">
-                Создайте бесплатный аккаунт и начните создавать свои первые QR-альбомы
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" asChild>
-                  <Link href="/auth/register">
-                    Создать аккаунт
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button size="lg" variant="outline" asChild>
-                  <Link href="/auth/login">Уже есть аккаунт?</Link>
-                </Button>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Регистрация займет менее минуты
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* FAQ Section */}
-        <div className="max-w-3xl mx-auto mt-16">
-          <h2 className="text-2xl font-bold text-center mb-8">Частые вопросы о демо</h2>
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Нужна ли регистрация для демо?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Да, но регистрация бесплатная и займет всего минуту. Это необходимо для сохранения ваших тестовых альбомов.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Сколько альбомов можно создать в демо?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  В бесплатном тарифе вы можете создать до 3 альбомов с неограниченным количеством страниц в каждом.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Можно ли скачать QR-коды в демо?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Конечно! Вы можете скачать QR-коды в различных форматах (PNG, SVG) и сразу использовать их.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+        <div className="text-center mt-12">
+          <a
+            href="/auth/register"
+            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+          >
+            Начать использовать StoryQR
+          </a>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 mt-16">
-        <div className="container mx-auto px-4 py-8">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <Link href="/" className="inline-flex items-center space-x-2 mb-4">
-                <QrCode className="h-6 w-6 text-primary" />
-                <span className="text-lg font-bold">StoryQR</span>
-              </Link>
-              <p className="text-sm text-muted-foreground">
-                Создавайте интерактивные альбомы с QR-кодами
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Продукт</h3>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/features" className="text-muted-foreground hover:text-foreground">Возможности</Link></li>
-                <li><Link href="/pricing" className="text-muted-foreground hover:text-foreground">Тарифы</Link></li>
-                <li><Link href="/demo" className="text-muted-foreground hover:text-foreground">Демо</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Поддержка</h3>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/help" className="text-muted-foreground hover:text-foreground">Помощь</Link></li>
-                <li><Link href="/docs" className="text-muted-foreground hover:text-foreground">Документация</Link></li>
-                <li><Link href="/contact" className="text-muted-foreground hover:text-foreground">Контакты</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Правовая информация</h3>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/legal/privacy" className="text-muted-foreground hover:text-foreground">Конфиденциальность</Link></li>
-                <li><Link href="/legal/terms" className="text-muted-foreground hover:text-foreground">Условия использования</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2024 StoryQR. Все права защищены.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

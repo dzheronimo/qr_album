@@ -93,7 +93,7 @@ export default function ResetPasswordPage() {
           description: uiError.message,
           variant: 'destructive',
           action: uiError.actions?.[0] ? (
-            <ToastAction onClick={uiError.actions[0].onClick}>
+            <ToastAction altText={uiError.actions[0].label} onClick={uiError.actions[0].onClick}>
               {uiError.actions[0].label}
             </ToastAction>
           ) : undefined,

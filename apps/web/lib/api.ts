@@ -94,18 +94,19 @@ class ApiClient {
       clearTimeout(timeoutId);
 
       // Handle different response statuses
-      if (response.status === 401) {
-        // Token expired, try to refresh
-        if (!skipAuth && retries > 0) {
+      if (response.status === 401 && !skipAuth) {
+        // Token expired, try to refresh (только если аутентификация обязательна)
+        if (retries > 0) {
           const refreshed = await this.refreshToken();
           if (refreshed) {
-            // Retry the original request with new token
             return this.request<T>(url, { ...config, retries: retries - 1 });
           }
         }
-        // If refresh failed or this is already a retry, logout user
+        // Если не удалось обновить токен — выходим из аккаунта и редиректим на логин
         auth.logout();
-        window.location.href = '/auth/login';
+        if (typeof window !== 'undefined') {
+          window.location.href = '/auth/login';
+        }
         throw new ApiError('Unauthorized', 401);
       }
 
@@ -141,6 +142,7 @@ class ApiClient {
         // Извлекаем сообщение об ошибке из стандартной структуры API
         const message = errorData?.error?.message || 
                        errorData?.message || 
+                       errorData?.detail ||
                        getDefaultErrorMessage(response.status);
         
         throw new ApiError(
@@ -150,8 +152,23 @@ class ApiClient {
         );
       }
 
-      const data = await response.json();
-      return data;
+      // Приводим ответ к унифицированному виду ApiResponse<T>
+      let parsed: any = null;
+      try {
+        parsed = await response.json();
+      } catch {
+        parsed = null;
+      }
+
+      if (parsed && typeof parsed === 'object' && 'success' in parsed && 'data' in parsed) {
+        return parsed as ApiResponse<T>;
+      }
+
+      // Если бэкенд вернул «сырой» объект без success/data — оборачиваем
+      return {
+        success: true,
+        data: parsed as T,
+      } as ApiResponse<T>;
     } catch (error) {
       clearTimeout(timeoutId);
       
@@ -335,8 +352,39 @@ class ApiClient {
   }
 }
 
-// Create API client instance
-export const apiClient = new ApiClient(process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080/api/v1');
+// Normalize base URL to avoid accidental 8000 port and trailing slashes in runtime
+function normalizeBaseUrl(rawBaseUrl: string | undefined): string {
+  const fallback = 'http://localhost:8080';
+  if (!rawBaseUrl) {
+    return fallback;
+  }
+  try {
+    const parsed = new URL(rawBaseUrl);
+    // Only change port for localhost, not for Docker internal URLs
+    if (parsed.hostname === 'localhost' && parsed.port === '8000') {
+      parsed.port = '8080';
+    }
+    const normalized = parsed.toString().replace(/\/$/, '');
+    return normalized;
+  } catch {
+    // Only replace localhost:8000 with localhost:8080, not Docker URLs
+    if (rawBaseUrl.includes('localhost:8000')) {
+      return rawBaseUrl.replace('localhost:8000', 'localhost:8080').replace(/\/$/, '') || fallback;
+    }
+    return rawBaseUrl.replace(/\/$/, '') || fallback;
+  }
+}
+
+// Create API client instance with debug logging
+const rawBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+const normalizedBaseUrl = normalizeBaseUrl(rawBaseUrl);
+const finalBaseUrl = normalizedBaseUrl + '/api/v1';
+
+console.log('DEBUG: NEXT_PUBLIC_API_BASE_URL (raw):', rawBaseUrl);
+console.log('DEBUG: Normalized Base URL:', normalizedBaseUrl);
+console.log('DEBUG: Final API Client Base URL:', finalBaseUrl);
+
+export const apiClient = new ApiClient(finalBaseUrl);
 
 // Export endpoints for convenience
 export { endpoints };

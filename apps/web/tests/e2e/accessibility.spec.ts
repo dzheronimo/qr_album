@@ -171,7 +171,7 @@ test.describe('Accessibility Tests', () => {
 
     // Проверяем, что ошибки имеют достаточный контраст
     await page.fill('input[name="email"]', 'invalid-email');
-    await page.blur('input[name="email"]');
+    await page.locator('input[name="email"]').blur();
 
     const errorText = page.locator('text=Введите корректный email');
     await expect(errorText).toBeVisible();
