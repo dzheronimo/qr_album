@@ -4,11 +4,13 @@ services:
     build:
       context: ./apps/web
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_BASE_URL: http://localhost:8080
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - NEXT_PUBLIC_API_BASE_URL=http://localhost:8080/api/v1
+      - NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
       - NEXT_PUBLIC_PUBLIC_BASE_URL=http://localhost:3000
       - NEXT_PUBLIC_SHORT_BASE_URL=http://localhost:3000
       - NEXT_PUBLIC_USE_MOCKS=false
@@ -60,8 +62,8 @@ services:
       - REDIS_URL=redis://redis:6379
       - RABBITMQ_URL=amqp://${RABBITMQ_DEFAULT_USER:-storyqr_rabbit}:${RABBITMQ_DEFAULT_PASS:-storyqr_rabbit_secure_password_2024}@rabbit:5672
       - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production-2024-secure-random-string}
-      - ADMIN_ORIGINS=${ADMIN_ORIGINS:-http://localhost:3001,https://admin.yourdomain.com}
-      - WEB_ORIGINS=${WEB_ORIGINS:-http://localhost:3000,https://yourdomain.com}
+      - ADMIN_ORIGINS=http://localhost:3001,http://127.0.0.1:3001,https://admin.yourdomain.com
+      - WEB_ORIGINS=http://localhost:3000,http://127.0.0.1:3000,https://yourdomain.com
     depends_on:
       - redis
       - rabbit
