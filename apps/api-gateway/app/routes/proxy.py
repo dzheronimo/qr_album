@@ -224,32 +224,7 @@ class ServiceProxy:
 service_proxy = ServiceProxy()
 
 
-@router.api_route("/api/{service_name}/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
-async def proxy_to_service(
-    service_name: str,
-    path: str,
-    request: Request
-):
-    """
-    Проксирует запросы к микросервисам.
-    
-    Args:
-        service_name: Имя сервиса
-        path: Путь в сервисе
-        request: HTTP запрос
-        
-    Returns:
-        StreamingResponse: Ответ от микросервиса
-    """
-    return await service_proxy.proxy_request(
-        service_name=service_name,
-        path=f"/{path}" if not path.startswith("/") else path,
-        request=request,
-        method=request.method
-    )
-
-
-@router.get("/api/services")
+@router.get("/services")
 async def list_services():
     """
     Возвращает список доступных сервисов.
@@ -263,7 +238,7 @@ async def list_services():
     }
 
 
-@router.get("/api/services/{service_name}/health")
+@router.get("/services/{service_name}/health")
 async def check_service_health(service_name: str):
     """
     Проверяет здоровье сервиса.
@@ -301,3 +276,125 @@ async def check_service_health(service_name: str):
             "status": "unhealthy",
             "error": str(e)
         }
+
+
+# Создаем отдельные маршруты для каждого сервиса
+@router.api_route("/auth/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+async def proxy_to_auth(path: str, request: Request):
+    """Проксирует запросы к сервису аутентификации."""
+    return await service_proxy.proxy_request(
+        service_name="auth",
+        path=f"/{path}" if not path.startswith("/") else path,
+        request=request,
+        method=request.method
+    )
+
+@router.api_route("/user-profile/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+async def proxy_to_user_profile(path: str, request: Request):
+    """Проксирует запросы к сервису профилей пользователей."""
+    return await service_proxy.proxy_request(
+        service_name="user-profile",
+        path=f"/{path}" if not path.startswith("/") else path,
+        request=request,
+        method=request.method
+    )
+
+@router.api_route("/album/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+async def proxy_to_album(path: str, request: Request):
+    """Проксирует запросы к сервису альбомов."""
+    return await service_proxy.proxy_request(
+        service_name="album",
+        path=f"/{path}" if not path.startswith("/") else path,
+        request=request,
+        method=request.method
+    )
+
+@router.api_route("/albums", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+async def proxy_to_albums_root(request: Request):
+    """Проксирует запросы к сервису альбомов (корневой путь)."""
+    return await service_proxy.proxy_request(
+        service_name="album",
+        path="/albums",
+        request=request,
+        method=request.method
+    )
+
+@router.api_route("/albums/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+async def proxy_to_albums(path: str, request: Request):
+    """Проксирует запросы к сервису альбомов (множественное число)."""
+    return await service_proxy.proxy_request(
+        service_name="album",
+        path=f"/albums/{path}" if not path.startswith("/") else f"/albums{path}",
+        request=request,
+        method=request.method
+    )
+
+@router.api_route("/media/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+async def proxy_to_media(path: str, request: Request):
+    """Проксирует запросы к сервису медиа."""
+    return await service_proxy.proxy_request(
+        service_name="media",
+        path=f"/{path}" if not path.startswith("/") else path,
+        request=request,
+        method=request.method
+    )
+
+@router.api_route("/qr/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+async def proxy_to_qr(path: str, request: Request):
+    """Проксирует запросы к сервису QR-кодов."""
+    return await service_proxy.proxy_request(
+        service_name="qr",
+        path=f"/{path}" if not path.startswith("/") else path,
+        request=request,
+        method=request.method
+    )
+
+@router.api_route("/analytics/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+async def proxy_to_analytics(path: str, request: Request):
+    """Проксирует запросы к сервису аналитики."""
+    return await service_proxy.proxy_request(
+        service_name="analytics",
+        path=f"/{path}" if not path.startswith("/") else path,
+        request=request,
+        method=request.method
+    )
+
+@router.api_route("/billing/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+async def proxy_to_billing(path: str, request: Request):
+    """Проксирует запросы к сервису биллинга."""
+    return await service_proxy.proxy_request(
+        service_name="billing",
+        path=f"/{path}" if not path.startswith("/") else path,
+        request=request,
+        method=request.method
+    )
+
+@router.api_route("/notification/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+async def proxy_to_notification(path: str, request: Request):
+    """Проксирует запросы к сервису уведомлений."""
+    return await service_proxy.proxy_request(
+        service_name="notification",
+        path=f"/{path}" if not path.startswith("/") else path,
+        request=request,
+        method=request.method
+    )
+
+@router.api_route("/moderation/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+async def proxy_to_moderation(path: str, request: Request):
+    """Проксирует запросы к сервису модерации."""
+    return await service_proxy.proxy_request(
+        service_name="moderation",
+        path=f"/{path}" if not path.startswith("/") else path,
+        request=request,
+        method=request.method
+    )
+
+@router.api_route("/print/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+async def proxy_to_print(path: str, request: Request):
+    """Проксирует запросы к сервису печати."""
+    return await service_proxy.proxy_request(
+        service_name="print",
+        path=f"/{path}" if not path.startswith("/") else path,
+        request=request,
+        method=request.method
+    )

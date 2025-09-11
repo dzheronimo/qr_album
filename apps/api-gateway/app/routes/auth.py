@@ -55,32 +55,31 @@ async def login(request: LoginRequest):
             if response.status_code == 200:
                 data = response.json()
                 logger.info(f"User logged in: {request.email}")
-                return data
+                return {"success": True, "data": data}
             else:
-                error_data = response.json() if response.content else {"detail": "Ошибка входа"}
-                raise HTTPException(
-                    status_code=response.status_code,
-                    detail=error_data.get("detail", "Ошибка входа")
-                )
+                # Handle non-200 responses - return the error response directly
+                try:
+                    error_data = response.json() if response.content else {"detail": "Ошибка входа"}
+                    detail = error_data.get("detail", "Ошибка входа")
+                except Exception:
+                    detail = "Ошибка входа"
+                
+                logger.error(f"Login failed for user {request.email}: {response.status_code} - {detail}")
+                # Return the error response in the expected format
+                return {"success": False, "data": None, "error": detail}
                 
     except httpx.TimeoutException:
         logger.error(f"Timeout when logging in user: {request.email}")
-        raise HTTPException(
-            status_code=status.HTTP_504_GATEWAY_TIMEOUT,
-            detail="Таймаут при входе в систему"
-        )
+        return {"success": False, "data": None, "error": "Таймаут при входе в систему"}
     except httpx.ConnectError:
         logger.error(f"Connection error when logging in user: {request.email}")
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="Сервис аутентификации недоступен"
-        )
+        return {"success": False, "data": None, "error": "Сервис аутентификации недоступен"}
+    except httpx.HTTPStatusError as e:
+        logger.error(f"HTTP error when logging in user: {e.response.status_code}: {e.response.text}")
+        return {"success": False, "data": None, "error": "Ошибка при входе в систему"}
     except Exception as e:
         logger.error(f"Error when logging in user: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Ошибка при входе в систему"
-        )
+        return {"success": False, "data": None, "error": "Ошибка при входе в систему"}
 
 
 @router.post("/auth/register")
