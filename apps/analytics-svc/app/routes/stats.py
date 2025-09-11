@@ -11,6 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import get_db
 from app.services.stats_service import StatsService
+from app.dependencies import get_current_user_id
 
 router = APIRouter()
 
@@ -290,3 +291,15 @@ async def get_overview_stats(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Ошибка при получении общей статистики: {str(e)}"
         )
+
+
+@router.get("/overview")
+async def get_overview(
+    start_date: Optional[datetime] = Query(None, description="Начальная дата"),
+    end_date: Optional[datetime] = Query(None, description="Конечная дата"),
+    db: AsyncSession = Depends(get_db),
+    user_id: int = Depends(get_current_user_id)
+):
+    """Получение общей статистики системы (алиас для /stats/overview)."""
+    # Перенаправляем на существующий endpoint
+    return await get_overview_stats(start_date, end_date, db)

@@ -12,7 +12,8 @@ from app.routes import (
     subscriptions_router,
     payments_router,
     plans_router,
-    usage_router
+    usage_router,
+    limits_router
 )
 from app.database import init_db, close_db
 
@@ -40,3 +41,4 @@ app.include_router(subscriptions_router, tags=["subscriptions"])
 app.include_router(payments_router, tags=["payments"])
 app.include_router(plans_router, tags=["plans"])
 app.include_router(usage_router, tags=["usage"])
+app.include_router(limits_router, tags=["limits"])

@@ -8,7 +8,7 @@ Production-ready фронтенд для проекта StoryQR, построе�
 
 - Node.js 18+ 
 - npm или yarn
-- Доступ к API Gateway (по умолчанию http://localhost:8000)
+- Доступ к API Gateway (по умолчанию http://localhost:8080/api/v1)
 
 ### Установка
 
@@ -33,7 +33,7 @@ nano .env.local
 
 ```env
 # API Configuration
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8080/api/v1
 NEXT_PUBLIC_PUBLIC_BASE_URL=https://storyqr.ru
 NEXT_PUBLIC_SHORT_BASE_URL=https://sqra.ru
 

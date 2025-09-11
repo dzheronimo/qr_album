@@ -1,11 +1,6 @@
-"""
-Основной модуль Analytics сервиса.
-
-Содержит FastAPI приложение и настройку маршрутов для Analytics сервиса.
-"""
-
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.routes import health, analytics, stats
 from app.database import init_db, close_db
@@ -30,6 +25,15 @@ app = FastAPI(
     description="Сервис для аналитики и статистики",
     version="1.0.0",
     lifespan=lifespan
+)
+
+# Добавляем CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://localhost:3001"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
 )
 
 # Подключение маршрутов

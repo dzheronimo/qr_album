@@ -1,0 +1,332 @@
+[
+  {
+    "url": "http://localhost:8080/healthz",
+    "method": "GET",
+    "total_requests": 50,
+    "concurrent_requests": 5,
+    "total_time": 23.851006269454956,
+    "rps": 2.096347610458391,
+    "response_times": {
+      "min": 0.4140143394470215,
+      "max": 3.1722824573516846,
+      "avg": 1.9689177322387694,
+      "p50": 2.097204327583313,
+      "p95": 2.9365953683853148,
+      "p99": 3.2870735192298888
+    },
+    "status_codes": {
+      "200": 50
+    },
+    "error_rate": 0.0,
+    "errors": [],
+    "timestamp": "2025-09-06T19:14:36.497795"
+  },
+  {
+    "url": "http://localhost:8080/docs",
+    "method": "GET",
+    "total_requests": 50,
+    "concurrent_requests": 5,
+    "total_time": 22.69665217399597,
+    "rps": 2.2029680684487047,
+    "response_times": {
+      "min": 0.4340097904205322,
+      "max": 3.0798206329345703,
+      "avg": 1.9343902587890625,
+      "p50": 2.0792282819747925,
+      "p95": 2.6738993883132935,
+      "p99": 3.26966983795166
+    },
+    "status_codes": {
+      "200": 50
+    },
+    "error_rate": 0.0,
+    "errors": [],
+    "timestamp": "2025-09-06T19:14:59.203417"
+  },
+  {
+    "url": "http://localhost:8086/healthz",
+    "method": "GET",
+    "total_requests": 50,
+    "concurrent_requests": 5,
+    "total_time": 23.64017105102539,
+    "rps": 2.1150439179174745,
+    "response_times": {
+      "min": 0.3898026943206787,
+      "max": 3.0838053226470947,
+      "avg": 2.070246124267578,
+      "p50": 2.1284446716308594,
+      "p95": 2.7875598311424254,
+      "p99": 3.215441279411316
+    },
+    "status_codes": {
+      "200": 50
+    },
+    "error_rate": 0.0,
+    "errors": [],
+    "timestamp": "2025-09-06T19:15:22.844210"
+  },
+  {
+    "url": "http://localhost:8001/health",
+    "method": "GET",
+    "total_requests": 50,
+    "concurrent_requests": 5,
+    "total_time": 23.13014030456543,
+    "rps": 2.161681656126011,
+    "response_times": {
+      "min": 0.46841883659362793,
+      "max": 3.2040674686431885,
+      "avg": 2.0447188663482665,
+      "p50": 2.0756072998046875,
+      "p95": 3.000916397571564,
+      "p99": 3.2829836440086364
+    },
+    "status_codes": {
+      "404": 50
+    },
+    "error_rate": 0.0,
+    "errors": [],
+    "timestamp": "2025-09-06T19:15:45.975008"
+  },
+  {
+    "url": "http://localhost:8002/health",
+    "method": "GET",
+    "total_requests": 50,
+    "concurrent_requests": 5,
+    "total_time": 23.13488531112671,
+    "rps": 2.1612382913328094,
+    "response_times": {
+      "min": 0.44277381896972656,
+      "max": 3.6507833003997803,
+      "avg": 1.977388072013855,
+      "p50": 1.994737982749939,
+      "p95": 3.0835862874984743,
+      "p99": 3.9126891779899595
+    },
+    "status_codes": {
+      "404": 50
+    },
+    "error_rate": 0.0,
+    "errors": [],
+    "timestamp": "2025-09-06T19:16:09.110642"
+  },
+  {
+    "url": "http://localhost:8003/health",
+    "method": "GET",
+    "total_requests": 50,
+    "concurrent_requests": 5,
+    "total_time": 25.708373069763184,
+    "rps": 1.9448916453918794,
+    "response_times": {
+      "min": 0.4916849136352539,
+      "max": 3.6437110900878906,
+      "avg": 2.2382081270217897,
+      "p50": 2.313267946243286,
+      "p95": 3.282701146602631,
+      "p99": 3.8152948069572448
+    },
+    "status_codes": {
+      "404": 50
+    },
+    "error_rate": 0.0,
+    "errors": [],
+    "timestamp": "2025-09-06T19:16:34.819852"
+  },
+  {
+    "url": "http://localhost:8005/health",
+    "method": "GET",
+    "total_requests": 50,
+    "concurrent_requests": 5,
+    "total_time": 23.5491361618042,
+    "rps": 2.1232201324266873,
+    "response_times": {
+      "min": 0.5754909515380859,
+      "max": 3.4529476165771484,
+      "avg": 2.016696367263794,
+      "p50": 1.974501371383667,
+      "p95": 3.006378650665283,
+      "p99": 3.668069245815277
+    },
+    "status_codes": {
+      "404": 50
+    },
+    "error_rate": 0.0,
+    "errors": [],
+    "timestamp": "2025-09-06T19:16:58.369776"
+  },
+  {
+    "url": "http://localhost:8006/health",
+    "method": "GET",
+    "total_requests": 50,
+    "concurrent_requests": 5,
+    "total_time": 23.101612329483032,
+    "rps": 2.164351097528737,
+    "response_times": {
+      "min": 0.4604928493499756,
+      "max": 3.3204896450042725,
+      "avg": 1.9649654912948609,
+      "p50": 2.173479914665222,
+      "p95": 2.901960301399231,
+      "p99": 3.4606543016433715
+    },
+    "status_codes": {
+      "404": 50
+    },
+    "error_rate": 0.0,
+    "errors": [],
+    "timestamp": "2025-09-06T19:17:21.472210"
+  },
+  {
+    "url": "http://localhost:8007/health",
+    "method": "GET",
+    "total_requests": 50,
+    "concurrent_requests": 5,
+    "total_time": 23.273833990097046,
+    "rps": 2.1483353374985343,
+    "response_times": {
+      "min": 0.45119428634643555,
+      "max": 3.2879793643951416,
+      "avg": 2.0588049268722535,
+      "p50": 2.2189375162124634,
+      "p95": 2.8663881421089172,
+      "p99": 3.4760228037834167
+    },
+    "status_codes": {
+      "404": 50
+    },
+    "error_rate": 0.0,
+    "errors": [],
+    "timestamp": "2025-09-06T19:17:44.746753"
+  },
+  {
+    "url": "http://localhost:8008/health",
+    "method": "GET",
+    "total_requests": 50,
+    "concurrent_requests": 5,
+    "total_time": 23.01466679573059,
+    "rps": 2.1725276513356,
+    "response_times": {
+      "min": 0.47147464752197266,
+      "max": 2.979923725128174,
+      "avg": 2.0566399669647217,
+      "p50": 2.2280322313308716,
+      "p95": 2.676150715351105,
+      "p99": 3.1232211637496947
+    },
+    "status_codes": {
+      "404": 50
+    },
+    "error_rate": 0.0,
+    "errors": [],
+    "timestamp": "2025-09-06T19:18:07.762061"
+  },
+  {
+    "url": "http://localhost:8009/health",
+    "method": "GET",
+    "total_requests": 50,
+    "concurrent_requests": 5,
+    "total_time": 22.962477922439575,
+    "rps": 2.1774653488567366,
+    "response_times": {
+      "min": 0.4758422374725342,
+      "max": 2.8434503078460693,
+      "avg": 1.830031337738037,
+      "p50": 1.9034265279769897,
+      "p95": 2.6901560187339784,
+      "p99": 2.909837107658386
+    },
+    "status_codes": {
+      "404": 50
+    },
+    "error_rate": 0.0,
+    "errors": [],
+    "timestamp": "2025-09-06T19:18:30.725325"
+  },
+  {
+    "url": "http://localhost:8010/health",
+    "method": "GET",
+    "total_requests": 50,
+    "concurrent_requests": 5,
+    "total_time": 23.487054347991943,
+    "rps": 2.1288323030714498,
+    "response_times": {
+      "min": 0.42348766326904297,
+      "max": 3.0405614376068115,
+      "avg": 1.8758009386062622,
+      "p50": 1.9329421520233154,
+      "p95": 2.6678796291351317,
+      "p99": 3.210190086364746
+    },
+    "status_codes": {
+      "404": 50
+    },
+    "error_rate": 0.0,
+    "errors": [],
+    "timestamp": "2025-09-06T19:18:54.213008"
+  },
+  {
+    "url": "http://localhost:8011/health",
+    "method": "GET",
+    "total_requests": 50,
+    "concurrent_requests": 5,
+    "total_time": 23.247366428375244,
+    "rps": 2.150781257483474,
+    "response_times": {
+      "min": 0.46507978439331055,
+      "max": 2.737025260925293,
+      "avg": 1.8444819784164428,
+      "p50": 1.9413317441940308,
+      "p95": 2.59851016998291,
+      "p99": 2.7707847952842712
+    },
+    "status_codes": {
+      "404": 50
+    },
+    "error_rate": 0.0,
+    "errors": [],
+    "timestamp": "2025-09-06T19:19:17.460931"
+  },
+  {
+    "url": "http://localhost:8080/healthz",
+    "method": "GET",
+    "total_requests": 200,
+    "concurrent_requests": 20,
+    "total_time": 91.52466487884521,
+    "rps": 2.185203303008515,
+    "response_times": {
+      "min": 0.4826369285583496,
+      "max": 14.542327880859375,
+      "avg": 5.815488040447235,
+      "p50": 6.0375165939331055,
+      "p95": 9.509170043468476,
+      "p99": 13.603263244628906
+    },
+    "status_codes": {
+      "200": 200
+    },
+    "error_rate": 0.0,
+    "errors": [],
+    "timestamp": "2025-09-06T19:20:48.986365"
+  },
+  {
+    "url": "http://localhost:8086/healthz",
+    "method": "GET",
+    "total_requests": 200,
+    "concurrent_requests": 20,
+    "total_time": 104.5243091583252,
+    "rps": 1.913430489141581,
+    "response_times": {
+      "min": 0.59071946144104,
+      "max": 16.041900157928467,
+      "avg": 8.334128130674362,
+      "p50": 8.441750526428223,
+      "p95": 13.345985448360443,
+      "p99": 15.449077003002166
+    },
+    "status_codes": {
+      "200": 200
+    },
+    "error_rate": 0.0,
+    "errors": [],
+    "timestamp": "2025-09-06T19:22:33.511375"
+  }
+]

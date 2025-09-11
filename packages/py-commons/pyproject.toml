@@ -30,7 +30,7 @@ dev = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["commons*"]
+include = ["commons*", "health.py", "http.py"]
 
 [tool.black]
 line-length = 88

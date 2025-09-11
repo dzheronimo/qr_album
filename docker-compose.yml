@@ -1,16 +1,21 @@
-version: '3.8'
-
 services:
   # Frontend (Next.js)
   web:
     build:
       context: ./apps/web
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_BASE_URL: http://localhost:8080
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - API_BASE_URL=http://api-gateway:8000
+      - NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
+      - NEXT_PUBLIC_PUBLIC_BASE_URL=http://localhost:3000
+      - NEXT_PUBLIC_SHORT_BASE_URL=http://localhost:3000
+      - NEXT_PUBLIC_USE_MOCKS=false
+      - NEXT_PUBLIC_ENABLE_PWA=false
+      - NEXT_PUBLIC_SHOW_BETA_BADGE=true
     depends_on:
       - api-gateway
     networks:
@@ -38,12 +43,12 @@ services:
   # API Gateway
   api-gateway:
     build:
-      context: ./apps/api-gateway
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/api-gateway/Dockerfile
     ports:
       - "8080:8000"
     environment:
-      - ENVIRONMENT=production
+      - ENVIRONMENT=${ENVIRONMENT:-production}
       - AUTH_SVC_URL=http://auth-svc:8000
       - ALBUM_SVC_URL=http://album-svc:8000
       - MEDIA_SVC_URL=http://media-svc:8000
@@ -55,29 +60,49 @@ services:
       - MODERATION_SVC_URL=http://moderation-svc:8000
       - PRINT_SVC_URL=http://print-svc:8000
       - REDIS_URL=redis://redis:6379
-      - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
-      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - RABBITMQ_URL=amqp://${RABBITMQ_DEFAULT_USER:-storyqr_rabbit}:${RABBITMQ_DEFAULT_PASS:-storyqr_rabbit_secure_password_2024}@rabbit:5672
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production-2024-secure-random-string}
+      - ADMIN_ORIGINS=http://localhost:3001,http://127.0.0.1:3001,https://admin.yourdomain.com
+      - WEB_ORIGINS=http://localhost:3000,http://127.0.0.1:3000,https://yourdomain.com
     depends_on:
       - redis
       - rabbit
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
     networks:
       - storyqr-network
 
   # Auth Service
   auth-svc:
     build:
-      context: ./apps/auth-svc
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/auth-svc/Dockerfile
     ports:
       - "8001:8000"
     environment:
-      - ENVIRONMENT=production
-      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_auth
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-storyqr}:${POSTGRES_PASSWORD:-storyqr_secure_password_2024}@postgres:5432/storyqr_auth
       - REDIS_URL=redis://redis:6379
-      - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
-      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
-      - JWT_ACCESS_TOKEN_EXPIRE_MINUTES=30
-      - JWT_REFRESH_TOKEN_EXPIRE_DAYS=7
+      - RABBITMQ_URL=amqp://${RABBITMQ_DEFAULT_USER:-storyqr_rabbit}:${RABBITMQ_DEFAULT_PASS:-storyqr_rabbit_secure_password_2024}@rabbit:5672
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production-2024-secure-random-string}
+      - JWT_ACCESS_TOKEN_EXPIRE_MINUTES=${JWT_ACCESS_TOKEN_EXPIRE_MINUTES:-30}
+      - JWT_REFRESH_TOKEN_EXPIRE_DAYS=${JWT_REFRESH_TOKEN_EXPIRE_DAYS:-7}
     depends_on:
       - postgres
       - redis
@@ -88,16 +113,16 @@ services:
   # Album Service
   album-svc:
     build:
-      context: ./apps/album-svc
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/album-svc/Dockerfile
     ports:
       - "8002:8000"
     environment:
-      - ENVIRONMENT=production
-      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_album
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-storyqr}:${POSTGRES_PASSWORD:-storyqr_secure_password_2024}@postgres:5432/storyqr_album
       - REDIS_URL=redis://redis:6379
-      - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
-      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - RABBITMQ_URL=amqp://${RABBITMQ_DEFAULT_USER:-storyqr_rabbit}:${RABBITMQ_DEFAULT_PASS:-storyqr_rabbit_secure_password_2024}@rabbit:5672
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production-2024-secure-random-string}
     depends_on:
       - postgres
       - redis
@@ -108,20 +133,20 @@ services:
   # Media Service
   media-svc:
     build:
-      context: ./apps/media-svc
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/media-svc/Dockerfile
     ports:
       - "8003:8000"
     environment:
-      - ENVIRONMENT=production
-      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_media
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-storyqr}:${POSTGRES_PASSWORD:-storyqr_secure_password_2024}@postgres:5432/storyqr_media
       - REDIS_URL=redis://redis:6379
-      - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
+      - RABBITMQ_URL=amqp://${RABBITMQ_DEFAULT_USER:-storyqr_rabbit}:${RABBITMQ_DEFAULT_PASS:-storyqr_rabbit_secure_password_2024}@rabbit:5672
       - MINIO_ENDPOINT=minio:9000
-      - MINIO_ACCESS_KEY=minioadmin
-      - MINIO_SECRET_KEY=minioadmin
+      - MINIO_ACCESS_KEY=${MINIO_ROOT_USER:-storyqr_minio}
+      - MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD:-storyqr_minio_secure_password_2024}
       - MINIO_BUCKET_NAME=storyqr-media
-      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production-2024-secure-random-string}
     depends_on:
       - postgres
       - redis
@@ -133,16 +158,16 @@ services:
   # QR Service
   qr-svc:
     build:
-      context: ./apps/qr-svc
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/qr-svc/Dockerfile
     ports:
       - "8005:8000"
     environment:
-      - ENVIRONMENT=production
-      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_qr
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-storyqr}:${POSTGRES_PASSWORD:-storyqr_secure_password_2024}@postgres:5432/storyqr_qr
       - REDIS_URL=redis://redis:6379
-      - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
-      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - RABBITMQ_URL=amqp://${RABBITMQ_DEFAULT_USER:-storyqr_rabbit}:${RABBITMQ_DEFAULT_PASS:-storyqr_rabbit_secure_password_2024}@rabbit:5672
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production-2024-secure-random-string}
     depends_on:
       - postgres
       - redis
@@ -153,16 +178,16 @@ services:
   # User Profile Service
   user-profile-svc:
     build:
-      context: ./apps/user-profile-svc
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/user-profile-svc/Dockerfile
     ports:
       - "8006:8000"
     environment:
-      - ENVIRONMENT=production
-      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_user_profile
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-storyqr}:${POSTGRES_PASSWORD:-storyqr_secure_password_2024}@postgres:5432/storyqr_user_profile
       - REDIS_URL=redis://redis:6379
-      - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
-      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - RABBITMQ_URL=amqp://${RABBITMQ_DEFAULT_USER:-storyqr_rabbit}:${RABBITMQ_DEFAULT_PASS:-storyqr_rabbit_secure_password_2024}@rabbit:5672
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production-2024-secure-random-string}
     depends_on:
       - postgres
       - redis
@@ -173,16 +198,16 @@ services:
   # Analytics Service
   analytics-svc:
     build:
-      context: ./apps/analytics-svc
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/analytics-svc/Dockerfile
     ports:
       - "8007:8000"
     environment:
-      - ENVIRONMENT=production
-      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_analytics
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-storyqr}:${POSTGRES_PASSWORD:-storyqr_secure_password_2024}@postgres:5432/storyqr_analytics
       - REDIS_URL=redis://redis:6379
-      - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
-      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - RABBITMQ_URL=amqp://${RABBITMQ_DEFAULT_USER:-storyqr_rabbit}:${RABBITMQ_DEFAULT_PASS:-storyqr_rabbit_secure_password_2024}@rabbit:5672
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production-2024-secure-random-string}
     depends_on:
       - postgres
       - redis
@@ -193,16 +218,16 @@ services:
   # Billing Service
   billing-svc:
     build:
-      context: ./apps/billing-svc
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/billing-svc/Dockerfile
     ports:
       - "8008:8000"
     environment:
-      - ENVIRONMENT=production
-      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_billing
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-storyqr}:${POSTGRES_PASSWORD:-storyqr_secure_password_2024}@postgres:5432/storyqr_billing
       - REDIS_URL=redis://redis:6379
-      - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
-      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - RABBITMQ_URL=amqp://${RABBITMQ_DEFAULT_USER:-storyqr_rabbit}:${RABBITMQ_DEFAULT_PASS:-storyqr_rabbit_secure_password_2024}@rabbit:5672
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production-2024-secure-random-string}
     depends_on:
       - postgres
       - redis
@@ -213,20 +238,20 @@ services:
   # Notification Service
   notification-svc:
     build:
-      context: ./apps/notification-svc
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/notification-svc/Dockerfile
     ports:
       - "8009:8000"
     environment:
-      - ENVIRONMENT=production
-      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_notification
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-storyqr}:${POSTGRES_PASSWORD:-storyqr_secure_password_2024}@postgres:5432/storyqr_notification
       - REDIS_URL=redis://redis:6379
-      - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
-      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
-      - SMTP_HOST=mailhog
-      - SMTP_PORT=1025
-      - SMTP_USERNAME=
-      - SMTP_PASSWORD=
+      - RABBITMQ_URL=amqp://${RABBITMQ_DEFAULT_USER:-storyqr_rabbit}:${RABBITMQ_DEFAULT_PASS:-storyqr_rabbit_secure_password_2024}@rabbit:5672
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production-2024-secure-random-string}
+      - SMTP_HOST=${SMTP_HOST:-mailhog}
+      - SMTP_PORT=${SMTP_PORT:-1025}
+      - SMTP_USERNAME=${SMTP_USERNAME:-}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
     depends_on:
       - postgres
       - redis
@@ -238,16 +263,16 @@ services:
   # Moderation Service
   moderation-svc:
     build:
-      context: ./apps/moderation-svc
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/moderation-svc/Dockerfile
     ports:
       - "8010:8000"
     environment:
-      - ENVIRONMENT=production
-      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_moderation
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-storyqr}:${POSTGRES_PASSWORD:-storyqr_secure_password_2024}@postgres:5432/storyqr_moderation
       - REDIS_URL=redis://redis:6379
-      - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
-      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - RABBITMQ_URL=amqp://${RABBITMQ_DEFAULT_USER:-storyqr_rabbit}:${RABBITMQ_DEFAULT_PASS:-storyqr_rabbit_secure_password_2024}@rabbit:5672
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production-2024-secure-random-string}
     depends_on:
       - postgres
       - redis
@@ -258,16 +283,16 @@ services:
   # Print Service
   print-svc:
     build:
-      context: ./apps/print-svc
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/print-svc/Dockerfile
     ports:
       - "8011:8000"
     environment:
-      - ENVIRONMENT=production
-      - DATABASE_URL=postgresql+asyncpg://storyqr:storyqr@postgres:5432/storyqr_print
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-storyqr}:${POSTGRES_PASSWORD:-storyqr_secure_password_2024}@postgres:5432/storyqr_print
       - REDIS_URL=redis://redis:6379
-      - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
-      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - RABBITMQ_URL=amqp://${RABBITMQ_DEFAULT_USER:-storyqr_rabbit}:${RABBITMQ_DEFAULT_PASS:-storyqr_rabbit_secure_password_2024}@rabbit:5672
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production-2024-secure-random-string}
     depends_on:
       - postgres
       - redis
@@ -278,16 +303,16 @@ services:
   # Scan Gateway
   scan-gateway:
     build:
-      context: ./apps/scan-gateway
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/scan-gateway/Dockerfile
     ports:
       - "8086:8000"
     environment:
-      - ENVIRONMENT=production
+      - ENVIRONMENT=${ENVIRONMENT:-production}
       - QR_SVC_URL=http://qr-svc:8000
       - ANALYTICS_SVC_URL=http://analytics-svc:8000
       - REDIS_URL=redis://redis:6379
-      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production-2024-secure-random-string}
     depends_on:
       - qr-svc
       - analytics-svc
@@ -299,15 +324,15 @@ services:
   postgres:
     image: postgres:16
     environment:
-      - POSTGRES_USER=storyqr
-      - POSTGRES_PASSWORD=storyqr
-      - POSTGRES_DB=storyqr
+      - POSTGRES_USER=${POSTGRES_USER:-storyqr}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-storyqr_secure_password_2024}
+      - POSTGRES_DB=${POSTGRES_DB:-storyqr}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U storyqr"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-storyqr}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -333,8 +358,8 @@ services:
   rabbit:
     image: rabbitmq:3-management
     environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER:-storyqr_rabbit}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS:-storyqr_rabbit_secure_password_2024}
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -353,8 +378,8 @@ services:
     image: minio/minio:latest
     command: server /data --console-address ":9001"
     environment:
-      - MINIO_ROOT_USER=minioadmin
-      - MINIO_ROOT_PASSWORD=minioadmin
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER:-storyqr_minio}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-storyqr_minio_secure_password_2024}
     ports:
       - "9000:9000"
       - "9001:9001"

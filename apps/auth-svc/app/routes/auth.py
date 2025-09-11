@@ -5,7 +5,7 @@
 """
 
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Depends, status
+from fastapi import APIRouter, HTTPException, Depends, status, Request
 from pydantic import BaseModel, EmailStr
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -327,3 +327,52 @@ async def update_profile(
         )
     
     return user_data
+
+
+@router.get("/verify")
+async def verify_token(
+    request: Request,
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Проверяет JWT токен и возвращает информацию о пользователе.
+    
+    Args:
+        request: HTTP запрос
+        db: Сессия базы данных
+        
+    Returns:
+        Dict[str, Any]: Информация о пользователе
+        
+    Raises:
+        HTTPException: При недействительном токене
+    """
+    # Получаем токен из заголовка Authorization
+    auth_header = request.headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Bearer "):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Токен аутентификации не предоставлен"
+        )
+    
+    token = auth_header.split(" ")[1]
+    
+    try:
+        # Создаем сервис аутентификации
+        auth_service = AuthService(db)
+        
+        # Проверяем токен
+        user_info = await auth_service.verify_token(token)
+        if not user_info:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Недействительный токен аутентификации"
+            )
+        
+        return user_info
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Ошибка проверки токена"
+        )

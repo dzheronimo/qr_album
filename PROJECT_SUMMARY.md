@@ -3,7 +3,7 @@
 ## ✅ Выполненные задачи
 
 ### 1. Структура проекта
-- ✅ Создана полная структура monorepo с 12 микросервисами
+- ✅ Создана полная структура monorepo с 12 микросервисами + 2 frontend приложения
 - ✅ Настроены корневые файлы (.gitignore, .editorconfig, Makefile, README.md)
 - ✅ Создан .env.example с переменными окружения
 
@@ -11,27 +11,42 @@
 - ✅ Docker Compose конфигурация с PostgreSQL, Redis, RabbitMQ, MinIO
 - ✅ SQL скрипт для создания баз данных
 - ✅ Health checks для всех сервисов
+- ✅ Все базы данных PostgreSQL созданы и работают
 
-### 3. Микросервисы
-- ✅ **api-gateway** - API Gateway (порт 8080)
-- ✅ **auth-svc** - Сервис аутентификации
-- ✅ **user-profile-svc** - Сервис профилей пользователей
-- ✅ **album-svc** - Сервис альбомов (in-memory)
-- ✅ **media-svc** - Сервис медиафайлов с MinIO
-- ✅ **qr-svc** - Сервис QR-кодов с базой данных
-- ✅ **scan-gateway** - Gateway для сканирования (порт 8086) с rate limiting
-- ✅ **print-svc** - Сервис печати
-- ✅ **analytics-svc** - Сервис аналитики
-- ✅ **billing-svc** - Сервис биллинга
-- ✅ **notification-svc** - Сервис уведомлений с SMTP
-- ✅ **moderation-svc** - Сервис модерации
+### 3. Микросервисы (Backend)
+- ✅ **api-gateway** - API Gateway (порт 8080) - работает
+- ✅ **auth-svc** - Сервис аутентификации (порт 8001) - работает
+- ✅ **user-profile-svc** - Сервис профилей пользователей (порт 8006) - работает
+- ✅ **album-svc** - Сервис альбомов (порт 8002) - работает
+- ✅ **media-svc** - Сервис медиафайлов с MinIO (порт 8003) - работает
+- ✅ **qr-svc** - Сервис QR-кодов с базой данных (порт 8005) - работает
+- ✅ **scan-gateway** - Gateway для сканирования (порт 8086) - работает
+- ✅ **print-svc** - Сервис печати (порт 8011) - работает
+- ✅ **analytics-svc** - Сервис аналитики (порт 8007) - работает
+- ✅ **billing-svc** - Сервис биллинга (порт 8008) - работает
+- ✅ **notification-svc** - Сервис уведомлений с SMTP (порт 8009) - работает
+- ✅ **moderation-svc** - Сервис модерации (порт 8010) - работает
 
-### 4. Общие компоненты
-- ✅ **packages/py-commons** - Общие утилиты (JWT, настройки)
+### 4. Frontend приложения
+- ✅ **web** - Основное приложение StoryQR (порт 3000) - работает
+- ✅ **admin** - Админ панель StoryQR (порт 3001) - работает
+
+### 5. Общие компоненты
+- ✅ **packages/py-commons** - Общие утилиты (JWT, настройки, health checks)
 - ✅ Базовые классы настроек с поддержкой переменных окружения
 - ✅ JWT утилиты для создания и декодирования токенов
+- ✅ Health check система для всех сервисов
 
-### 5. Специальная функциональность
+### 6. Health Standard
+- ✅ **Единый стандарт health checks** для всех микросервисов
+- ✅ **Liveness probe** (`GET /health`) - без авторизации, всегда 200 при работе
+- ✅ **Readiness probe** (`GET /health/ready`) - проверка зависимостей с таймаутами
+- ✅ **Проверки зависимостей** для каждого сервиса (БД, Redis, RabbitMQ, внешние API)
+- ✅ **Smoke тесты** для автоматической проверки всех health endpoints
+- ✅ **Docker healthcheck** настроены для всех контейнеров
+- ✅ **API Gateway** исключает health endpoints из авторизации
+
+### 7. Специальная функциональность
 - ✅ **qr-svc**: Создание коротких ссылок, генерация QR кодов (SVG)
 - ✅ **scan-gateway**: Rate limiting, редиректы по коротким ссылкам
 - ✅ **media-svc**: Presigned POST для загрузки в MinIO
@@ -41,7 +56,7 @@
 - ✅ **notification-svc**: Отправка email через SMTP
 - ✅ **moderation-svc**: API модерации контента
 
-### 6. CI/CD
+### 8. CI/CD
 - ✅ GitHub Actions workflow с тестированием, линтингом и сборкой
 - ✅ Поддержка Python 3.12, pytest, black, isort, flake8, mypy
 
@@ -60,8 +75,10 @@ make health
 ```
 
 ### Доступные эндпоинты:
-- **API Gateway**: http://localhost:8080/healthz
-- **Scan Gateway**: http://localhost:8086/healthz
+- **Frontend Web**: http://localhost:3000
+- **Frontend Admin**: http://localhost:3001
+- **API Gateway**: http://localhost:8080/health
+- **Scan Gateway**: http://localhost:8086/health
 - **RabbitMQ Management**: http://localhost:15672 (guest/guest)
 - **MinIO Console**: http://localhost:9001 (minioadmin/minioadmin)
 

@@ -24,6 +24,7 @@ import { apiClient, endpoints } from '@/lib/api';
 import { Album } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 import { formatDate } from '@/lib/utils';
+import { authManager } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,6 +41,12 @@ export default function AlbumsPage() {
   const { data: albumsData, isLoading } = useQuery({
     queryKey: ['albums', { page: currentPage, limit, search: searchQuery, is_public: filterPublic }],
     queryFn: async () => {
+      // Check authentication before making API request
+      const authState = authManager.getAuthState();
+      if (!authState.isAuthenticated) {
+        throw new Error('User not authenticated');
+      }
+
       const params: any = { page: currentPage, limit };
       if (searchQuery) params.search = searchQuery;
       if (filterPublic !== undefined) params.is_public = filterPublic;
@@ -47,6 +54,7 @@ export default function AlbumsPage() {
       const response = await apiClient.get(endpoints.albums.list(params));
       return response.data;
     },
+    enabled: authManager.getAuthState().isAuthenticated, // Only run query if authenticated
   });
 
   // Delete album mutation

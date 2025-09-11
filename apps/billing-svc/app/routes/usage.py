@@ -5,7 +5,7 @@
 from typing import Optional, List, Dict, Any
 
 from fastapi import APIRouter, HTTPException, Depends, status, Query
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import get_db
@@ -40,6 +40,13 @@ class CheckLimitsRequest(BaseModel):
     media_files_count: Optional[int] = Field(None, ge=0, description="Количество медиафайлов для проверки")
     qr_codes_count: Optional[int] = Field(None, ge=0, description="Количество QR кодов для проверки")
     storage_used_mb: Optional[int] = Field(None, ge=0, description="Использованное хранилище в МБ для проверки")
+    
+    @validator('*', pre=True)
+    def validate_positive_values(cls, v):
+        """Валидация положительных значений."""
+        if v is not None and v < 0:
+            raise ValueError('Значение не может быть отрицательным')
+        return v
 
 
 class UsageResponse(BaseModel):

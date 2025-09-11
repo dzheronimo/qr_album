@@ -1,0 +1,5 @@
+---
+description: "Do not change the architecture of the project, do not change the design of the frontend, without my direct instructions. If any of this is critically necessary, coordinate with me with an indication of the reason."
+globs:
+alwaysApply: true
+---

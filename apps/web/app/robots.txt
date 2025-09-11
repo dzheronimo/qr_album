@@ -1,0 +1,26 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://storyqr.ru/sitemap.xml
+
+# Disallow demo page (noindex)
+Disallow: /demo
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+
+# Allow public pages
+Allow: /help
+Allow: /features
+Allow: /pricing
+Allow: /contact
+Allow: /legal/
+Allow: /auth/login
+Allow: /auth/register
+Allow: /auth/reset-password
+
+# Crawl delay
+Crawl-delay: 1

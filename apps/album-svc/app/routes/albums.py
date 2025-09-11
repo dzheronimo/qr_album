@@ -12,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_db
 from app.services.album_service import AlbumService
 from app.models.album import AlbumStatus
+from app.dependencies import get_current_user_id
 
 router = APIRouter()
 
@@ -52,7 +53,7 @@ class AlbumResponse(BaseModel):
 @router.post("/albums", response_model=AlbumResponse)
 async def create_album(
     request: CreateAlbumRequest,
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -89,10 +90,11 @@ async def create_album(
 
 @router.get("/albums", response_model=List[AlbumResponse])
 async def get_user_albums(
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     status: Optional[AlbumStatus] = Query(None, description="Фильтр по статусу"),
     limit: int = Query(50, ge=1, le=100, description="Лимит записей"),
     offset: int = Query(0, ge=0, description="Смещение"),
+    page: int = Query(1, ge=1, description="Номер страницы"),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -103,12 +105,17 @@ async def get_user_albums(
         status: Фильтр по статусу
         limit: Лимит записей
         offset: Смещение
+        page: Номер страницы
         db: Сессия базы данных
         
     Returns:
         List[AlbumResponse]: Список альбомов пользователя
     """
     album_service = AlbumService(db)
+    
+    # Если передан page, вычисляем offset
+    if page > 1:
+        offset = (page - 1) * limit
     
     albums = await album_service.get_user_albums(
         user_id=user_id,
@@ -150,7 +157,7 @@ async def get_public_albums(
 @router.get("/albums/{album_id}", response_model=AlbumResponse)
 async def get_album(
     album_id: int,
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -183,7 +190,7 @@ async def get_album(
 async def update_album(
     album_id: int,
     request: UpdateAlbumRequest,
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -225,7 +232,7 @@ async def update_album(
 @router.post("/albums/{album_id}/publish")
 async def publish_album(
     album_id: int,
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -257,7 +264,7 @@ async def publish_album(
 @router.post("/albums/{album_id}/archive")
 async def archive_album(
     album_id: int,
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -289,7 +296,7 @@ async def archive_album(
 @router.delete("/albums/{album_id}")
 async def delete_album(
     album_id: int,
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -321,7 +328,7 @@ async def delete_album(
 @router.get("/albums/{album_id}/stats")
 async def get_album_stats(
     album_id: int,
-    user_id: int,  # TODO: Получать из JWT токена
+    user_id: int = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -348,3 +355,4 @@ async def get_album_stats(
         )
     
     return stats
+

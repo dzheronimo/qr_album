@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -10,10 +10,14 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { QrCode, Eye, EyeOff, CheckCircle } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { QrCode, Eye, EyeOff, CheckCircle, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { ToastAction } from '@/components/ui/toast';
 import { apiClient, endpoints } from '@/lib/api';
 import { authManager } from '@/lib/auth';
+import { mapToUiError, shouldShowToast, shouldShowInlineAlert, logError } from '@/lib/errors';
+import { ConnectionStatusBanner } from '@/components/net/OfflineBanner';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,9 +39,11 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [inlineError, setInlineError] = useState<string | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
+  const alertRef = useRef<HTMLDivElement>(null);
 
   const plan = searchParams.get('plan');
 
@@ -45,46 +51,75 @@ export default function RegisterPage() {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
+    clearErrors,
   } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
   });
 
+  // Обработка клавиши Escape для отмены загрузки
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isLoading) {
+        setIsLoading(false);
+        setInlineError(null);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isLoading]);
+
   const onSubmit = async (data: RegisterForm) => {
     setIsLoading(true);
+    setInlineError(null);
+    clearErrors();
+
     try {
-      const { confirmPassword, ...registerData } = data;
+      // Бэкенд принимает: email, password, first_name, last_name
+      // username не поддерживается на сервере — не отправляем его
+      const { confirmPassword, username, email, password, firstName, lastName } = data;
+      const registerData = {
+        email,
+        password,
+        first_name: firstName || undefined,
+        last_name: lastName || undefined,
+      } as const;
       
-      const response = await apiClient.post(endpoints.auth.register(), registerData, {
-        skipAuth: true,
-      });
+      const response = await apiClient.post(endpoints.auth.register(), registerData, { skipAuth: true });
 
-      if (response.success) {
-        const { access_token, refresh_token, user } = response.data as any;
-        
-        // Store tokens and user data
-        authManager.login(
-          { access_token, refresh_token, token_type: 'bearer', expires_in: 3600 },
-          user
-        );
-
-        toast({
-          title: 'Добро пожаловать в StoryQR!',
-          description: 'Ваш аккаунт успешно создан.',
-        });
-
-        // Redirect to dashboard or plan selection
-        if (plan === 'pro') {
-          router.push('/dashboard?upgrade=pro');
-        } else {
-          router.push('/dashboard');
-        }
+      if (response?.success) {
+        toast({ title: 'Аккаунт создан', description: 'Войдите, используя свой email и пароль.' });
+        router.push('/auth/login');
+        return;
       }
     } catch (error: any) {
-      toast({
-        title: 'Ошибка регистрации',
-        description: error.message || 'Не удалось создать аккаунт. Попробуйте еще раз.',
-        variant: 'destructive',
+      // Логируем ошибку для разработчиков
+      logError(error, 'Register form submission');
+
+      // Маппим ошибку в UI-формат
+      const uiError = mapToUiError(error, {
+        retryAction: () => onSubmit(data),
+        checkStatusAction: () => window.open('/status', '_blank'),
       });
+
+      // Показываем ошибку в зависимости от типа
+      if (shouldShowInlineAlert(uiError)) {
+        setInlineError(uiError.message);
+        // Фокусируемся на alert для screen readers
+        setTimeout(() => alertRef.current?.focus(), 100);
+      } else if (shouldShowToast(uiError)) {
+        toast({
+          title: uiError.title,
+          description: uiError.message,
+          variant: 'destructive',
+          action: uiError.actions?.[0] ? (
+            <ToastAction altText={uiError.actions[0].label} onClick={uiError.actions[0].onClick}>
+              {uiError.actions[0].label}
+            </ToastAction>
+          ) : undefined,
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -100,6 +135,7 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-muted/20 p-4">
+      <ConnectionStatusBanner />
       <div className="w-full max-w-4xl">
         {/* Header */}
         <div className="text-center mb-8">
@@ -123,6 +159,13 @@ export default function RegisterPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
+              {/* Inline Error Alert */}
+              {inlineError && (
+                <Alert variant="destructive" className="mb-4" ref={alertRef} tabIndex={-1}>
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{inlineError}</AlertDescription>
+                </Alert>
+              )}
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
