@@ -5,21 +5,17 @@ import { useMutation } from '@tanstack/react-query';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { 
   CreditCard, 
-  X, 
   Loader2, 
   Check,
-  AlertCircle,
-  ExternalLink
 } from 'lucide-react';
 import { PrintUpsell } from './PrintUpsell';
 import { apiClient, endpoints } from '@/lib/api';
 import { formatPriceWithCurrency, getPriceInCurrency, Currency } from '@/lib/currency';
 import { trackCheckoutOpen, trackCheckoutPayClick, trackCheckoutPayRedirect } from '@/lib/analytics';
-import { BillingPlan, CreateOrderRequest, CreateOrderResponse } from '@/types';
+import { BillingPlan, CreateOrderRequest, CreateOrderResponse, PrintSku } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 
 interface CheckoutDrawerProps {
@@ -30,7 +26,7 @@ interface CheckoutDrawerProps {
 }
 
 export function CheckoutDrawer({ isOpen, onClose, plan, currency }: CheckoutDrawerProps) {
-  const [selectedSku, setSelectedSku] = useState<string | null>(null);
+  const [selectedSku, setSelectedSku] = useState<PrintSku | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const { toast } = useToast();
 
@@ -79,7 +75,7 @@ export function CheckoutDrawer({ isOpen, onClose, plan, currency }: CheckoutDraw
       // Добавляем дополнения если выбраны
       if (selectedSku) {
         orderData.addons = [{
-          sku: selectedSku,
+          sku: selectedSku.sku,
           qty: 1,
         }];
       }
@@ -87,7 +83,7 @@ export function CheckoutDrawer({ isOpen, onClose, plan, currency }: CheckoutDraw
       // Трекинг клика на оплату
       await trackCheckoutPayClick(
         plan.id,
-        selectedSku ? [selectedSku] : [],
+        selectedSku ? [selectedSku.sku] : [],
         getTotalAmount(),
         currency
       );
@@ -109,22 +105,12 @@ export function CheckoutDrawer({ isOpen, onClose, plan, currency }: CheckoutDraw
 
     // Добавляем стоимость печати если выбрана
     if (selectedSku) {
-      // Здесь нужно получить цену выбранного SKU
-      // Для простоты используем примерные цены
-      const printPrice = currency === 'RUB' ? 1490 : 18;
-      total += printPrice;
+      total += getPriceInCurrency({ rub: selectedSku.price_rub, eur: selectedSku.price_eur }, currency);
     }
 
     return total;
   };
 
-  const getSelectedSkuName = (): string => {
-    if (!selectedSku) return 'Без печати';
-    
-    // Здесь нужно получить название SKU из данных
-    // Для простоты используем примерные названия
-    return selectedSku === 'cards-100' ? 'Мини-карточки 100 шт' : 'Таблички 5×7″ 10 шт';
-  };
 
   if (!plan) return null;
 
@@ -186,10 +172,10 @@ export function CheckoutDrawer({ isOpen, onClose, plan, currency }: CheckoutDraw
               
               {selectedSku && (
                 <div className="flex items-center justify-between">
-                  <span>{getSelectedSkuName()}</span>
+                  <span>{selectedSku.name}</span>
                   <span>
                     +{formatPriceWithCurrency(
-                      { rub: 1490, eur: 18 }, // Примерные цены
+                      { rub: selectedSku.price_rub, eur: selectedSku.price_eur },
                       currency
                     )}
                   </span>
@@ -202,7 +188,9 @@ export function CheckoutDrawer({ isOpen, onClose, plan, currency }: CheckoutDraw
                 <span>Итого</span>
                 <span>
                   {formatPriceWithCurrency(
-                    { rub: getTotalAmount(), eur: getTotalAmount() },
+                    currency === 'RUB'
+                      ? { rub: getTotalAmount(), eur: plan.price_eur + (selectedSku ? selectedSku.price_eur : 0) }
+                      : { rub: plan.price_rub + (selectedSku ? selectedSku.price_rub : 0), eur: getTotalAmount() },
                     currency
                   )}
                 </span>

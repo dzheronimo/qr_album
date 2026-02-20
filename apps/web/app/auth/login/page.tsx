@@ -39,7 +39,6 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
     clearErrors,
   } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
@@ -68,94 +67,37 @@ export default function LoginPage() {
         skipAuth: true,
       });
 
-      // Добавляем детальное логирование для диагностики
-      console.log('=== LOGIN DEBUG ===');
-      console.log('API Response:', response);
-      console.log('Response success:', response?.success);
-      console.log('Response data:', response?.data);
-
       if (response?.success && response?.data) {
         const payload: any = response.data;
         const access_token = payload.access_token || payload.data?.access_token;
         const refresh_token = payload.refresh_token || payload.data?.refresh_token;
         const user = payload.user || payload.data?.user;
-        
-        console.log('Extracted tokens:');
-        console.log('Access token:', access_token ? 'Present' : 'Missing');
-        console.log('Refresh token:', refresh_token ? 'Present' : 'Missing');
-        console.log('User data:', user);
-        
+
         if (!access_token || !refresh_token) {
-          console.error('Missing tokens - access_token:', !!access_token, 'refresh_token:', !!refresh_token);
           throw new Error('Некорректный ответ авторизации');
         }
-        
-        // Store tokens and user data
-        console.log('Storing tokens and user data...');
+
         authManager.login(
           { access_token, refresh_token, token_type: 'bearer', expires_in: 3600 },
           user
         );
 
-        console.log('Auth state after login:', authManager.getAuthState());
         toast({ title: 'Добро пожаловать!', description: 'Вы успешно вошли в систему.' });
-
-        // Redirect to dashboard with verification
-        const redirectToDashboard = () => {
-          console.log('=== REDIRECT ATTEMPT ===');
-          if (typeof window !== 'undefined') {
-            // Verify tokens are stored before redirect
-            const authState = authManager.getAuthState();
-            console.log('Current auth state:', authState);
-            if (authState.isAuthenticated) {
-              console.log('✅ Authentication successful, redirecting to dashboard...');
-              window.location.href = '/dashboard';
-            } else {
-              console.error('❌ Tokens not stored properly, retrying...');
-              // Retry redirect after another delay
-              setTimeout(() => {
-                console.log('🔄 Force redirect to dashboard...');
-                window.location.href = '/dashboard';
-              }, 500);
-            }
-          } else {
-            console.error('❌ Window is undefined, cannot redirect');
-          }
-        };
-
-        // Try redirect immediately, then with delays if needed
-        console.log('Starting redirect attempts...');
-        redirectToDashboard();
-        setTimeout(() => {
-          console.log('Second redirect attempt...');
-          redirectToDashboard();
-        }, 200);
-        setTimeout(() => {
-          console.log('Third redirect attempt...');
-          redirectToDashboard();
-        }, 500);
+        router.push('/dashboard');
       } else {
-        // Если success=false или странный ответ — показываем понятную ошибку
-        console.error('❌ Login failed - response not successful');
-        console.error('Response success:', response?.success);
-        console.error('Response data:', response?.data);
         setInlineError('Не удалось выполнить вход. Попробуйте ещё раз.');
       }
     } catch (error: any) {
-      // Логируем ошибку для разработчиков
       logError(error, 'Login form submission');
 
-      // Маппим ошибку в UI-формат
       const uiError = mapToUiError(error, {
         retryAction: () => onSubmit(data),
         resetPasswordAction: () => router.push('/auth/reset-password'),
         checkStatusAction: () => window.open('/status', '_blank'),
       });
 
-      // Показываем ошибку в зависимости от типа
       if (shouldShowInlineAlert(uiError)) {
         setInlineError(uiError.message);
-        // Фокусируемся на alert для screen readers
         setTimeout(() => alertRef.current?.focus(), 100);
       } else if (shouldShowToast(uiError)) {
         toast({
@@ -169,7 +111,6 @@ export default function LoginPage() {
           ) : undefined,
         });
       } else {
-        // Гарантируем видимую обратную связь пользователю
         setInlineError(uiError.message);
         setTimeout(() => alertRef.current?.focus(), 100);
       }

@@ -8,14 +8,14 @@ import { Badge } from '@/components/ui/badge';
 import { Check, Package, Image } from 'lucide-react';
 import { apiClient, endpoints } from '@/lib/api';
 import { DEFAULT_PRINT_SKUS } from '@/lib/constants';
-import { formatPriceWithCurrency, getPriceInCurrency, Currency } from '@/lib/currency';
+import { formatPriceWithCurrency, Currency } from '@/lib/currency';
 import { trackCheckoutAddonChange } from '@/lib/analytics';
 import { PrintSku } from '@/types';
 
 interface PrintUpsellProps {
   currency: Currency;
-  selectedSku: string | null;
-  onSkuChange: (sku: string | null) => void;
+  selectedSku: PrintSku | null;
+  onSkuChange: (sku: PrintSku | null) => void;
   className?: string;
 }
 
@@ -23,7 +23,7 @@ export function PrintUpsell({ currency, selectedSku, onSkuChange, className }: P
   const [isFallback, setIsFallback] = useState(false);
 
   // Загружаем SKU из API
-  const { data: skusData, isLoading, error } = useQuery({
+  const { data: skusData, error } = useQuery({
     queryKey: ['print', 'skus'],
     queryFn: async () => {
       const response = await apiClient.get<PrintSku[]>(endpoints.print.skus());
@@ -43,12 +43,12 @@ export function PrintUpsell({ currency, selectedSku, onSkuChange, className }: P
     }
   }, [usingFallback, isFallback]);
 
-  const handleSkuSelect = async (sku: string | null) => {
+  const handleSkuSelect = async (sku: PrintSku | null) => {
     onSkuChange(sku);
-    await trackCheckoutAddonChange(sku || 'none', !!sku);
+    await trackCheckoutAddonChange(sku?.sku || 'none', !!sku);
   };
 
-  const selectedSkuData = skus.find(sku => sku.sku === selectedSku);
+  const selectedSkuData = selectedSku;
 
   return (
     <Card className={className}>
@@ -90,15 +90,15 @@ export function PrintUpsell({ currency, selectedSku, onSkuChange, className }: P
           <div
             key={sku.sku}
             className={`p-4 border rounded-lg cursor-pointer transition-colors ${
-              selectedSku === sku.sku ? 'border-primary bg-primary/5' : 'border-border hover:bg-muted/50'
+              selectedSku?.sku === sku.sku ? 'border-primary bg-primary/5' : 'border-border hover:bg-muted/50'
             }`}
-            onClick={() => handleSkuSelect(sku.sku)}
+            onClick={() => handleSkuSelect(sku)}
             data-testid={`print-option-${sku.sku}`}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className={`w-4 h-4 rounded-full border-2 ${
-                  selectedSku === sku.sku ? 'border-primary bg-primary' : 'border-muted-foreground'
+                  selectedSku?.sku === sku.sku ? 'border-primary bg-primary' : 'border-muted-foreground'
                 }`} />
                 <div>
                   <h4 className="font-medium">{sku.name}</h4>
