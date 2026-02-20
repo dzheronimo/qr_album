@@ -52,6 +52,11 @@ class ApiClient {
     this.baseURL = baseURL;
   }
 
+  private resolveUrl(path: string): string {
+    if (/^https?:\/\//.test(path)) return path;
+    return `${this.baseURL}${path.startsWith('/') ? '' : '/'}${path}`;
+  }
+
   // Main request method
   private async request<T>(
     url: string,
@@ -75,9 +80,10 @@ class ApiClient {
       }
     }
 
-    // Add default headers
+    // Add default headers (do not force Content-Type for FormData)
+    const isFormData = fetchConfig.body instanceof FormData;
     fetchConfig.headers = {
-      'Content-Type': 'application/json',
+      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
       ...fetchConfig.headers,
     };
 
@@ -86,7 +92,7 @@ class ApiClient {
     const timeoutId = setTimeout(() => controller.abort(), timeout);
 
     try {
-      const response = await fetch(url, {
+      const response = await fetch(this.resolveUrl(url), {
         ...fetchConfig,
         signal: controller.signal,
       });
@@ -195,7 +201,7 @@ class ApiClient {
         return false;
       }
 
-      const response = await fetch(endpoints.auth.refresh(), {
+      const response = await fetch(this.resolveUrl(endpoints.auth.refresh()), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -329,7 +335,7 @@ class ApiClient {
       });
 
       // Setup request
-      xhr.open('POST', url);
+      xhr.open('POST', this.resolveUrl(url));
       
       // Add auth header
       const token = auth.getAccessToken();
@@ -375,14 +381,11 @@ function normalizeBaseUrl(rawBaseUrl: string | undefined): string {
   }
 }
 
-// Create API client instance with debug logging
+// Create API client instance
 const rawBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 const normalizedBaseUrl = normalizeBaseUrl(rawBaseUrl);
-const finalBaseUrl = normalizedBaseUrl + '/api/v1';
+const finalBaseUrl = normalizedBaseUrl.endsWith('/api/v1') ? normalizedBaseUrl : `${normalizedBaseUrl}/api/v1`;
 
-console.log('DEBUG: NEXT_PUBLIC_API_BASE_URL (raw):', rawBaseUrl);
-console.log('DEBUG: Normalized Base URL:', normalizedBaseUrl);
-console.log('DEBUG: Final API Client Base URL:', finalBaseUrl);
 
 export const apiClient = new ApiClient(finalBaseUrl);
 
@@ -392,8 +395,8 @@ export { endpoints };
 // Health check
 export const healthCheck = async (): Promise<boolean> => {
   try {
-    const response = await apiClient.get(endpoints.health(), { skipAuth: true });
-    return response.success;
+    const response = await fetch(`${normalizedBaseUrl}${endpoints.health()}`);
+    return response.ok;
   } catch {
     return false;
   }

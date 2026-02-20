@@ -3,20 +3,19 @@
 import { useState } from 'react';
 
 export const dynamic = 'force-dynamic';
-import { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { PricingTable } from '@/components/pricing/PricingTable';
 import { CompareTable } from '@/components/pricing/CompareTable';
 import { TrialCta } from '@/components/trial/TrialCta';
 import { TrialStartModal } from '@/components/trial/TrialStartModal';
 import { CheckoutDrawer } from '@/components/checkout/CheckoutDrawer';
-import { QrCode, Users, Camera, Share2, BarChart3, Smartphone, Zap, ChevronDown, ChevronUp } from 'lucide-react';
+import { QrCode, Users, Camera, Share2, ChevronDown, ChevronUp } from 'lucide-react';
 import { FAQ_DATA } from '@/lib/constants';
 import { BillingPlan } from '@/types';
-import { getCurrencyPreference, Currency } from '@/lib/currency';
+import { Currency, getCurrencyPreference } from '@/lib/currency';
+
 
 export default function PricingPage() {
   const [isTrialModalOpen, setIsTrialModalOpen] = useState(false);
@@ -34,19 +33,7 @@ export default function PricingPage() {
     console.log('Trial started:', trialData);
   };
 
-  const handlePlanSelect = (planId: string) => {
-    // Здесь нужно получить данные плана по ID
-    // Для простоты используем первый план
-    const plan: BillingPlan = {
-      id: planId,
-      name: 'Lite',
-      description: '3 месяца загрузок / 1 год хранения',
-      price_rub: 1990,
-      price_eur: 24,
-      upload_months: 3,
-      storage_years: 1,
-      features: ['Безлимит гостей и загрузок', 'ZIP-скачивание', 'Пароль/PIN', 'Ко-организаторы', 'Лайв-слайдшоу', 'Многоязычие']
-    };
+  const handlePlanSelect = (plan: BillingPlan) => {
     setSelectedPlan(plan);
     setIsCheckoutOpen(true);
   };
@@ -78,6 +65,14 @@ export default function PricingPage() {
               <Button>Начать бесплатно</Button>
             </Link>
           </nav>
+        </div>
+        <div className="md:hidden border-t py-2">
+          <div className="flex items-center gap-3 overflow-x-auto text-sm">
+            <Link href="/" className="whitespace-nowrap text-muted-foreground hover:text-foreground">Главная</Link>
+            <Link href="/help" className="whitespace-nowrap text-muted-foreground hover:text-foreground">Помощь</Link>
+            <Link href="/auth/login" className="whitespace-nowrap text-muted-foreground hover:text-foreground">Войти</Link>
+            <Link href="/auth/register" className="whitespace-nowrap text-primary font-medium">Начать</Link>
+          </div>
         </div>
       </header>
 
@@ -132,7 +127,7 @@ export default function PricingPage() {
       {/* Pricing Table */}
       <section className="py-20">
         <div className="container">
-          <PricingTable onPlanSelect={handlePlanSelect} />
+          <PricingTable onPlanSelect={handlePlanSelect} initialCurrency={currency} onCurrencyChange={setCurrency} />
         </div>
       </section>
 

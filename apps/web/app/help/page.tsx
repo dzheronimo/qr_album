@@ -1,62 +1,38 @@
 import { Metadata } from 'next';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MarketingShell } from '@/components/marketing/MarketingShell';
 
 export const metadata: Metadata = {
-  title: 'Помощь | StoryQR',
-  description: 'Получите помощь по использованию StoryQR',
+  title: 'Помощь и поддержка | StoryQR',
+  description: 'Центр помощи StoryQR: ответы на популярные вопросы и быстрый старт по созданию QR-альбомов.',
 };
+
+const faq = [
+  ['Как создать альбом?', 'Откройте кабинет → Альбомы → Создать альбом, заполните название и добавьте страницы.'],
+  ['Как поделиться с гостями?', 'Сгенерируйте QR-код страницы и разместите его на карточках или экране события.'],
+  ['Какие форматы медиа поддерживаются?', 'Изображения, видео и аудио в популярных форматах.'],
+  ['Можно ли ограничить доступ?', 'Да, доступны публичный режим, доступ по ссылке и PIN-защита.'],
+  ['Как работает печать QR?', 'В разделе печати можно выбрать макет и получить PDF для типографии или домашней печати.'],
+  ['Где посмотреть аналитику?', 'В dashboard доступны просмотры, загрузки и активность по альбомам и страницам.'],
+];
 
 export default function HelpPage() {
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white shadow rounded-lg p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">
-            Помощь по StoryQR
-          </h1>
-          
-          <div className="space-y-8">
-            <section>
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                Как создать альбом
-              </h2>
-              <p className="text-gray-600">
-                Перейдите в раздел "Альбомы" и нажмите "Создать альбом". 
-                Заполните название и описание, затем добавьте страницы с QR-кодами.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                Как добавить QR-код
-              </h2>
-              <p className="text-gray-600">
-                В созданном альбоме нажмите "Добавить страницу". 
-                Загрузите медиафайлы и создайте QR-код для доступа к странице.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                Как поделиться альбомом
-              </h2>
-              <p className="text-gray-600">
-                Используйте QR-коды для быстрого доступа к вашим страницам. 
-                QR-коды можно скачать и распечатать.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                Техническая поддержка
-              </h2>
-              <p className="text-gray-600">
-                Если у вас возникли вопросы, обратитесь в службу поддержки 
-                или проверьте документацию.
-              </p>
-            </section>
-          </div>
-        </div>
+    <MarketingShell
+      title="Помощь и поддержка"
+      subtitle="Краткие инструкции по всем основным сценариям StoryQR"
+    >
+      <h2 className="text-2xl font-semibold mb-4">Часто задаваемые вопросы</h2>
+      <div className="grid gap-4 md:grid-cols-2">
+        {faq.map(([question, answer]) => (
+          <Card key={question} data-testid="faq-item">
+            <CardHeader>
+              <CardTitle className="text-lg">{question}</CardTitle>
+            </CardHeader>
+            <CardContent className="text-sm text-muted-foreground">{answer}</CardContent>
+          </Card>
+        ))}
       </div>
-    </div>
+    </MarketingShell>
   );
 }

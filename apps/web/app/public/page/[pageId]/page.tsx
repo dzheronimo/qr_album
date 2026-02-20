@@ -16,9 +16,11 @@ import {
   Music,
   Download,
   Share2,
-  QrCode
+  QrCode,
+  Upload,
+  Loader2
 } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { apiClient, endpoints } from '@/lib/api';
 import { PublicPageData } from '@/types';
@@ -31,7 +33,8 @@ export default function PublicPageView() {
   const params = useParams();
   const pageId = params.pageId as string;
   const { toast } = useToast();
-  
+  const queryClient = useQueryClient();
+
   const [pin, setPin] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [accessToken, setAccessToken] = useState<string | null>(null);
@@ -49,19 +52,8 @@ export default function PublicPageView() {
     enabled: !!pageId,
   });
 
-  // Validate PIN
-  const validatePinMutation = useQuery({
-    queryKey: ['validate-pin', pageId, pin],
-    queryFn: async () => {
-      const response = await apiClient.post(
-        endpoints.pages.validatePin(pageId),
-        { pin },
-        { skipAuth: true }
-      );
-      return response.data;
-    },
-    enabled: false, // Only run when manually triggered
-  });
+
+
 
   const handlePinSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -120,6 +112,69 @@ export default function PublicPageView() {
     link.href = mediaUrl;
     link.download = filename;
     link.click();
+  };
+
+
+  const guestUploadMutation = useMutation({
+    mutationFn: async (file: File) => {
+      const uploadResponse = await apiClient.upload<any>(
+        endpoints.media.upload(),
+        file,
+        {
+          skipAuth: !accessToken,
+          headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : undefined,
+        }
+      );
+
+      const mediaId =
+        (uploadResponse.data as any)?.id ||
+        (uploadResponse.data as any)?.data?.id;
+
+      if (mediaId) {
+        await apiClient.post(
+          endpoints.media.attach(mediaId),
+          { page_id: pageId },
+          {
+            skipAuth: !accessToken,
+            headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : undefined,
+          }
+        );
+      }
+
+      return uploadResponse.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['public-page', pageId] });
+      toast({
+        title: 'Фото загружено',
+        description: 'Файл добавлен на страницу события.',
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: 'Ошибка загрузки',
+        description: error.message || 'Не удалось загрузить фото. Попробуйте ещё раз.',
+        variant: 'destructive',
+      });
+    },
+  });
+
+  const handleGuestUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: 'Неподдерживаемый формат',
+        description: 'Для гостей разрешена загрузка только изображений.',
+        variant: 'destructive',
+      });
+      event.target.value = '';
+      return;
+    }
+
+    await guestUploadMutation.mutateAsync(file);
+    event.target.value = '';
   };
 
   if (isLoading) {
@@ -244,6 +299,27 @@ export default function PublicPageView() {
               </p>
             )}
           </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Добавить фото как гость</CardTitle>
+              <CardDescription>
+                Выберите изображение, чтобы загрузить его в этот альбом для хозяина события.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <label className="inline-flex items-center gap-2">
+                <input type="file" accept="image/*" className="hidden" onChange={handleGuestUpload} />
+                <Button type="button" disabled={guestUploadMutation.isPending}>
+                  {guestUploadMutation.isPending ? (
+                    <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Загрузка...</>
+                  ) : (
+                    <><Upload className="mr-2 h-4 w-4" />Загрузить фото</>
+                  )}
+                </Button>
+              </label>
+            </CardContent>
+          </Card>
 
           {/* Media Grid */}
           {media && media.length > 0 ? (

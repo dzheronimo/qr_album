@@ -12,7 +12,7 @@ import { trackPlanSelect } from '@/lib/analytics';
 interface PlanCardProps {
   plan: BillingPlan;
   currency: Currency;
-  onSelect: (planId: string) => void;
+  onSelect: (plan: BillingPlan) => void;
   className?: string;
 }
 
@@ -23,7 +23,7 @@ export function PlanCard({ plan, currency, onSelect, className }: PlanCardProps)
     setIsLoading(true);
     try {
       await trackPlanSelect(plan.id, currency);
-      onSelect(plan.id);
+      onSelect(plan);
     } finally {
       setIsLoading(false);
     }

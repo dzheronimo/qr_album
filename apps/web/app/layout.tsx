@@ -1,12 +1,9 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { Providers } from './providers';
 import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 
 export const dynamic = 'force-dynamic';
-
-const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 
 export const metadata: Metadata = {
   title: {
@@ -76,7 +73,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className="font-sans">
         <Providers>
           {children}
           <Toaster />

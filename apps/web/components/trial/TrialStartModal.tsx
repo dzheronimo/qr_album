@@ -7,17 +7,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
-import { 
-  Gift, 
-  X, 
-  Loader2, 
-  Check,
-  AlertCircle,
-  Mail,
-  Lock
-} from 'lucide-react';
+import { Gift, Loader2, Check, Mail, Lock } from 'lucide-react';
 import { apiClient, endpoints } from '@/lib/api';
 import { trackTrialStartSuccess } from '@/lib/analytics';
+import { authManager } from '@/lib/auth';
 import { TrialStartResponse } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 
@@ -33,7 +26,6 @@ export function TrialStartModal({ isOpen, onClose, onSuccess }: TrialStartModalP
   const [isLogin, setIsLogin] = useState(false);
   const { toast } = useToast();
 
-  // Мутация для старта триала
   const startTrialMutation = useMutation({
     mutationFn: async () => {
       const response = await apiClient.post<TrialStartResponse>(endpoints.trial.start());
@@ -46,7 +38,7 @@ export function TrialStartModal({ isOpen, onClose, onSuccess }: TrialStartModalP
         title: 'Триал активирован!',
         description: `Бесплатный период до ${new Date(data.ends_at).toLocaleDateString('ru-RU')}`,
       });
-      onClose();
+      handleClose();
     },
     onError: (error: any) => {
       toast({
@@ -57,9 +49,35 @@ export function TrialStartModal({ isOpen, onClose, onSuccess }: TrialStartModalP
     },
   });
 
+  const performLogin = async () => {
+    const loginResponse = await apiClient.post<any>(
+      endpoints.auth.login(),
+      { email, password },
+      { skipAuth: true }
+    );
+    const payload = loginResponse.data;
+    const access_token = payload.access_token || payload?.data?.access_token;
+    const refresh_token = payload.refresh_token || payload?.data?.refresh_token;
+    const user = payload.user || payload?.data?.user;
+
+    if (!access_token || !refresh_token) {
+      throw new Error('Некорректный ответ сервера авторизации');
+    }
+
+    authManager.login(
+      {
+        access_token,
+        refresh_token,
+        token_type: 'bearer',
+        expires_in: 3600,
+      },
+      user
+    );
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email || !password) {
       toast({
         title: 'Заполните все поля',
@@ -69,9 +87,20 @@ export function TrialStartModal({ isOpen, onClose, onSuccess }: TrialStartModalP
       return;
     }
 
-    // Здесь должна быть логика входа/регистрации
-    // Для простоты сразу запускаем триал
-    startTrialMutation.mutate();
+    try {
+      if (!isLogin) {
+        await apiClient.post(endpoints.auth.register(), { email, password }, { skipAuth: true });
+      }
+
+      await performLogin();
+      startTrialMutation.mutate();
+    } catch (error: any) {
+      toast({
+        title: isLogin ? 'Не удалось войти' : 'Не удалось зарегистрироваться',
+        description: error.message || 'Проверьте введенные данные и попробуйте снова.',
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleClose = () => {
@@ -99,15 +128,7 @@ export function TrialStartModal({ isOpen, onClose, onSuccess }: TrialStartModalP
             <Label htmlFor="email">Email</Label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                id="email"
-                type="email"
-                placeholder="your@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="pl-10"
-                required
-              />
+              <Input id="email" type="email" placeholder="your@email.com" value={email} onChange={(e) => setEmail(e.target.value)} className="pl-10" required />
             </div>
           </div>
 
@@ -115,44 +136,20 @@ export function TrialStartModal({ isOpen, onClose, onSuccess }: TrialStartModalP
             <Label htmlFor="password">Пароль</Label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                id="password"
-                type="password"
-                placeholder="Введите пароль"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="pl-10"
-                required
-              />
+              <Input id="password" type="password" placeholder="Введите пароль" value={password} onChange={(e) => setPassword(e.target.value)} className="pl-10" required />
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <Button
-              type="button"
-              variant={isLogin ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setIsLogin(true)}
-              className="flex-1"
-            >
+            <Button type="button" variant={isLogin ? 'default' : 'outline'} size="sm" onClick={() => setIsLogin(true)} className="flex-1">
               Войти
             </Button>
-            <Button
-              type="button"
-              variant={!isLogin ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setIsLogin(false)}
-              className="flex-1"
-            >
+            <Button type="button" variant={!isLogin ? 'default' : 'outline'} size="sm" onClick={() => setIsLogin(false)} className="flex-1">
               Регистрация
             </Button>
           </div>
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={startTrialMutation.isPending}
-          >
+          <Button type="submit" className="w-full" disabled={startTrialMutation.isPending}>
             {startTrialMutation.isPending ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -167,7 +164,6 @@ export function TrialStartModal({ isOpen, onClose, onSuccess }: TrialStartModalP
           </Button>
         </form>
 
-        {/* Информация о триале */}
         <Card>
           <CardContent className="pt-4">
             <div className="space-y-2">
@@ -191,11 +187,8 @@ export function TrialStartModal({ isOpen, onClose, onSuccess }: TrialStartModalP
           </CardContent>
         </Card>
 
-        {/* Дополнительная информация */}
         <div className="text-center">
-          <p className="text-xs text-muted-foreground">
-            Без карты • Без подписки • Отменить можно в любое время
-          </p>
+          <p className="text-xs text-muted-foreground">Без карты • Без подписки • Отменить можно в любое время</p>
         </div>
       </DialogContent>
     </Dialog>
